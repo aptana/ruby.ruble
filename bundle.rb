@@ -32,5 +32,11 @@ END
     menu.separator
     #menu.command "Open require"
     menu.command "Validate Syntax"
+    #menu.separator
+    menu.separator
+    #menu.command "Insert Missing requires"
+    #menu.command "Add ! to Method in Line"
+    menu.command "Toggle String / Symbol"
+    #menu.command "Insert ERb's <% .. %> or <%= ..  %>"
   end
 end
