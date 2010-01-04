@@ -1,6 +1,4 @@
 require 'radrails'
-require 'radrails/logger'
-require 'radrails/editor'
 
 command "Toggle String / Symbol" do |cmd|
   cmd.key_binding = [ :M1, ":" ] # FIXME Keybinding is incorrect
