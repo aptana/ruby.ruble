@@ -1,6 +1,6 @@
 require 'radrails'
 require 'radrails/logger'
-require 'lib/ruby_requires'
+require 'ruby_requires'
 
 command "Insert Missing requires" do |cmd|
   cmd.key_binding = [ :M1, "#" ] # FIXME Keybinding is incorrect
