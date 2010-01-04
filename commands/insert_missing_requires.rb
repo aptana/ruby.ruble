@@ -1,5 +1,4 @@
 require 'radrails'
-require 'radrails/logger'
 require 'ruby_requires'
 
 command "Insert Missing requires" do |cmd|
