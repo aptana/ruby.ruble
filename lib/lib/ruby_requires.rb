@@ -1,6 +1,3 @@
-#!/usr/bin/env ruby
-
-$: << "#{ENV['TM_SUPPORT_PATH']}/lib" if ENV.has_key?('TM_SUPPORT_PATH')
 require "escape"
 
 module RubyRequires
