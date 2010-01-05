@@ -1,7 +1,7 @@
 require 'radrails'
 
 command 'Italic' do |cmd|
-  cmd.key_binding = '@i'
+  cmd.key_binding = :M1, :I
   cmd.scope = 'source.ruby comment'
   cmd.output = :insert_as_snippet
   cmd.input = :selection, :word
