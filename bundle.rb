@@ -35,7 +35,7 @@ END
     #menu.separator
     menu.separator
     menu.command "Insert Missing requires"
-    #menu.command "Add ! to Method in Line"
+    menu.command "Add ! to Method in Line"
     menu.command "Toggle String / Symbol"
     menu.command "Insert ERb's <% .. %> or <%= ..  %>"
     menu.separator
