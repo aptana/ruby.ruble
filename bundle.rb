@@ -39,6 +39,7 @@ END
     menu.command "Toggle String / Symbol"
     menu.command "Insert ERb's <% .. %> or <%= ..  %>"
     menu.separator
+    menu.command "New Method"
     menu.command "Hash Pointer - =>"
   end
 end
