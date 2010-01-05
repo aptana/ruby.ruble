@@ -37,6 +37,8 @@ END
     menu.command "Insert Missing requires"
     #menu.command "Add ! to Method in Line"
     menu.command "Toggle String / Symbol"
-    #menu.command "Insert ERb's <% .. %> or <%= ..  %>"
+    menu.command "Insert ERb's <% .. %> or <%= ..  %>"
+    menu.separator
+    menu.command "Hash Pointer - =>"
   end
 end
