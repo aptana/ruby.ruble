@@ -35,7 +35,8 @@ END
     menu.command "Open require"
     menu.command "Validate Syntax"
     menu.command "Validate Syntax (ERB)"
-    #menu.separator
+    menu.separator
+    menu.command "Execute Line / Selection as Ruby"
     menu.separator
     menu.command "Insert Missing requires"
     menu.command "Add ! to Method in Line"
