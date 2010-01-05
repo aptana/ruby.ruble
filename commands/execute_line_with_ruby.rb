@@ -5,9 +5,10 @@ command 'Execute Line / Selection as Ruby' do |cmd|
   cmd.output = :insert_as_text
   cmd.input = :selection, :line
   cmd.invoke do |context|
-    # FIXME We don't want to execute this in the JRuby process, we'll need to write thise code out to a file, run it with ruby as a command, pipe the input and then return the result
-    # be smart, dont print something if we already have..
+    # We don't want to execute this in the JRuby process, we'll need to write thise code out to a file, 
+    # run it with ruby as a command, pipe the input and then return the result
 code =<<EOF
+    # be smart, dont print something if we already have..
     $write_count = 0
     def STDOUT.write(what)
        $write_count += 1
