@@ -30,7 +30,7 @@ END
     menu.command "Documentation for Word"
     #menu.command "RDoc"
     menu.separator
-    #menu.command "Open require"
+    menu.command "Open require"
     menu.command "Validate Syntax"
     #menu.separator
     menu.separator
