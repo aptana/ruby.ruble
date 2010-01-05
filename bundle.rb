@@ -28,7 +28,9 @@ END
     #menu.command "Run Focused Unit Test"
     #menu.separator
     menu.command "Documentation for Word"
-    #menu.command "RDoc"
+    menu.menu "RDoc" do |rdoc|
+      rdoc.command "Omit"
+    end
     menu.separator
     menu.command "Open require"
     menu.command "Validate Syntax"
