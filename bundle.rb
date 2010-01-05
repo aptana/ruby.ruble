@@ -34,6 +34,7 @@ END
     menu.separator
     menu.command "Open require"
     menu.command "Validate Syntax"
+    menu.command "Validate Syntax (ERB)"
     #menu.separator
     menu.separator
     menu.command "Insert Missing requires"
