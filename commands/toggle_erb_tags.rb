@@ -1,5 +1,5 @@
 require 'radrails'
-
+# TODO This needs to be tested My guess is it won't work as is (especially because of the scope declared)
 command 'Toggle ERb Tags' do |cmd|
   cmd.key_binding = :CTRL, :>
   cmd.scope = 'source.ruby.embedded, source.ruby.rails.embedded, comment.block.erb, meta.erb'
