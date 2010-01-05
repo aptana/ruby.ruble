@@ -1,0 +1,19 @@
+require 'radrails'
+
+command 'Italic' do |cmd|
+  cmd.key_binding = '@i'
+  cmd.scope = 'source.ruby comment'
+  cmd.output = :insert_as_snippet
+  cmd.input = :selection, :word
+  cmd.invoke do |context|
+    s = context.in.read
+    case s
+    when /^\w+$/
+      "_#{s}_$0"
+    when ""
+      "_$1_$0"
+    else
+      "<em>#{s}</em>"
+    end
+  end
+end
