@@ -29,8 +29,15 @@ END
     #menu.separator
     menu.command "Documentation for Word"
     menu.menu "RDoc" do |rdoc|
-      rdoc.command "Omit"
       rdoc.command 'Show for Current File / Project'
+      rdoc.separator
+      rdoc.menu 'Format' do |format|
+        format.command "Bold"
+        format.command "Italic"
+        format.command "Typewriter"
+      end
+      rdoc.separator
+      rdoc.command "Omit"
     end
     menu.separator
     menu.command "Open require"
