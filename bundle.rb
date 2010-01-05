@@ -30,6 +30,7 @@ END
     menu.command "Documentation for Word"
     menu.menu "RDoc" do |rdoc|
       rdoc.command "Omit"
+      rdoc.command 'Show for Current File / Project'
     end
     menu.separator
     menu.command "Open require"
