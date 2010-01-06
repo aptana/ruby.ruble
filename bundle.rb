@@ -24,10 +24,9 @@ END
     # this menu should be shown when any of the following scopes is active:
     menu.scope = [ "source.ruby", "project.rails" ]
     
-    menu.command 'Completion: Ruby (rcodetools)'
-    #menu.command "Run"
+    menu.command "Run"
     #menu.command "Run Focused Unit Test"
-    #menu.separator
+    menu.separator
     menu.command "Documentation for Word"
     menu.menu "RDoc" do |rdoc|
       rdoc.command 'Show for Current File / Project'
@@ -40,7 +39,7 @@ END
       rdoc.separator
       rdoc.command "Omit"
     end
-    menu.separator
+    menu.separator   
     menu.command "Open require"
     menu.command "Validate Syntax"
     menu.command "Validate Syntax (ERB)"
@@ -52,6 +51,8 @@ END
     menu.command "Add ! to Method in Line"
     menu.command "Toggle String / Symbol"
     menu.command "Insert ERb's <% .. %> or <%= ..  %>"
+    menu.separator
+    menu.command 'Completion: Ruby (rcodetools)'
     menu.separator
     menu.command "New Method"
     menu.command "Hash Pointer - =>"
