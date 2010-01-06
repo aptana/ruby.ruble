@@ -45,6 +45,7 @@ END
     menu.command "Validate Syntax (ERB)"
     menu.separator
     menu.command "Execute Line / Selection as Ruby"
+    menu.command "Execute and Update '# =>' Markers"
     menu.separator
     menu.command "Insert Missing requires"
     menu.command "Add ! to Method in Line"
