@@ -24,6 +24,7 @@ END
     # this menu should be shown when any of the following scopes is active:
     menu.scope = [ "source.ruby", "project.rails" ]
     
+    menu.command 'Completion: Ruby (rcodetools)'
     #menu.command "Run"
     #menu.command "Run Focused Unit Test"
     #menu.separator
