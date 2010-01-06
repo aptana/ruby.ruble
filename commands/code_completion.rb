@@ -9,8 +9,8 @@ command "Completion: Ruby (rcodetools)" do |cmd|
   cmd.invoke do |context|
 	require "pathname"
 
-	TM_RUBY    = context["TM_RUBY"] || "ruby"
-	RCODETOOLS = "#{context['TM_BUNDLE_SUPPORT']}/vendor/rcodetools"
+	ruby_exe    = context["TM_RUBY"] || "ruby"
+	rcodetools_dir = "#{context['TM_BUNDLE_SUPPORT']}/vendor/rcodetools"
 	
 	RAILS_DIR = nil
 	dir = File.dirname(context["TM_FILEPATH"]) rescue context["TM_PROJECT_DIRECTORY"]
@@ -30,10 +30,10 @@ command "Completion: Ruby (rcodetools)" do |cmd|
 	end
 	
 	command     = <<END_COMMAND.tr("\n", " ").strip
-"#{TM_RUBY}"
--I "#{RCODETOOLS}/lib"
+"#{ruby_exe}"
+-I "#{rcodetools_dir}/lib"
 --
-"#{RCODETOOLS}/bin/rct-complete"
+"#{rcodetools_dir}/bin/rct-complete"
 #{"-r \"#{RAILS_DIR}/config/environment.rb\"" if RAILS_DIR}
 --line=#{context['TM_LINE_NUMBER']}
 --column=#{context['TM_LINE_INDEX']}
