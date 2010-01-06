@@ -3,7 +3,7 @@ require 'radrails/ui'
 require 'radrails/editor'
 
 command 'Open require' do |cmd|
-  cmd.key_binding = :Shift, :M1, :D
+  cmd.key_binding = 'Shift+M1+D'
   cmd.scope = 'source.ruby'
   cmd.output = :show_as_tooltip
   cmd.input = :selection, :document

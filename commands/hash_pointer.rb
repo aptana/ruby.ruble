@@ -1,7 +1,7 @@
 require 'radrails'
 
 command "Hash Pointer - =>" do |cmd|
-  cmd.key_binding = [ :Control, :L ] # FIXME Keybinding is incorrect
+  cmd.key_binding = 'Control+L'
   cmd.output = :insert_as_text
   cmd.input = :none
   cmd.scope = "source.ruby"

@@ -1,7 +1,7 @@
 require 'radrails'
 
 command 'Toggle Quote Style' do |cmd|
-  cmd.key_binding = :Control, '"' # FIXME Keybinding is incorrect
+  cmd.key_binding = 'Control+"'
   #cmd.scope = 'source.ruby string.quoted.double, source.ruby string.quoted.single, source.ruby string'
   cmd.scope = 'source.ruby'
   cmd.output = :replace_selection

@@ -2,7 +2,7 @@ require 'radrails'
 require 'ruby_requires'
 
 command "Insert Missing requires" do |cmd|
-  cmd.key_binding = [ :M1, "#" ] # FIXME Keybinding is incorrect
+  cmd.key_binding = 'M1+#'
   cmd.output = :insert_as_snippet
   cmd.input = :selection, :document
   cmd.scope = "source.ruby"

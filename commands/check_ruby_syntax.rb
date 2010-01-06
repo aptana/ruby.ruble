@@ -2,7 +2,7 @@ require 'radrails'
 require 'radrails/editor'
 
 command "Validate Syntax" do |cmd|
-  cmd.key_binding = [ :Shift, :Control, :V ]
+  cmd.key_binding = 'Control+Shift+V'
   cmd.output = :show_as_tooltip
   cmd.input = :document
   cmd.scope = "source.ruby"

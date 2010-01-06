@@ -2,7 +2,7 @@ require 'radrails'
 require 'radrails/ui'
 
 command 'New Method' do |cmd|
-  cmd.key_binding = :Shift, :Return
+  cmd.key_binding = 'Shift+Return'
   cmd.scope = 'source.ruby'
   cmd.output = :insert_as_snippet
   cmd.input = :selection, :word

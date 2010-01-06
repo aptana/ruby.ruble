@@ -1,7 +1,7 @@
 require 'radrails'
 
 command "Toggle String / Symbol" do |cmd|
-  cmd.key_binding = [ :M1, ":" ] # FIXME Keybinding is incorrect
+  cmd.key_binding = 'CTRL+:'
   cmd.output = :replace_selection
   cmd.input = :selection, :scope
   cmd.scope = "source.ruby string.quoted, source.ruby constant.other.symbol.ruby"

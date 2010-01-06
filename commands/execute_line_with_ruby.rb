@@ -1,7 +1,7 @@
 require 'radrails'
 
 command 'Execute Line / Selection as Ruby' do |cmd|
-  cmd.key_binding = :Shift, :Control, :E
+  cmd.key_binding = 'Shift+Control+E'
   cmd.output = :insert_as_text
   cmd.input = :selection, :line
   cmd.invoke do |context|

@@ -2,7 +2,7 @@ require 'radrails'
 require 'radrails/ui'
 
 command 'Add ! to Method in Line' do |cmd|
-  cmd.key_binding = '^!'
+  cmd.key_binding = 'CTRL+!'
   cmd.scope = 'source.ruby'
   cmd.output = :insert_as_snippet
   cmd.input = :selection, :line
