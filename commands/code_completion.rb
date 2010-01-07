@@ -9,11 +9,11 @@ command "Completion: Ruby (rcodetools)" do |cmd|
   cmd.invoke do |context|
 	require "pathname"
 
-	ruby_exe    = context["TM_RUBY"] || "ruby"
-	rcodetools_dir = "#{context['TM_BUNDLE_SUPPORT']}/vendor/rcodetools"
+	ruby_exe    = ENV["TM_RUBY"] || "ruby"
+	rcodetools_dir = "#{ENV['TM_BUNDLE_SUPPORT']}/vendor/rcodetools"
 	
 	RAILS_DIR = nil
-	dir = File.dirname(context["TM_FILEPATH"]) rescue context["TM_PROJECT_DIRECTORY"]
+	dir = File.dirname(ENV["TM_FILEPATH"]) rescue ENV["TM_PROJECT_DIRECTORY"]
 	if dir
 	  dir = Pathname.new(dir)
 	  loop do
@@ -35,8 +35,8 @@ command "Completion: Ruby (rcodetools)" do |cmd|
 --
 "#{rcodetools_dir}/bin/rct-complete"
 #{"-r \"#{RAILS_DIR}/config/environment.rb\"" if RAILS_DIR}
---line=#{context['TM_LINE_NUMBER']}
---column=#{context['TM_LINE_INDEX']}
+--line=#{ENV['TM_LINE_NUMBER']}
+--column=#{ENV['TM_LINE_INDEX']}
 2> /dev/null
 END_COMMAND
 
@@ -59,7 +59,7 @@ END_COMMAND
 	end
 	
 	if selected
-	  selected.sub(/\A#{Regexp.escape(context['TM_CURRENT_WORD'].to_s)}/, "")
+	  selected.sub(/\A#{Regexp.escape(ENV['TM_CURRENT_WORD'].to_s)}/, "")
 	else
 	  nil
 	end

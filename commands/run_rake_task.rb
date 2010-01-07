@@ -11,7 +11,7 @@ command 'Run Rake Task' do |cmd|
   cmd.output = :discard
   cmd.input = :none
   cmd.invoke do |context|
-    Dir.chdir context['TM_PROJECT_DIRECTORY']
+    Dir.chdir ENV['TM_PROJECT_DIRECTORY']
     tasks = `rake --tasks`
     tasks = [DEFAULT_TASK] + tasks.grep(/^rake\s+(\S+)/) { |t| t.split[1] }
     task = RadRails::UI.request_item( :title   => "Rake Tasks",
@@ -22,6 +22,6 @@ command 'Run Rake Task' do |cmd|
     
     cmd_line = "rake"
     cmd_line << " " << e_sh(task) unless task.nil?
-    RadRails::Terminal.open(cmd_line, context['TM_PROJECT_DIRECTORY'])
+    RadRails::Terminal.open(cmd_line, ENV['TM_PROJECT_DIRECTORY'])
   end
 end

@@ -12,10 +12,10 @@ command 'Toggle ERb Tags' do |cmd|
     TAGS = %w[<%= <%# <%- <%].freeze
     
     # locate caret (Allan's code)
-    line = context['TM_LINE_NUMBER'].to_i - context['TM_INPUT_START_LINE'].to_i
-    col  = context['TM_LINE_INDEX'].to_i
-    if context['TM_LINE_NUMBER'].to_i == context['TM_INPUT_START_LINE'].to_i
-      col -= context['TM_INPUT_START_LINE_INDEX'].to_i
+    line = ENV['TM_LINE_NUMBER'].to_i - ENV['TM_INPUT_START_LINE'].to_i
+    col  = ENV['TM_LINE_INDEX'].to_i
+    if ENV['TM_LINE_NUMBER'].to_i == ENV['TM_INPUT_START_LINE'].to_i
+      col -= ENV['TM_INPUT_START_LINE_INDEX'].to_i
     end
     
     # read input

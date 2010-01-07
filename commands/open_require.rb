@@ -17,7 +17,7 @@ command 'Open require' do |cmd|
                        false
                      end
     
-    requires = if context['TM_CURRENT_LINE'].to_s =~ REQUIRE_RE
+    requires = if ENV['TM_CURRENT_LINE'].to_s =~ REQUIRE_RE
                  ["#{$2}.rb"]
                else
                  context.in.read.scan(REQUIRE_RE).map { |_, path| "#{path}.rb" }
@@ -36,7 +36,7 @@ command 'Open require' do |cmd|
     end
     
     if file and dir
-      dir.sub!(%r{\A\.(?=/|\z)}, context['TM_DIRECTORY']) if context['TM_DIRECTORY']
+      dir.sub!(%r{\A\.(?=/|\z)}, ENV['TM_DIRECTORY']) if ENV['TM_DIRECTORY']
       file_path = File.join(dir, file)
       # puts file_path
       RadRails::Editor.go_to :file => file_path

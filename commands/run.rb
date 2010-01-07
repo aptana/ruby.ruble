@@ -6,5 +6,5 @@ command 'Run' do |cmd|
   cmd.scope = 'source.ruby'
   cmd.output = :discard
   cmd.input = :none
-  cmd.invoke {|context| RadRails::Terminal.open("ruby -KU -- \"#{context['TM_FILEPATH']}\"", context['TM_PROJECT_DIRECTORY']) }
+  cmd.invoke {|context| RadRails::Terminal.open("ruby -KU -- \"#{ENV['TM_FILEPATH']}\"", ENV['TM_PROJECT_DIRECTORY']) }
 end

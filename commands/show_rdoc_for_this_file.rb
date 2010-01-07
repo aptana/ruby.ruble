@@ -5,10 +5,10 @@ command 'Show for Current File / Project' do |cmd|
   cmd.output = :show_as_html
   cmd.input = :none
   cmd.invoke do |context|
-    output = context.TM_FILENAME
+    output = ENV['TM_FILENAME']
     input = output
-    wd = context.TM_DIRECTORY
-    project_directory = context.TM_PROJECT_DIRECTORY
+    wd = ENV['TM_DIRECTORY']
+    project_directory = ['TM_PROJECT_DIRECTORY']
     if File.directory?(project_directory)
       wd = project_directory
       output = `basename #{wd}`.strip # FIXME This probably doesn't work across systems!

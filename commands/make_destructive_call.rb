@@ -12,7 +12,7 @@ command 'Add ! to Method in Line' do |cmd|
     CURSOR = [0xFFFC].pack("U").freeze
     line = context.in.read
     begin
-      line[context["TM_LINE_INDEX"].to_i, 0] = CURSOR
+      line[ENV["TM_LINE_INDEX"].to_i, 0] = CURSOR
     rescue
       exit
     end
