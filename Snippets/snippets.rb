@@ -545,11 +545,6 @@ snippet 'map { |e| .. }' do |s|
   s.expansion = 'map { |${1:e}| $0 }'
 end
 
-snippet 'map_with_index { |e, i| .. }' do |s|
-  s.trigger = 'mapwi-'
-  s.expansion = 'enum_with_index.map { |${1:e}, ${2:i}| $0 }'
-end
-
 snippet 'Marshal.dump(.., file)' do |s|
   s.trigger = 'Md'
   s.expansion = 'File.open(${1:"${2:path/to/file}.dump"}, "wb") { |${3:file}| Marshal.dump(${4:obj}, ${3:file}) }'
