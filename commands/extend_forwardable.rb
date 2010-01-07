@@ -7,19 +7,8 @@ command 'Extend Forwardable (Forw)' do |cmd|
   cmd.input = :document
   cmd.invoke do |context|
     require 'ruby_requires'
-    # Insert Forwardable requires
-    CURSOR = [0xFFFC].pack("U").freeze
-    line, col = ENV["TM_LINE_NUMBER"].to_i - 1, ENV["TM_LINE_INDEX"].to_i
-    code = context.in.read.to_a
-    unless ENV.has_key?('TM_SELECTED_TEXT')
-      if code[line].nil?  # if cursor was on the last line and it was blank
-        code << CURSOR
-      else
-        code[line][col...col] = CURSOR
-      end
-    end
-    code = code.join
-    output = RubyRequires.add_requires(code, "forwardable")
-    output.split(CURSOR).join('${0}extend Forwardable')
+    require 'insert'
+    
+    insert_at_cursor(context.in.read, '${0}extend Forwardable') {|code| RubyRequires.add_requires(code, 'forwardable') }
   end
 end

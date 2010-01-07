@@ -815,7 +815,7 @@ snippet 'usage_unless()' do |s|
 end'
 end
 
-snippet 'when É' do |s|
+snippet 'when ...' do |s|
   s.trigger = 'when'
   s.expansion = 'when ${1:condition}
 	$0'
@@ -828,7 +828,7 @@ snippet 'while ... end' do |s|
 end'
 end
 
-snippet 'begin É rescue É end' do |s|
+snippet 'begin ... rescue ... end' do |s|
   s.trigger = 'begin'
   s.expansion = '${TM_SELECTED_TEXT/([\t ]*).*/$1/m}begin
 	${3:${TM_SELECTED_TEXT/(\A.*)|(.+)|\n\z/(?1:$0:(?2:\t$0))/g}}
@@ -848,11 +848,6 @@ snippet 'xpath(..) { .. }' do |s|
   s.expansion = 'elements.each(${1:"${2://XPath}"}) do |${3:node}|
 	$0
 end'
-end
-
-snippet 'YAML.dump(.., file)' do |s|
-  s.trigger = 'Yd-'
-  s.expansion = 'File.open(${1:"${2:path/to/file}.yaml"}, "w") { |${3:file}| YAML.dump(${4:obj}, ${3:file}) }'
 end
 
 snippet 'zip(enums) { |row| .. }' do |s|
