@@ -386,11 +386,6 @@ snippet 'each_byte { |byte| .. }' do |s|
   s.expansion = 'each_byte { |${1:byte}| $0 }'
 end
 
-snippet 'each_char { |chr| .. }' do |s|
-  s.trigger = 'eac-'
-  s.expansion = 'each_char { |${1:chr}| $0 }'
-end
-
 snippet 'each_cons(..) { |group| .. }' do |s|
   s.trigger = 'eac-'
   s.expansion = 'each_cons(${1:2}) { |${2:group}| $0 }'
