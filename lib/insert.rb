@@ -11,7 +11,7 @@ def insert_at_cursor(string, to_insert, hash = ENV, &blk)
       code[line][col...col] = cursor
     end
   end
-  code = code.join
-  output = blk.call(code)
-  output.split(cursor).join(to_insert)
+  output = blk.call(code.join)
+  array = output.split(cursor)
+  array.length == 1 ? array.join << to_insert : array.join(to_insert)
 end

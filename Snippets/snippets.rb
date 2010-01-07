@@ -1,6 +1,6 @@
 snippet '#!/usr/bin/env ruby -wKU' do |s|
   s.trigger = 'rb'
-  s.expansion = '#!/usr/bin/env ruby${TM_RUBY_SWITCHES: -wKU}
+  s.expansion = '#!/usr/bin/env ruby -wKU
 '
 end
 
@@ -9,7 +9,7 @@ snippet ':yields:' do |s|
   s.expansion = ' :yields: ${0:arguments}'
 end
 
-snippet 'if É else É end' do |s|
+snippet 'if ... else ... end' do |s|
   s.trigger = 'ife'
   s.expansion = 'if ${1:condition}
 	$2
@@ -18,14 +18,14 @@ else
 end'
 end
 
-snippet 'if É end' do |s|
+snippet 'if ... end' do |s|
   s.trigger = 'if'
   s.expansion = 'if ${1:condition}
 	$0
 end'
 end
 
-snippet 'case É end' do |s|
+snippet 'case ... end' do |s|
   s.trigger = 'case'
   s.expansion = 'case ${1:object}
 when ${2:condition}
@@ -39,7 +39,7 @@ snippet '__END__' do |s|
 '
 end
 
-snippet 'Add Ô# =>Õ Marker' do |s|
+snippet "Add '# =>' Marker" do |s|
   s.trigger = '#'
   s.expansion = '# => '
 end
@@ -188,20 +188,7 @@ Benchmark.bmbm do |results|
   $0
 end'
 end
-
-snippet 'class .. < DelegateClass .. initialize .. end' do |s|
-  s.trigger = 'cla-'
-  s.expansion = 'class ${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}} < DelegateClass(${2:ParentClass})
-	def initialize${3/(^.*?\S.*)|.*/(?1:\()/}${3:args}${3/(^.*?\S.*)|.*/(?1:\))/}
-		super(${4:del_obj})
-		
-		$0
-	end
-	
-	
-end'
-end
-
+# FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
 snippet 'class .. < ParentClass .. initialize .. end' do |s|
   s.trigger = 'cla'
   s.expansion = 'class ${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}} < ${2:ParentClass}
@@ -212,7 +199,7 @@ snippet 'class .. < ParentClass .. initialize .. end' do |s|
 	
 end'
 end
-
+# FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
 snippet 'ClassName = Struct .. do .. end' do |s|
   s.trigger = 'cla'
   s.expansion = '${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}} = Struct.new(:${2:attr_names}) do
@@ -223,7 +210,7 @@ snippet 'ClassName = Struct .. do .. end' do |s|
 	
 end'
 end
-
+# FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
 snippet 'class .. < Test::Unit::TestCase .. end' do |s|
   s.trigger = 'tc'
   s.expansion = 'require "test/unit"
@@ -236,14 +223,14 @@ class Test${2:${1/([\w&&[^_]]+)|./\u$1/g}} < Test::Unit::TestCase
 	end
 end'
 end
-
+# FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
 snippet 'class .. end' do |s|
   s.trigger = 'cla'
   s.expansion = 'class ${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}}
 	$0
 end'
 end
-
+# FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
 snippet 'class .. initialize .. end' do |s|
   s.trigger = 'cla'
   s.expansion = 'class ${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}}
@@ -260,7 +247,7 @@ snippet 'class BlankSlate .. initialize .. end' do |s|
   s.expansion = 'class ${1:BlankSlate}
 	instance_methods.each { |meth| undef_method(meth) unless meth =~ /\A__/ }
 	
-	def initialize${2/(^.*?\S.*)|.*/(?1:\()/}${2:args}${2/(^.*?\S.*)|.*/(?1:\))/}
+	def initialize(${2:args})
 		@${3:delegate} = ${4:delegate_object}
 		
 		$0
@@ -364,7 +351,7 @@ snippet 'directory()' do |s|
   s.expansion = 'File.dirname(__FILE__)'
 end
 
-snippet 'Insert do |variable| É end' do |s|
+snippet 'Insert do |variable| ... end' do |s|
   s.trigger = 'do'
   s.expansion = 'do${1/(^(?<var>\s*[a-z_][a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1: |)/}${1:variable}${1/(^(?<var>\s*[a-z_][a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}
 	$0
@@ -428,7 +415,7 @@ snippet 'elsif ...' do |s|
 end
 
 # FIXME No tab trigger, probably needs to become command
-snippet 'Embedded Code Ñ #{É}' do |s|
+snippet 'Embedded Code Ñ #{...}' do |s|
   s.expansion = '#{${1:$TM_SELECTED_TEXT}}'
 end
 
@@ -439,12 +426,12 @@ end
 
 snippet 'File.foreach ("..") { |line| .. }' do |s|
   s.trigger = 'File'
-  s.expansion = 'File.foreach(${1:"${2:path/to/file}"}) { |${3:line}| $0 }'
+  s.expansion = 'File.foreach(${1:"${2:path_to_file}"}) { |${3:line}| $0 }'
 end
 
 snippet 'File.open("..") { |file| .. }' do |s|
   s.trigger = 'File'
-  s.expansion = 'File.open(${1:"${2:path/to/file}"}${3/(^[rwab+]+$)|.*/(?1:, ")/}${3:w}${3/(^[rwab+]+$)|.*/(?1:")/}) { |${4:file}| $0 }'
+  s.expansion = 'File.open(${1:"${2:path_to_file}"}${3/(^[rwab+]+$)|.*/(?1:, ")/}${3:w}${3/(^[rwab+]+$)|.*/(?1:")/}) { |${4:file}| $0 }'
 end
 
 snippet 'File.read("..")' do |s|
@@ -487,7 +474,7 @@ snippet 'gsub(/../) { |match| .. }' do |s|
   s.expansion = 'gsub(/${1:pattern}/) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:match}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
 end
 
-snippet 'Hash Pair Ñ :key => "value"' do |s|
+snippet 'Hash Pair - :key => "value"' do |s|
   s.trigger = ':'
   s.expansion = ':${1:key} => ${2:"${3:value}"}${4:, }'
 end
@@ -517,7 +504,7 @@ end
 
 snippet 'inject(init) { |mem, var| .. }' do |s|
   s.trigger = 'inj'
-  s.expansion = 'inject${1/.+/(/}${1:init}${1/.+/)/} { |${2:mem}, ${3:var}| $0 }'
+  s.expansion = 'inject(${1:init}) { |${2:mem}, ${3:var}| $0 }'
 end
 
 snippet 'lambda { |args| .. }' do |s|
@@ -537,12 +524,12 @@ end
 
 snippet 'Marshal.dump(.., file)' do |s|
   s.trigger = 'Md'
-  s.expansion = 'File.open(${1:"${2:path/to/file}.dump"}, "wb") { |${3:file}| Marshal.dump(${4:obj}, ${3:file}) }'
+  s.expansion = 'File.open("${1:path_to_file}.dump", "wb") { |${2:file}| Marshal.dump(${3:obj}, ${2:file}) }'
 end
 
 snippet 'Marshal.load(obj)' do |s|
   s.trigger = 'Ml'
-  s.expansion = 'File.open(${1:"${2:path/to/file}.dump"}, "rb") { |${3:file}| Marshal.load(${3:file}) }'
+  s.expansion = 'File.open("${1:path_to_file}.dump", "rb") { |${2:file}| Marshal.load(${2:file}) }'
 end
 
 snippet 'max { |a, b| .. }' do |s|
@@ -554,7 +541,7 @@ snippet 'min { |a, b| .. }' do |s|
   s.trigger = 'min'
   s.expansion = 'min { |a, b| $0 }'
 end
-
+# FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
 snippet 'module .. ClassMethods .. end' do |s|
   s.trigger = 'mod'
   s.expansion = 'module ${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}}
@@ -572,14 +559,14 @@ snippet 'module .. ClassMethods .. end' do |s|
 	end
 end'
 end
-
+# FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
 snippet 'module .. end' do |s|
   s.trigger = 'mod'
   s.expansion = 'module ${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}}
 	$0
 end'
 end
-
+# FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
 snippet 'module .. module_function .. end' do |s|
   s.trigger = 'mod'
   s.expansion = 'module ${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}}
@@ -588,7 +575,7 @@ snippet 'module .. module_function .. end' do |s|
 	$0
 end'
 end
-
+# FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
 snippet 'namespace :.. do .. end' do |s|
   s.trigger = 'nam'
   s.expansion = 'namespace :${1:${TM_FILENAME/\.\w+//}} do
@@ -596,7 +583,7 @@ snippet 'namespace :.. do .. end' do |s|
 end'
 end
 
-snippet 'Insert { |variable| É }' do |s|
+snippet 'Insert { |variable| ... }' do |s|
   s.trigger = '{'
   s.expansion = '{ ${1/(^(?<var>\s*[a-z_][a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${1:variable}${1/(^(?<var>\s*[a-z_][a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}${2:$TM_SELECTED_TEXT} '
 end
@@ -650,7 +637,7 @@ end
 
 snippet 'PStore.new( .. )' do |s|
   s.trigger = 'Pn-'
-  s.expansion = 'PStore.new(${1:"${2:file_name.pstore}"})'
+  s.expansion = 'PStore.new("${1:file_name.pstore}")'
 end
 
 snippet 'randomize()' do |s|
@@ -749,7 +736,7 @@ end
 
 snippet 'transaction( .. ) { .. }' do |s|
   s.trigger = 'tra'
-  s.expansion = 'transaction${1/(^.*?\S.*)|.*/(?1:\()/}${1:true}${1/(^.*?\S.*)|.*/(?1:\))/} { $0 }'
+  s.expansion = 'transaction(${1:true}) { $0 }'
 end
 
 snippet 'unix_filter { .. }' do |s|
@@ -812,7 +799,7 @@ snippet 'while ... end' do |s|
 	$0
 end'
 end
-
+# FIXME Turn into command so we can grab selection and do the right manipulation to generate snippet
 snippet 'begin ... rescue ... end' do |s|
   s.trigger = 'begin'
   s.expansion = '${TM_SELECTED_TEXT/([\t ]*).*/$1/m}begin
@@ -825,12 +812,12 @@ end
 
 snippet 'xmlread(..)' do |s|
   s.trigger = 'xml-'
-  s.expansion = 'REXML::Document.new(File.read(${1:"${2:path/to/file}"}))'
+  s.expansion = 'REXML::Document.new(File.read("${1:path_to_file}"))'
 end
 
 snippet 'xpath(..) { .. }' do |s|
   s.trigger = 'xpa'
-  s.expansion = 'elements.each(${1:"${2://XPath}"}) do |${3:node}|
+  s.expansion = 'elements.each("${1:XPath}") do |${2:node}|
 	$0
 end'
 end
