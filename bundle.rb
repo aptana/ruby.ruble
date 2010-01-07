@@ -25,6 +25,8 @@ END
     menu.scope = [ "source.ruby", "project.rails" ]
     
     menu.command "Run"
+    menu.command "Run Focused Unit Test"
+    menu.command "Run Rake Task"
     menu.separator
     menu.command "Documentation for Word"
     menu.menu "RDoc" do |rdoc|
@@ -55,6 +57,5 @@ END
     menu.separator
     menu.command "New Method"
     menu.command "Hash Pointer - =>"
-    menu.command "Run Rake Task"
   end
 end
