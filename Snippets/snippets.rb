@@ -386,11 +386,6 @@ snippet 'each_byte { |byte| .. }' do |s|
   s.expansion = 'each_byte { |${1:byte}| $0 }'
 end
 
-snippet 'each_cons(..) { |group| .. }' do |s|
-  s.trigger = 'eac-'
-  s.expansion = 'each_cons(${1:2}) { |${2:group}| $0 }'
-end
-
 snippet 'each_index { |i| .. }' do |s|
   s.trigger = 'eai'
   s.expansion = 'each_index { |${1:i}| $0 }'
