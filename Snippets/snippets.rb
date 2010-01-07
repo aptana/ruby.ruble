@@ -442,11 +442,6 @@ snippet 'Embedded Code Ñ #{É}' do |s|
   s.expansion = '#{${1:$TM_SELECTED_TEXT}}'
 end
 
-snippet 'extend Forwardable' do |s|
-  s.trigger = 'Forw-'
-  s.expansion = 'extend Forwardable'
-end
-
 snippet 'fetch(name) { |key| .. }' do |s|
   s.trigger = 'fet'
   s.expansion = 'fetch(${1:name}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:key}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
@@ -779,7 +774,7 @@ snippet 'unix_filter { .. }' do |s|
 end'
 end
 
-snippet 'unless É end' do |s|
+snippet 'unless ... end' do |s|
   s.trigger = 'unless'
   s.expansion = 'unless ${1:condition}
 	$0
@@ -858,11 +853,6 @@ end
 snippet 'YAML.dump(.., file)' do |s|
   s.trigger = 'Yd-'
   s.expansion = 'File.open(${1:"${2:path/to/file}.yaml"}, "w") { |${3:file}| YAML.dump(${4:obj}, ${3:file}) }'
-end
-
-snippet 'YAML.load(file)' do |s|
-  s.trigger = 'Yl-'
-  s.expansion = 'File.open(${1:"${2:path/to/file}.yaml"}) { |${3:file}| YAML.load(${3:file}) }'
 end
 
 snippet 'zip(enums) { |row| .. }' do |s|

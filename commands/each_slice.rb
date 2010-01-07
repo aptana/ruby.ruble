@@ -1,5 +1,4 @@
 require 'radrails'
-require 'radrails/editor'
 
 command 'each_slice(..) { |group| .. }' do |cmd|
   cmd.trigger = 'eas'
@@ -7,6 +6,7 @@ command 'each_slice(..) { |group| .. }' do |cmd|
   cmd.output = :insert_as_snippet
   cmd.input = :document
   cmd.invoke do |context|
+    require 'ruby_requires'
     # Insert enumerator requires
     CURSOR = [0xFFFC].pack("U").freeze
     line, col = ENV["TM_LINE_NUMBER"].to_i - 1, ENV["TM_LINE_INDEX"].to_i
@@ -20,7 +20,6 @@ command 'each_slice(..) { |group| .. }' do |cmd|
     end
     code = code.join
     output = RubyRequires.add_requires(code, "enumerator")
-    # FIXME Need to replace the tab trigger prefix!
     output.split(CURSOR).join('each_slice(${1:2}) { |${2:group}| $0 }')
   end
 end

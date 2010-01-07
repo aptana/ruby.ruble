@@ -1,13 +1,13 @@
 require 'radrails'
 
-command 'Extend Forwardable (Forw)' do |cmd|
-  cmd.trigger = 'Forw'
+command 'YAML.load(file)' do |cmd|
+  cmd.trigger = 'Yl'
   cmd.scope = 'source.ruby'
   cmd.output = :insert_as_snippet
   cmd.input = :document
   cmd.invoke do |context|
     require 'ruby_requires'
-    # Insert Forwardable requires
+    # Insert yaml requires
     CURSOR = [0xFFFC].pack("U").freeze
     line, col = ENV["TM_LINE_NUMBER"].to_i - 1, ENV["TM_LINE_INDEX"].to_i
     code = context.in.read.to_a
@@ -19,7 +19,7 @@ command 'Extend Forwardable (Forw)' do |cmd|
       end
     end
     code = code.join
-    output = RubyRequires.add_requires(code, "forwardable")
-    output.split(CURSOR).join('${0}extend Forwardable')
+    output = RubyRequires.add_requires(code, "yaml")
+    output.split(CURSOR).join('${0}File.open("${1:path_to_file}.yaml") { |${2:file}| YAML.load(${2:file}) }')
   end
 end
