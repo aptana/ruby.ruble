@@ -9,7 +9,7 @@ command 'xmlread(..)' do |cmd|
     require 'ruby_requires'
     require 'insert'
     
-    snippet = 'REXML::Document.new(File.read("${1:path_to_file}"))'
+    snippet = 'REXML::Document.new(File.read("${1:path_to_file}"))${0}'
     result = insert_at_cursor(context.in.read, snippet) { |code| RubyRequires.add_requires(code, 'rexml/document') }
   end
 end
