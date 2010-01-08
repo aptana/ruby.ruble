@@ -69,10 +69,10 @@ end'
   $0
 end'
   end
-  # FIXME What is the second var syntax here?
+
   snippet 'Array.new(10) { |i| .. }' do |s|
     s.trigger = 'Array'
-    s.expansion = 'Array.new(${1:10}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:i}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
+    s.expansion = 'Array.new(${1:10}) { |${2:i}| $0 }'
   end
   
   snippet 'assert_nothing_raised(..) { .. }' do |s|
@@ -215,32 +215,32 @@ end'
     s.trigger = 'det'
     s.expansion = 'detect { |${1:e}| $0 }'
   end
-  # FIXME We interpret the / as a list delimeter, maybe we should change it to pipe and fix the CSS bundle?
+
   snippet 'Dir.glob("..") { |file| .. }' do |s|
     s.trigger = 'Dir'
-    s.expansion = 'Dir.glob("${1:dir/glob/*}") { |${2:file}| $0 }'
+    s.expansion = 'Dir.glob("${1:*}") { |${2:file}| $0 }'
   end
-  # FIXME We interpret the / as a list delimeter, maybe we should change it to pipe and fix the CSS bundle?
+
   snippet 'Dir[".."]' do |s|
     s.trigger = 'Dir'
-    s.expansion = 'Dir["${1:glob/**/*.rb}"]'
+    s.expansion = 'Dir["${1:*.rb}"]'
   end
   
   snippet 'directory()' do |s|
     s.trigger = 'dir'
     s.expansion = 'File.dirname(__FILE__)'
   end
-  # FIXME What the heck is the first var syntax here?
+
   snippet 'Insert do |variable| ... end' do |s|
     s.trigger = 'do'
-    s.expansion = 'do${1/(^(?<var>\s*[a-z_][a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1: |)/}${1:variable}${1/(^(?<var>\s*[a-z_][a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}
+    s.expansion = 'do |${1:variable}|
   $0
 end'
   end
-  # FIXME What the heck is the second var syntax here?
+
   snippet 'downto(0) { |n| .. }' do |s|
     s.trigger = 'dow'
-    s.expansion = 'downto(${1:0}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:n}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
+    s.expansion = 'downto(${1:0}) { |${2:n}| $0 }'
   end
   
   snippet 'each { |e| .. }' do |s|
@@ -293,30 +293,30 @@ end'
     s.expansion = 'elsif ${1:condition}
   $0'
   end
-  # FIXME What the heck is the second var syntax here?
+
   snippet 'fetch(name) { |key| .. }' do |s|
     s.trigger = 'fet'
-    s.expansion = 'fetch(${1:name}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:key}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
+    s.expansion = 'fetch(${1:name}) { |${2:key}| $0 }'
   end
   
   snippet 'File.foreach ("..") { |line| .. }' do |s|
     s.trigger = 'File'
     s.expansion = 'File.foreach("${1:path_to_file}") { |${3:line}| $0 }'
   end
-  # FIXME What the heck is the third var syntax here?
+
   snippet 'File.open("..") { |file| .. }' do |s|
     s.trigger = 'File'
-    s.expansion = 'File.open("${1:path_to_file}"${3/(^[rwab+]+$)|.*/(?1:, ")/}${3:w}${3/(^[rwab+]+$)|.*/(?1:")/}) { |${4:file}| $0 }'
+    s.expansion = 'File.open("${1:path_to_file}", "${2:r/r+/w/w+/a/a+/b}") { |${3:file}| $0 }'
   end
   
   snippet 'File.read("..")' do |s|
     s.trigger = 'File'
     s.expansion = 'File.read("${1:path_to_file}")'
   end
-  # FIXME What the heck is the second var syntax here?
+
   snippet 'fill(range) { |i| .. }' do |s|
     s.trigger = 'fil'
-    s.expansion = 'fill(${1:range}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:i}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
+    s.expansion = 'fill(${1:range}) { |${2:i}| $0 }'
   end
   
   snippet 'find { |e| .. }' do |s|
@@ -338,10 +338,10 @@ end'
     s.trigger = 'gre'
     s.expansion = 'grep(/${1:pattern}/) { |${2:match}| $0 }'
   end
-  # FIXME What the heck is the second var syntax here?
+
   snippet 'gsub(/../) { |match| .. }' do |s|
     s.trigger = 'gsu'
-    s.expansion = 'gsub(/${1:pattern}/) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:match}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
+    s.expansion = 'gsub(/${1:pattern}/) { |${2:match}| $0 }'
   end
   
   snippet 'Hash Pair - :key => "value"' do |s|
@@ -376,10 +376,10 @@ end'
     s.trigger = 'inj'
     s.expansion = 'inject(${1:init}) { |${2:mem}, ${3:var}| $0 }'
   end
-  # FIXME What the heck is the first var syntax here?
+
   snippet 'lambda { |args| .. }' do |s|
     s.trigger = 'lam'
-    s.expansion = 'lambda { ${1/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${1:args}${1/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
+    s.expansion = 'lambda { |${1:args}| $0 }'
   end
   
   snippet 'loop { .. }' do |s|
@@ -411,17 +411,17 @@ end'
     s.trigger = 'min'
     s.expansion = 'min { |a, b| $0 }'
   end
-  # FIXME What the heck is the first var syntax here?
+
   snippet 'Insert { |variable| ... }' do |s|
     s.trigger = '{'
-    s.expansion = '{ ${1/(^(?<var>\s*[a-z_][a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${1:variable}${1/(^(?<var>\s*[a-z_][a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}${2:$TM_SELECTED_TEXT} '
+    s.expansion = '{ |${1:variable}| ${0} }'
   end
-  # FIXME What the heck is the third var syntax here?
-  snippet 'open("path/or/url", "w") { |io| .. }' do |s|
+
+  snippet 'open("path_or_url", "w") { |io| .. }' do |s|
     s.trigger = 'ope'
-    s.expansion = 'open("${2:path_or_url_or_pipe}"${3/(^[rwab+]+$)|.*/(?1:, ")/}${3:w}${3/(^[rwab+]+$)|.*/(?1:")/}) { |${4:io}| $0 }'
+    s.expansion = 'open("${1:path_or_url_or_pipe}", "${2:r/r+/w/w+/a/a+/b}") { |${3:io}| $0 }'
   end
-  # FIXME WHat the heck is the second var syntax?
+
   snippet 'option_parse { .. }' do |s|
     s.trigger = 'optp'
     s.expansion = 'require "optparse"
@@ -429,7 +429,7 @@ end'
 options = {${1::default => "args"}}
 
 ARGV.options do |opts|
-  opts.banner = "Usage:  #{File.basename(\$PROGRAM_NAME)} [OPTIONS]${2/^\s*$|(.*\S.*)/(?1: )/}${2:OTHER_ARGS}"
+  opts.banner = "Usage:  #{File.basename(\$PROGRAM_NAME)} [OPTIONS] ${2:OTHER_ARGS}"
 	
   opts.separator ""
   opts.separator "Specific Options:"
@@ -522,28 +522,28 @@ require "tc_${2:test_case_file}"
     s.trigger = 'sorb'
     s.expansion = 'sort_by { |${1:e}| $0 }'
   end
-  # FIXME What the heck is the second var syntax here?
+
   snippet 'step(2) { |e| .. }' do |s|
     s.trigger = 'ste'
-    s.expansion = 'step(${1:2}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:n}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
+    s.expansion = 'step(${1:2}) { |${2:n}| $0 }'
   end
-  # FIXME What the heck is the second var syntax here?
+
   snippet 'sub(/../) { |match| .. }' do |s|
     s.trigger = 'sub'
-    s.expansion = 'sub(/${1:pattern}/) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:match}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
+    s.expansion = 'sub(/${1:pattern}/) { |${2:match}| $0 }'
   end
-  # FIXME Un-nest the vars
+
   snippet 'task :task_name => [:dependent, :tasks] do .. end' do |s|
     s.trigger = 'tas'
     s.expansion = 'desc "${1:Task description}"
-task :${2:${3:task_name} => ${4:[:${5:dependent, :tasks}]}} do
+task :${2:task_name} => ${3:[:dependent, :tasks]} do
   $0
 end'
   end
-  # FIXME What the heck is the first var syntax here?
+
   snippet 'times { |n| .. }' do |s|
     s.trigger = 'tim'
-    s.expansion = 'times { ${1/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${1:n}${1/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
+    s.expansion = 'times { |${1:n}| $0 }'
   end
   
   snippet 'transaction( .. ) { .. }' do |s|
@@ -571,18 +571,18 @@ end'
   $0
 end'
   end
-  # FIXME WHat the heck is the third var syntax?
+
   snippet 'option(..)' do |s|
     s.trigger = 'opt'
-    s.expansion = 'opts.on( "-${1:o}", "--${2:long-option-name}"${3/^\s*$|(.*\S.*)/(?1:, )/}${3:String},
-         "${4:Option description.}" ) do |${6:opt}|
+    s.expansion = 'opts.on( "-${1:o}", "--${2:long-option-name}", ${3:String},
+     "${4:Option description.}" ) do |${6:opt}|
   $0
 end'
   end
-  # FIXME WHat the heck is the second var syntax?
+
   snippet 'upto(1.0/0.0) { |n| .. }' do |s|
     s.trigger = 'upt'
-    s.expansion = 'upto(${1:1.0/0.0}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:n}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
+    s.expansion = 'upto(${1:1.0/0.0}) { |${2:n}| $0 }'
   end
   
   snippet 'usage_if()' do |s|
