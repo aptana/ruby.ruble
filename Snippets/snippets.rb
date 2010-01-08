@@ -181,13 +181,6 @@ snippet 'attr_writer ..' do |s|
   s.expansion = 'attr_writer :${0:attr_names}'
 end
 
-snippet 'Benchmark.bmbm do .. end' do |s|
-  s.trigger = 'bm-'
-  s.expansion = 'TESTS = ${1:10_000}
-Benchmark.bmbm do |results|
-  $0
-end'
-end
 # FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
 snippet 'class .. < ParentClass .. initialize .. end' do |s|
   s.trigger = 'cla'
