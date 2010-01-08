@@ -168,7 +168,7 @@ end'
     s.expansion = 'Marshal.load(Marshal.dump(${1:obj_to_copy}))'
   end
   
-  snippet 'def É end' do |s|
+  snippet 'def ... end' do |s|
     s.trigger = 'def'
     s.expansion = 'def ${1:method_name}
   $0
@@ -468,13 +468,6 @@ end
     s.trigger = 'ran'
     s.expansion = 'sort_by { rand }'
   end
-  # FIXME Turn into command so we can handle the execution here
-  snippet 'New Block' do |s|
-    s.trigger = '=b'
-    s.expansion = '`[[ $TM_LINE_INDEX != 0 ]] && echo; echo`=begin rdoc
-  $0
-=end'
-  end
   
   snippet 'reject { |e| .. }' do |s|
     s.trigger = 'rej'
@@ -757,6 +750,7 @@ rescue ${1:Exception} => ${2:e}
   $0
 end
 "
+    end
   end
 end
 
@@ -852,5 +846,19 @@ with_defaults :output => :insert_as_snippet, :input => :none, :scope => 'source.
   command 'flunk(..)' do |s|
     s.trigger = 'fl'
     s.invoke {|context| "flunk#{paren}\"${1:Failure message.}\"#{paren(:end)}" }
+  end
+end
+
+# =====================================================================================================================================
+# This snippet was converted because it had inline execution of shell code referring to an ENV var
+with_defaults :output => :insert_as_snippet, :input => :none, :scope => 'source.ruby' do |bundle| 
+  command 'New Block' do |s|
+    s.trigger = '=b'
+    s.invoke do |context|
+      nl = ENV['TM_LINE_INDEX'].to_i != 0 ? "\n" : ''
+"#{nl}=begin rdoc
+  $0
+=end"
+    end
   end
 end
