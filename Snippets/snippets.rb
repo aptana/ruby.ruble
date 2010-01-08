@@ -72,61 +72,6 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'Array'
     s.expansion = 'Array.new(${1:10}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:i}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
   end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert(..)' do |s|
-    s.trigger = 'as'
-    s.expansion = 'assert`snippet_paren.rb`${1:test}, "${2:Failure message.}"`snippet_paren.rb end`'
-  end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert_equal(..)' do |s|
-    s.trigger = 'ase'
-    s.expansion = 'assert_equal`snippet_paren.rb`${1:expected}, ${2:actual}`snippet_paren.rb end`'
-  end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert_in_delta(..)' do |s|
-    s.trigger = 'asid'
-    s.expansion = 'assert_in_delta`snippet_paren.rb`${1:expected_float}, ${2:actual_float}, ${3:2 ** -20}`snippet_paren.rb end`'
-  end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert_instance_of(..)' do |s|
-    s.trigger = 'asio'
-    s.expansion = 'assert_instance_of`snippet_paren.rb`${1:ExpectedClass}, ${2:actual_instance}`snippet_paren.rb end`'
-  end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert_kind_of(..)' do |s|
-    s.trigger = 'asko'
-    s.expansion = 'assert_kind_of`snippet_paren.rb`${1:ExpectedKind}, ${2:actual_instance}`snippet_paren.rb end`'
-  end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert_match(..)' do |s|
-    s.trigger = 'asm'
-    s.expansion = 'assert_match`snippet_paren.rb`/${1:expected_pattern}/, ${2:actual_string}`snippet_paren.rb end`'
-  end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert_nil(..)' do |s|
-    s.trigger = 'asn'
-    s.expansion = 'assert_nil`snippet_paren.rb`${1:instance}`snippet_paren.rb end`'
-  end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert_no_match(..)' do |s|
-    s.trigger = 'asnm'
-    s.expansion = 'assert_no_match`snippet_paren.rb`/${1:unexpected_pattern}/, ${2:actual_string}`snippet_paren.rb end`'
-  end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert_not_equal(..)' do |s|
-    s.trigger = 'asne'
-    s.expansion = 'assert_not_equal`snippet_paren.rb`${1:unexpected}, ${2:actual}`snippet_paren.rb end`'
-  end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert_not_nil(..)' do |s|
-    s.trigger = 'asnn'
-    s.expansion = 'assert_not_nil`snippet_paren.rb`${1:instance}`snippet_paren.rb end`'
-  end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert_not_same(..)' do |s|
-    s.trigger = 'asns'
-    s.expansion = 'assert_not_same`snippet_paren.rb`${1:unexpected}, ${2:actual}`snippet_paren.rb end`'
-  end
   
   snippet 'assert_nothing_raised(..) { .. }' do |s|
     s.trigger = 'asnr'
@@ -137,32 +82,12 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'asnt'
     s.expansion = 'assert_nothing_thrown { $0 }'
   end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert_operator(..)' do |s|
-    s.trigger = 'aso'
-    s.expansion = 'assert_operator`snippet_paren.rb`${1:left}, :${2:operator}, ${3:right}`snippet_paren.rb end`'
-  end
   
   snippet 'assert_raise(..) { .. }' do |s|
     s.trigger = 'asr'
     s.expansion = 'assert_raise(${1:Exception}) { $0 }'
   end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert_respond_to(..)' do |s|
-    s.trigger = 'asrt'
-    s.expansion = 'assert_respond_to`snippet_paren.rb`${1:object}, :${2:method}`snippet_paren.rb end`'
-  end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert_same(..)' do |s|
-    s.trigger = 'ass'
-    s.expansion = 'assert_same`snippet_paren.rb`${1:expected}, ${2:actual}`snippet_paren.rb end`'
-  end
-  # FIXME Turn into command so we can do the optional parens!
-  snippet 'assert_send(..)' do |s|
-    s.trigger = 'ass'
-    s.expansion = 'assert_send`snippet_paren.rb`[${1:object}, :${2:message}, ${3:args}]`snippet_paren.rb end`'
-  end
-  
+
   snippet 'assert_throws(..) { .. }' do |s|
     s.trigger = 'ast'
     s.expansion = 'assert_throws(:${1:expected}) { $0 }'
@@ -407,11 +332,6 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'flao'
     s.expansion = 'inject(Array.new) { |${1:arr}, ${2:a}| ${1:arr}.push(*${2:a}) }'
   end
-  # FIXME Turn into command so we can do optional parens
-  snippet 'flunk(..)' do |s|
-    s.trigger = 'fl'
-    s.expansion = 'flunk`snippet_paren.rb`"${1:Failure message.}"`snippet_paren.rb end`'
-  end
   
   snippet 'grep(/pattern/) { |match| .. }' do |s|
     s.trigger = 'gre'
@@ -498,7 +418,7 @@ with_defaults :scope => "source.ruby" do |bundle|
   
   snippet 'open("path/or/url", "w") { |io| .. }' do |s|
     s.trigger = 'ope'
-    s.expansion = 'open(${1:"${2:path/or/url/or/pipe}"}${3/(^[rwab+]+$)|.*/(?1:, ")/}${3:w}${3/(^[rwab+]+$)|.*/(?1:")/}) { |${4:io}| $0 }'
+    s.expansion = 'open("${2:path_or_url_or_pipe}"${3/(^[rwab+]+$)|.*/(?1:, ")/}${3:w}${3/(^[rwab+]+$)|.*/(?1:")/}) { |${4:io}| $0 }'
   end
   
   snippet 'option_parse { .. }' do |s|
@@ -547,7 +467,7 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'ran'
     s.expansion = 'sort_by { rand }'
   end
-  
+  # FIXME Turn into command so we can handle the execution here
   snippet 'New Block' do |s|
     s.trigger = '=b'
     s.expansion = '`[[ $TM_LINE_INDEX != 0 ]] && echo; echo`=begin rdoc
@@ -722,6 +642,9 @@ with_defaults :scope => "source.ruby" do |bundle|
 
 end
 
+# =====================================================================================================================================
+# These are snippets which got converted because they made reference to ENV vars and used regular expression search/replace on them
+# to come up with default values to use.
 with_defaults :output => :insert_as_snippet, :input => :none, :trigger => 'cla', :scope => 'source.ruby' do |bundle|
   
   command 'class .. < ParentClass .. initialize .. end' do |s|
@@ -831,5 +754,100 @@ end"
   $0
 end"
     end
+  end
+end
+
+# =====================================================================================================================================
+# These are snippets which got converted because they executed snippet_paren.rb to optionally place wrapping parens based on an ENV var.
+def paren(side = :start)
+  minimize = ENV["TM_MINIMIZE_PARENS"].to_s =~ /\byes\b/i
+  case side
+  when :start
+    minimize ? " " : "("
+  when :end
+    minimize ? "" : ")"
+  end
+end
+
+with_defaults :output => :insert_as_snippet, :input => :none, :scope => 'source.ruby' do |bundle| 
+
+  command 'assert(..)' do |s|
+    s.trigger = 'as'
+    s.invoke {|context| "assert#{paren}${1:test}, \"${2:Failure message.}\"#{paren(:end)}" }
+  end
+
+  command 'assert_equal(..)' do |s|
+    s.trigger = 'ase'
+    s.invoke {|context| "assert_equal#{paren}${1:expected}, ${2:actual}#{paren(:end)}" }
+  end
+
+  command 'assert_in_delta(..)' do |s|
+    s.trigger = 'asid'
+    s.invoke {|context| "assert_in_delta#{paren}${1:expected_float}, ${2:actual_float}, ${3:2 ** -20}#{paren(:end)}" }
+  end
+
+  command 'assert_instance_of(..)' do |s|
+    s.trigger = 'asio'
+    s.invoke {|context| "assert_instance_of#{paren}${1:ExpectedClass}, ${2:actual_instance}#{paren(:end)}" }
+  end
+
+  command 'assert_kind_of(..)' do |s|
+    s.trigger = 'asko'
+    s.invoke {|context| "assert_kind_of#{paren}${1:ExpectedKind}, ${2:actual_instance}#{paren(:end)}" }
+  end
+
+  command 'assert_match(..)' do |s|
+    s.trigger = 'asm'
+    s.invoke {|context| "assert_match#{paren}/${1:expected_pattern}/, ${2:actual_string}#{paren(:end)}" }
+  end
+
+  command 'assert_nil(..)' do |s|
+    s.trigger = 'asn'
+    s.invoke {|context| "assert_nil#{paren}${1:instance}#{paren(:end)}" }
+  end
+
+  command 'assert_no_match(..)' do |s|
+    s.trigger = 'asnm'
+    s.invoke {|context| "assert_no_match#{paren}/${1:unexpected_pattern}/, ${2:actual_string}#{paren(:end)}" }
+  end
+
+  command 'assert_not_equal(..)' do |s|
+    s.trigger = 'asne'
+    s.invoke {|context| "assert_not_equal#{paren}${1:unexpected}, ${2:actual}#{paren(:end)}" }
+  end
+
+  command 'assert_not_nil(..)' do |s|
+    s.trigger = 'asnn'
+    s.invoke {|context| "assert_not_nil#{paren}${1:instance}#{paren(:end)}" }
+  end
+
+  command 'assert_not_same(..)' do |s|
+    s.trigger = 'asns'
+    s.invoke {|context| "assert_not_same#{paren}${1:unexpected}, ${2:actual}#{paren(:end)}" }
+  end
+
+  command 'assert_respond_to(..)' do |s|
+    s.trigger = 'asrt'
+    s.invoke {|context| "assert_respond_to#{paren}${1:object}, :${2:method}#{paren(:end)}" }
+  end
+
+  command 'assert_same(..)' do |s|
+    s.trigger = 'ass'
+    s.invoke {|context| "assert_same#{paren}${1:expected}, ${2:actual}#{paren(:end)}" }
+  end
+
+  command 'assert_send(..)' do |s|
+    s.trigger = 'ass'
+    s.invoke {|context| "assert_send#{paren}[${1:object}, :${2:message}, ${3:args}]#{paren(:end)}" }
+  end
+
+  command 'assert_operator(..)' do |s|
+    s.trigger = 'aso'
+    s.invoke {|context| "assert_operator#{paren}${1:left}, :${2:operator}, ${3:right}#{paren(:end)}" }
+  end
+
+  command 'flunk(..)' do |s|
+    s.trigger = 'fl'
+    s.invoke {|context| "flunk#{paren}\"${1:Failure message.}\"#{paren(:end)}" }
   end
 end
