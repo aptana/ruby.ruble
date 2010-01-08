@@ -3,7 +3,7 @@ with_defaults :scope => "source.ruby" do |bundle|
   snippet '#!/usr/bin/env ruby -wKU' do |s|
     s.trigger = 'rb'
     s.expansion = '#!/usr/bin/env ruby -wKU
-  '
+'
   end
   
   snippet ':yields:' do |s|
@@ -13,11 +13,12 @@ with_defaults :scope => "source.ruby" do |bundle|
   
   snippet 'if ... else ... end' do |s|
     s.trigger = 'ife'
-    s.expansion = 'if ${1:condition}
-  	$2
-  else
-  	$3
-  end'
+    s.expansion = 
+'if ${1:condition}
+	$2
+else
+	$3
+end'
   end
   
   snippet 'if ... end' do |s|
@@ -29,16 +30,17 @@ with_defaults :scope => "source.ruby" do |bundle|
   
   snippet 'case ... end' do |s|
     s.trigger = 'case'
-    s.expansion = 'case ${1:object}
-  when ${2:condition}
-  	$0
-  end'
+    s.expansion = 
+'case ${1:object}
+when ${2:condition}
+	$0
+end'
   end
   
   snippet '__END__' do |s|
     s.trigger = 'end'
     s.expansion = '__END__
-  '
+'
   end
   
   snippet "Add '# =>' Marker" do |s|
@@ -64,10 +66,10 @@ with_defaults :scope => "source.ruby" do |bundle|
   snippet 'application { .. }' do |s|
     s.trigger = 'app'
     s.expansion = 'if __FILE__ == \$PROGRAM_NAME
-  	$0
-  end'
+  $0
+end'
   end
-  
+  # FIXME What is the second var syntax here?
   snippet 'Array.new(10) { |i| .. }' do |s|
     s.trigger = 'Array'
     s.expansion = 'Array.new(${1:10}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:i}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
@@ -111,40 +113,39 @@ with_defaults :scope => "source.ruby" do |bundle|
   snippet 'class .. < Test::Unit::TestCase .. end' do |s|
     s.trigger = 'tc'
     s.expansion = 'require "test/unit"
-  
-  require "${1:library_file_name}"
-  
-  class Test${2:ClassName} < Test::Unit::TestCase
-  	def test_${3:case_name}
-  		$0
-  	end
-  end'
+      
+require "${1:library_file_name}"
+
+class Test${2:ClassName} < Test::Unit::TestCase
+  def test_${3:case_name}
+    $0
+	end
+end'
   end
   
   snippet 'class BlankSlate .. initialize .. end' do |s|
     s.trigger = 'cla'
     s.expansion = 'class ${1:BlankSlate}
-  	instance_methods.each { |meth| undef_method(meth) unless meth =~ /\A__/ }
+  instance_methods.each { |meth| undef_method(meth) unless meth =~ /\A__/ }
   	
-  	def initialize(${2:args})
-  		@${3:delegate} = ${4:delegate_object}
-  		
-  		$0
-  	end
-  	
-  	def method_missing(meth, *args, &block)
-  		@${3:delegate}.send(meth, *args, &block)
-  	end
-  	
-  	
-  end'
+  def initialize(${2:args})
+    @${3:delegate} = ${4:delegate_object}
+
+    $0
+  end
+
+  def method_missing(meth, *args, &block)
+    @${3:delegate}.send(meth, *args, &block)
+  end
+  	  	
+end'
   end
   
   snippet 'class << self .. end' do |s|
     s.trigger = 'cla'
     s.expansion = 'class << ${1:self}
-  	$0
-  end'
+  $0
+end'
   end
   
   snippet 'class_from_name()' do |s|
@@ -170,29 +171,29 @@ with_defaults :scope => "source.ruby" do |bundle|
   snippet 'def É end' do |s|
     s.trigger = 'def'
     s.expansion = 'def ${1:method_name}
-  	$0
-  end'
+  $0
+end'
   end
   
   snippet 'def method_missing .. end' do |s|
     s.trigger = 'defmm'
     s.expansion = 'def method_missing(meth, *args, &blk)
-  	$0
-  end'
+  $0
+end'
   end
   
   snippet 'def self .. end' do |s|
     s.trigger = 'defs'
     s.expansion = 'def self.${1:class_method_name}
-  	$0
-  end'
+  $0
+end'
   end
   
   snippet 'def test_ .. end' do |s|
     s.trigger = 'deft'
     s.expansion = 'def test_${1:case_name}
-  	$0
-  end'
+  $0
+end'
   end
   
   snippet 'def_delegator ..' do |s|
@@ -214,12 +215,12 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'det'
     s.expansion = 'detect { |${1:e}| $0 }'
   end
-  
+  # FIXME We interpret the / as a list delimeter, maybe we should change it to pipe and fix the CSS bundle?
   snippet 'Dir.glob("..") { |file| .. }' do |s|
     s.trigger = 'Dir'
     s.expansion = 'Dir.glob("${1:dir/glob/*}") { |${2:file}| $0 }'
   end
-  
+  # FIXME We interpret the / as a list delimeter, maybe we should change it to pipe and fix the CSS bundle?
   snippet 'Dir[".."]' do |s|
     s.trigger = 'Dir'
     s.expansion = 'Dir["${1:glob/**/*.rb}"]'
@@ -229,14 +230,14 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'dir'
     s.expansion = 'File.dirname(__FILE__)'
   end
-  
+  # FIXME What the heck is the first var syntax here?
   snippet 'Insert do |variable| ... end' do |s|
     s.trigger = 'do'
     s.expansion = 'do${1/(^(?<var>\s*[a-z_][a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1: |)/}${1:variable}${1/(^(?<var>\s*[a-z_][a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}
-  	$0
-  end'
+  $0
+end'
   end
-  
+  # FIXME What the heck is the second var syntax here?
   snippet 'downto(0) { |n| .. }' do |s|
     s.trigger = 'dow'
     s.expansion = 'downto(${1:0}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:n}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
@@ -290,9 +291,9 @@ with_defaults :scope => "source.ruby" do |bundle|
   snippet 'elsif ...' do |s|
     s.trigger = 'elsif'
     s.expansion = 'elsif ${1:condition}
-  	$0'
+  $0'
   end
-  
+  # FIXME What the heck is the second var syntax here?
   snippet 'fetch(name) { |key| .. }' do |s|
     s.trigger = 'fet'
     s.expansion = 'fetch(${1:name}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:key}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
@@ -302,7 +303,7 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'File'
     s.expansion = 'File.foreach("${1:path_to_file}") { |${3:line}| $0 }'
   end
-  
+  # FIXME What the heck is the third var syntax here?
   snippet 'File.open("..") { |file| .. }' do |s|
     s.trigger = 'File'
     s.expansion = 'File.open("${1:path_to_file}"${3/(^[rwab+]+$)|.*/(?1:, ")/}${3:w}${3/(^[rwab+]+$)|.*/(?1:")/}) { |${4:file}| $0 }'
@@ -312,7 +313,7 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'File'
     s.expansion = 'File.read("${1:path_to_file}")'
   end
-  
+  # FIXME What the heck is the second var syntax here?
   snippet 'fill(range) { |i| .. }' do |s|
     s.trigger = 'fil'
     s.expansion = 'fill(${1:range}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:i}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
@@ -337,7 +338,7 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'gre'
     s.expansion = 'grep(/${1:pattern}/) { |${2:match}| $0 }'
   end
-  
+  # FIXME What the heck is the second var syntax here?
   snippet 'gsub(/../) { |match| .. }' do |s|
     s.trigger = 'gsu'
     s.expansion = 'gsub(/${1:pattern}/) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:match}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
@@ -356,26 +357,26 @@ with_defaults :scope => "source.ruby" do |bundle|
   snippet 'include Comparable ..' do |s|
     s.trigger = 'Comp'
     s.expansion = 'include Comparable
-  
-  def <=>(other)
-  	$0
-  end'
+
+def <=>(other)
+  $0
+end'
   end
   
   snippet 'include Enumerable ..' do |s|
     s.trigger = 'Enum'
     s.expansion = 'include Enumerable
-  
-  def each(&block)
-  	$0
-  end'
+
+def each(&block)
+  $0
+end'
   end
   
   snippet 'inject(init) { |mem, var| .. }' do |s|
     s.trigger = 'inj'
     s.expansion = 'inject(${1:init}) { |${2:mem}, ${3:var}| $0 }'
   end
-  
+  # FIXME What the heck is the first var syntax here?
   snippet 'lambda { |args| .. }' do |s|
     s.trigger = 'lam'
     s.expansion = 'lambda { ${1/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${1:args}${1/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
@@ -410,12 +411,12 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'min'
     s.expansion = 'min { |a, b| $0 }'
   end
-  
+  # FIXME What the heck is the first var syntax here?
   snippet 'Insert { |variable| ... }' do |s|
     s.trigger = '{'
     s.expansion = '{ ${1/(^(?<var>\s*[a-z_][a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${1:variable}${1/(^(?<var>\s*[a-z_][a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}${2:$TM_SELECTED_TEXT} '
   end
-  
+  # FIXME What the heck is the third var syntax here?
   snippet 'open("path/or/url", "w") { |io| .. }' do |s|
     s.trigger = 'ope'
     s.expansion = 'open("${2:path_or_url_or_pipe}"${3/(^[rwab+]+$)|.*/(?1:, ")/}${3:w}${3/(^[rwab+]+$)|.*/(?1:")/}) { |${4:io}| $0 }'
@@ -424,33 +425,33 @@ with_defaults :scope => "source.ruby" do |bundle|
   snippet 'option_parse { .. }' do |s|
     s.trigger = 'optp'
     s.expansion = 'require "optparse"
-  
-  options = {${1::default => "args"}}
-  
-  ARGV.options do |opts|
-  	opts.banner = "Usage:  #{File.basename(\$PROGRAM_NAME)} [OPTIONS]${2/^\s*$|(.*\S.*)/(?1: )/}${2:OTHER_ARGS}"
-  	
-  	opts.separator ""
-  	opts.separator "Specific Options:"
-  	
-  	$0
-  	
-  	opts.separator "Common Options:"
-  	
-  	opts.on( "-h", "--help",
-  	         "Show this message." ) do
-  		puts opts
-  		exit
-  	end
-  	
-  	begin
-  		opts.parse!
-  	rescue
-  		puts opts
-  		exit
-  	end
+
+options = {${1::default => "args"}}
+
+ARGV.options do |opts|
+  opts.banner = "Usage:  #{File.basename(\$PROGRAM_NAME)} [OPTIONS]${2/^\s*$|(.*\S.*)/(?1: )/}${2:OTHER_ARGS}"
+	
+  opts.separator ""
+  opts.separator "Specific Options:"
+	
+  $0
+	
+  opts.separator "Common Options:"
+	
+  opts.on( "-h", "--help",
+  	 "Show this message." ) do
+    puts opts
+    exit
   end
-  '
+	
+  begin
+    opts.parse!
+  rescue
+    puts opts
+    exit
+  end
+end
+'
   end
   
   snippet 'partition { |e| .. }' do |s|
@@ -471,8 +472,8 @@ with_defaults :scope => "source.ruby" do |bundle|
   snippet 'New Block' do |s|
     s.trigger = '=b'
     s.expansion = '`[[ $TM_LINE_INDEX != 0 ]] && echo; echo`=begin rdoc
-  	$0
-  =end'
+  $0
+=end'
   end
   
   snippet 'reject { |e| .. }' do |s|
@@ -488,10 +489,10 @@ with_defaults :scope => "source.ruby" do |bundle|
   snippet 'require "tc_.." ..' do |s|
     s.trigger = 'ts'
     s.expansion = 'require "test/unit"
-  
-  require "tc_${1:test_case_file}"
-  require "tc_${2:test_case_file}"
-  '
+
+require "tc_${1:test_case_file}"
+require "tc_${2:test_case_file}"
+'
   end
   
   snippet 'results.report(..) { .. }' do |s|
@@ -528,25 +529,25 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'sorb'
     s.expansion = 'sort_by { |${1:e}| $0 }'
   end
-  
+  # FIXME What the heck is the second var syntax here?
   snippet 'step(2) { |e| .. }' do |s|
     s.trigger = 'ste'
     s.expansion = 'step(${1:2}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:n}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
   end
-  
+  # FIXME What the heck is the second var syntax here?
   snippet 'sub(/../) { |match| .. }' do |s|
     s.trigger = 'sub'
     s.expansion = 'sub(/${1:pattern}/) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:match}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
   end
-  
+  # FIXME Un-nest the vars
   snippet 'task :task_name => [:dependent, :tasks] do .. end' do |s|
     s.trigger = 'tas'
     s.expansion = 'desc "${1:Task description}"
-  task :${2:${3:task_name} => ${4:[:${5:dependent, :tasks}]}} do
-  	$0
-  end'
+task :${2:${3:task_name} => ${4:[:${5:dependent, :tasks}]}} do
+  $0
+end'
   end
-  
+  # FIXME What the heck is the first var syntax here?
   snippet 'times { |n| .. }' do |s|
     s.trigger = 'tim'
     s.expansion = 'times { ${1/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${1:n}${1/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
@@ -560,30 +561,30 @@ with_defaults :scope => "source.ruby" do |bundle|
   snippet 'unix_filter { .. }' do |s|
     s.trigger = 'unif'
     s.expansion = 'ARGF.each_line$1 do |${2:line}|
-  	$0
-  end'
+  $0
+end'
   end
   
   snippet 'unless ... end' do |s|
     s.trigger = 'unless'
     s.expansion = 'unless ${1:condition}
-  	$0
-  end'
+  $0
+end'
   end
   
   snippet 'until ... end' do |s|
     s.trigger = 'until'
     s.expansion = 'until ${1:condition}
-  	$0
-  end'
+  $0
+end'
   end
   
   snippet 'option(..)' do |s|
     s.trigger = 'opt'
     s.expansion = 'opts.on( "-${1:o}", "--${2:long-option-name}"${3/^\s*$|(.*\S.*)/(?1:, )/}${3:String},
-           "${4:Option description.}" ) do |${6:opt}|
-  	$0
-  end'
+         "${4:Option description.}" ) do |${6:opt}|
+  $0
+end'
   end
   
   snippet 'upto(1.0/0.0) { |n| .. }' do |s|
@@ -594,45 +595,35 @@ with_defaults :scope => "source.ruby" do |bundle|
   snippet 'usage_if()' do |s|
     s.trigger = 'usai'
     s.expansion = 'if ARGV.$1
-  	abort "Usage:  #{\$PROGRAM_NAME} ${2:ARGS_GO_HERE}"
-  end'
+  abort "Usage:  #{\$PROGRAM_NAME} ${2:ARGS_GO_HERE}"
+end'
   end
   
   snippet 'usage_unless()' do |s|
     s.trigger = 'usau'
     s.expansion = 'unless ARGV.$1
-  	abort "Usage:  #{\$PROGRAM_NAME} ${2:ARGS_GO_HERE}"
-  end'
+  abort "Usage:  #{\$PROGRAM_NAME} ${2:ARGS_GO_HERE}"
+end'
   end
   
   snippet 'when ...' do |s|
     s.trigger = 'when'
     s.expansion = 'when ${1:condition}
-  	$0'
+  $0'
   end
   
   snippet 'while ... end' do |s|
     s.trigger = 'while'
     s.expansion = 'while ${1:condition}
-  	$0
-  end'
-  end
-  # FIXME Turn into command so we can grab selection and do the right manipulation to generate snippet
-  snippet 'begin ... rescue ... end' do |s|
-    s.trigger = 'begin'
-    s.expansion = '${TM_SELECTED_TEXT/([\t ]*).*/$1/m}begin
-  	${3:${TM_SELECTED_TEXT/(\A.*)|(.+)|\n\z/(?1:$0:(?2:\t$0))/g}}
-  ${TM_SELECTED_TEXT/([\t ]*).*/$1/m}rescue ${1:Exception}${2/.+/ => /}${2:e}
-  ${TM_SELECTED_TEXT/([\t ]*).*/$1/m}	$0
-  ${TM_SELECTED_TEXT/([\t ]*).*/$1/m}end
-  '
+  $0
+end'
   end
   
   snippet 'xpath(..) { .. }' do |s|
     s.trigger = 'xpa'
     s.expansion = 'elements.each("${1:XPath}") do |${2:node}|
-  	$0
-  end'
+  $0
+end'
   end
   
   snippet 'zip(enums) { |row| .. }' do |s|
@@ -651,13 +642,12 @@ with_defaults :output => :insert_as_snippet, :input => :none, :trigger => 'cla',
     s.invoke do |context|
       class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
       class_name = class_name[0, 1].upcase + class_name[1..-1]
-      "class ${1:#{class_name}} < ${2:ParentClass}
-    def initialize(${3:args})
-      $0
-    end
+"class ${1:#{class_name}} < ${2:ParentClass}
+  def initialize(${3:args})
+    $0
+  end
     
-    
-  end"
+end"
     end
   end
   
@@ -665,13 +655,12 @@ with_defaults :output => :insert_as_snippet, :input => :none, :trigger => 'cla',
     s.invoke do |context|
       class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
       class_name = class_name[0, 1].upcase + class_name[1..-1]
-      "${1:#{class_name}} = Struct.new(:${2:attr_names}) do
-    def ${3:method_name}
-      $0
-    end
-    
-    
-  end"
+"${1:#{class_name}} = Struct.new(:${2:attr_names}) do
+  def ${3:method_name}
+    $0
+  end
+  
+end"
     end
   end
   
@@ -679,9 +668,9 @@ with_defaults :output => :insert_as_snippet, :input => :none, :trigger => 'cla',
     s.invoke do |context|
       class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
       class_name = class_name[0, 1].upcase + class_name[1..-1]
-      "class ${1:#{class_name}}
-    $0
-  end"
+"class ${1:#{class_name}}
+  $0
+end"
     end
   end
   
@@ -689,13 +678,11 @@ with_defaults :output => :insert_as_snippet, :input => :none, :trigger => 'cla',
     s.invoke do |context|
       class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
       class_name = class_name[0, 1].upcase + class_name[1..-1]
-      "class ${1:#{class_name}}
-    def initialize(${2:args})
-      $0
-    end
-    
-    
-  end"
+"class ${1:#{class_name}}
+  def initialize(${2:args})
+    $0
+  end
+end"
     end
   end
   
@@ -754,6 +741,22 @@ end"
   $0
 end"
     end
+  end
+end
+
+# =====================================================================================================================================
+# This was converted because it uses selection and manipulates it with regular expressions
+with_defaults :output => :insert_as_snippet, :input => :selection, :scope => 'source.ruby', :trigger => 'begin' do |bundle| 
+
+  command 'begin ... rescue ... end' do |s|
+    s.invoke do |context|
+      selected = context.in.read      
+"begin
+  ${3:#{selected.gsub(/(\A.*)|(.+)|\n\z/, '$0')}}
+rescue ${1:Exception} => ${2:e}
+  $0
+end
+"
   end
 end
 
