@@ -72,57 +72,57 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'Array'
     s.expansion = 'Array.new(${1:10}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:i}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert(..)' do |s|
     s.trigger = 'as'
     s.expansion = 'assert`snippet_paren.rb`${1:test}, "${2:Failure message.}"`snippet_paren.rb end`'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert_equal(..)' do |s|
     s.trigger = 'ase'
     s.expansion = 'assert_equal`snippet_paren.rb`${1:expected}, ${2:actual}`snippet_paren.rb end`'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert_in_delta(..)' do |s|
     s.trigger = 'asid'
     s.expansion = 'assert_in_delta`snippet_paren.rb`${1:expected_float}, ${2:actual_float}, ${3:2 ** -20}`snippet_paren.rb end`'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert_instance_of(..)' do |s|
     s.trigger = 'asio'
     s.expansion = 'assert_instance_of`snippet_paren.rb`${1:ExpectedClass}, ${2:actual_instance}`snippet_paren.rb end`'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert_kind_of(..)' do |s|
     s.trigger = 'asko'
     s.expansion = 'assert_kind_of`snippet_paren.rb`${1:ExpectedKind}, ${2:actual_instance}`snippet_paren.rb end`'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert_match(..)' do |s|
     s.trigger = 'asm'
     s.expansion = 'assert_match`snippet_paren.rb`/${1:expected_pattern}/, ${2:actual_string}`snippet_paren.rb end`'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert_nil(..)' do |s|
     s.trigger = 'asn'
     s.expansion = 'assert_nil`snippet_paren.rb`${1:instance}`snippet_paren.rb end`'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert_no_match(..)' do |s|
     s.trigger = 'asnm'
     s.expansion = 'assert_no_match`snippet_paren.rb`/${1:unexpected_pattern}/, ${2:actual_string}`snippet_paren.rb end`'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert_not_equal(..)' do |s|
     s.trigger = 'asne'
     s.expansion = 'assert_not_equal`snippet_paren.rb`${1:unexpected}, ${2:actual}`snippet_paren.rb end`'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert_not_nil(..)' do |s|
     s.trigger = 'asnn'
     s.expansion = 'assert_not_nil`snippet_paren.rb`${1:instance}`snippet_paren.rb end`'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert_not_same(..)' do |s|
     s.trigger = 'asns'
     s.expansion = 'assert_not_same`snippet_paren.rb`${1:unexpected}, ${2:actual}`snippet_paren.rb end`'
@@ -137,7 +137,7 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'asnt'
     s.expansion = 'assert_nothing_thrown { $0 }'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert_operator(..)' do |s|
     s.trigger = 'aso'
     s.expansion = 'assert_operator`snippet_paren.rb`${1:left}, :${2:operator}, ${3:right}`snippet_paren.rb end`'
@@ -147,17 +147,17 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'asr'
     s.expansion = 'assert_raise(${1:Exception}) { $0 }'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert_respond_to(..)' do |s|
     s.trigger = 'asrt'
     s.expansion = 'assert_respond_to`snippet_paren.rb`${1:object}, :${2:method}`snippet_paren.rb end`'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert_same(..)' do |s|
     s.trigger = 'ass'
     s.expansion = 'assert_same`snippet_paren.rb`${1:expected}, ${2:actual}`snippet_paren.rb end`'
   end
-  
+  # FIXME Turn into command so we can do the optional parens!
   snippet 'assert_send(..)' do |s|
     s.trigger = 'ass'
     s.expansion = 'assert_send`snippet_paren.rb`[${1:object}, :${2:message}, ${3:args}]`snippet_paren.rb end`'
@@ -182,41 +182,7 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'w'
     s.expansion = 'attr_writer :${1:attr_names}'
   end
-  
-  command 'class .. < ParentClass .. initialize .. end' do |s|
-    s.trigger = 'cla'
-    s.output = :insert_as_snippet
-    s.input = :none
-    s.invoke do |context|
-      class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
-      class_name = class_name[0, 1].upcase + class_name[1..-1]
-      "class ${1:#{class_name}} < ${2:ParentClass}
-    def initialize(${3:args})
-      $0
-    end
     
-    
-  end"
-    end
-  end
-  
-  command 'ClassName = Struct .. do .. end' do |s|
-    s.trigger = 'cla'
-    s.output = :insert_as_snippet
-    s.input = :none
-    s.invoke do |context|
-      class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
-      class_name = class_name[0, 1].upcase + class_name[1..-1]
-      "${1:#{class_name}} = Struct.new(:${2:attr_names}) do
-    def ${3:method_name}
-      $0
-    end
-    
-    
-  end"
-    end
-  end
-  
   snippet 'class .. < Test::Unit::TestCase .. end' do |s|
     s.trigger = 'tc'
     s.expansion = 'require "test/unit"
@@ -228,36 +194,6 @@ with_defaults :scope => "source.ruby" do |bundle|
   		$0
   	end
   end'
-  end
-  
-  command 'class .. end' do |s|
-    s.trigger = 'cla'
-    s.output = :insert_as_snippet
-    s.input = :none
-    s.invoke do |context|
-      class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
-      class_name = class_name[0, 1].upcase + class_name[1..-1]
-      "class ${1:#{class_name}}
-    $0
-  end"
-    end
-  end
-  
-  command 'class .. initialize .. end' do |s|
-    s.trigger = 'cla'
-    s.output = :insert_as_snippet
-    s.input = :none
-    s.invoke do |context|
-      class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
-      class_name = class_name[0, 1].upcase + class_name[1..-1]
-      "class ${1:#{class_name}}
-    def initialize(${2:args})
-      $0
-    end
-    
-    
-  end"
-    end
   end
   
   snippet 'class BlankSlate .. initialize .. end' do |s|
@@ -341,7 +277,7 @@ with_defaults :scope => "source.ruby" do |bundle|
   
   snippet 'def_delegators ..' do |s|
     s.trigger = 'defds'
-    s.expansion = 'def_delegators :${1:@del_obj}, :${0:del_methods}'
+    s.expansion = 'def_delegators :${1:@del_obj}, :${2:del_methods}'
   end
   
   snippet 'delete_if { |e| .. }' do |s|
@@ -471,10 +407,10 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.trigger = 'flao'
     s.expansion = 'inject(Array.new) { |${1:arr}, ${2:a}| ${1:arr}.push(*${2:a}) }'
   end
-  
+  # FIXME Turn into command so we can do optional parens
   snippet 'flunk(..)' do |s|
     s.trigger = 'fl'
-    s.expansion = 'flunk`snippet_paren.rb`"${0:Failure message.}"`snippet_paren.rb end`'
+    s.expansion = 'flunk`snippet_paren.rb`"${1:Failure message.}"`snippet_paren.rb end`'
   end
   
   snippet 'grep(/pattern/) { |match| .. }' do |s|
@@ -553,47 +489,6 @@ with_defaults :scope => "source.ruby" do |bundle|
   snippet 'min { |a, b| .. }' do |s|
     s.trigger = 'min'
     s.expansion = 'min { |a, b| $0 }'
-  end
-  # FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
-  snippet 'module .. ClassMethods .. end' do |s|
-    s.trigger = 'mod'
-    s.expansion = 'module ${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}}
-  	module ClassMethods
-  		$0
-  	end
-  	
-  	module InstanceMethods
-  		
-  	end
-  	
-  	def self.included(receiver)
-  		receiver.extend         ClassMethods
-  		receiver.send :include, InstanceMethods
-  	end
-  end'
-  end
-  # FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
-  snippet 'module .. end' do |s|
-    s.trigger = 'mod'
-    s.expansion = 'module ${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}}
-  	$0
-  end'
-  end
-  # FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
-  snippet 'module .. module_function .. end' do |s|
-    s.trigger = 'mod'
-    s.expansion = 'module ${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}}
-  	module_function
-  	
-  	$0
-  end'
-  end
-  # FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
-  snippet 'namespace :.. do .. end' do |s|
-    s.trigger = 'nam'
-    s.expansion = 'namespace :${1:${TM_FILENAME/\.\w+//}} do
-  	$0
-  end'
   end
   
   snippet 'Insert { |variable| ... }' do |s|
@@ -825,4 +720,116 @@ with_defaults :scope => "source.ruby" do |bundle|
     s.expansion = 'zip(${1:enums}) { |${2:row}| $0 }'
   end
 
+end
+
+with_defaults :output => :insert_as_snippet, :input => :none, :trigger => 'cla', :scope => 'source.ruby' do |bundle|
+  
+  command 'class .. < ParentClass .. initialize .. end' do |s|
+    s.invoke do |context|
+      class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
+      class_name = class_name[0, 1].upcase + class_name[1..-1]
+      "class ${1:#{class_name}} < ${2:ParentClass}
+    def initialize(${3:args})
+      $0
+    end
+    
+    
+  end"
+    end
+  end
+  
+  command 'ClassName = Struct .. do .. end' do |s|
+    s.invoke do |context|
+      class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
+      class_name = class_name[0, 1].upcase + class_name[1..-1]
+      "${1:#{class_name}} = Struct.new(:${2:attr_names}) do
+    def ${3:method_name}
+      $0
+    end
+    
+    
+  end"
+    end
+  end
+  
+  command 'class .. end' do |s|
+    s.invoke do |context|
+      class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
+      class_name = class_name[0, 1].upcase + class_name[1..-1]
+      "class ${1:#{class_name}}
+    $0
+  end"
+    end
+  end
+  
+  command 'class .. initialize .. end' do |s|
+    s.invoke do |context|
+      class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
+      class_name = class_name[0, 1].upcase + class_name[1..-1]
+      "class ${1:#{class_name}}
+    def initialize(${2:args})
+      $0
+    end
+    
+    
+  end"
+    end
+  end
+  
+end
+
+with_defaults :output => :insert_as_snippet, :input => :none, :trigger => 'mod', :scope => 'source.ruby' do |bundle|
+
+  command 'module .. ClassMethods .. end' do |s|
+    s.invoke do |context|
+      class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
+      class_name = class_name[0, 1].upcase + class_name[1..-1]
+"module ${1:#{class_name}}
+  module ClassMethods
+    $0
+  end
+  
+  module InstanceMethods
+    
+  end
+  
+  def self.included(receiver)
+    receiver.extend         ClassMethods
+    receiver.send :include, InstanceMethods
+  end
+end"
+    end
+  end
+
+  command 'module .. end' do |s|
+    s.invoke do |context|
+      class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
+      class_name = class_name[0, 1].upcase + class_name[1..-1]
+"module ${1:#{class_name}}
+  $0
+end"
+    end
+  end
+
+  command 'module .. module_function .. end' do |s|
+    s.invoke do |context|
+      class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
+      class_name = class_name[0, 1].upcase + class_name[1..-1]
+"module ${1:#{class_name}}
+  module_function
+  
+  $0
+end"
+    end
+  end
+
+  command 'namespace :.. do .. end' do |s|
+    s.trigger = 'nam'
+    s.invoke do |context|
+      namespace = ENV['TM_FILENAME'].gsub(/\.\w+/, '')
+"namespace :${1:#{namespace}} do
+  $0
+end"
+    end
+  end
 end
