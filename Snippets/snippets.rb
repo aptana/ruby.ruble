@@ -800,11 +800,6 @@ ${TM_SELECTED_TEXT/([\t ]*).*/$1/m}end
 '
 end
 
-snippet 'xmlread(..)' do |s|
-  s.trigger = 'xml-'
-  s.expansion = 'REXML::Document.new(File.read("${1:path_to_file}"))'
-end
-
 snippet 'xpath(..) { .. }' do |s|
   s.trigger = 'xpa'
   s.expansion = 'elements.each("${1:XPath}") do |${2:node}|
