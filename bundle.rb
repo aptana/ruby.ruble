@@ -56,6 +56,7 @@ END
     menu.command 'Completion: Ruby (rcodetools)'
     menu.separator
     menu.command "New Method"
+    menu.command "Toggle 'do ... end' / '{ ... }'"
     menu.command "Hash Pointer - =>"
   end
 end
