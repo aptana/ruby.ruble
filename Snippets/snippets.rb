@@ -666,11 +666,6 @@ require "tc_${2:test_case_file}"
 '
 end
 
-snippet 'require_gem ".."' do |s|
-  s.trigger = 'reqg-'
-  s.expansion = 'require "$0"'
-end
-
 snippet 'results.report(..) { .. }' do |s|
   s.trigger = 'rep'
   s.expansion = 'results.report("${1:name}:") { TESTS.times { $0 } }'
