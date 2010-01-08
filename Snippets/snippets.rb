@@ -421,7 +421,7 @@ end'
     s.trigger = 'ope'
     s.expansion = 'open("${2:path_or_url_or_pipe}"${3/(^[rwab+]+$)|.*/(?1:, ")/}${3:w}${3/(^[rwab+]+$)|.*/(?1:")/}) { |${4:io}| $0 }'
   end
-  
+  # FIXME WHat the heck is the second var syntax?
   snippet 'option_parse { .. }' do |s|
     s.trigger = 'optp'
     s.expansion = 'require "optparse"
@@ -578,7 +578,7 @@ end'
   $0
 end'
   end
-  
+  # FIXME WHat the heck is the third var syntax?
   snippet 'option(..)' do |s|
     s.trigger = 'opt'
     s.expansion = 'opts.on( "-${1:o}", "--${2:long-option-name}"${3/^\s*$|(.*\S.*)/(?1:, )/}${3:String},
@@ -586,7 +586,7 @@ end'
   $0
 end'
   end
-  
+  # FIXME WHat the heck is the second var syntax?
   snippet 'upto(1.0/0.0) { |n| .. }' do |s|
     s.trigger = 'upt'
     s.expansion = 'upto(${1:1.0/0.0}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:n}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
