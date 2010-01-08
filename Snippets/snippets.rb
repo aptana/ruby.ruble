@@ -181,58 +181,85 @@ snippet 'attr_writer ..' do |s|
   s.expansion = 'attr_writer :${0:attr_names}'
 end
 
-# FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
-snippet 'class .. < ParentClass .. initialize .. end' do |s|
+command 'class .. < ParentClass .. initialize .. end' do |s|
   s.trigger = 'cla'
-  s.expansion = 'class ${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}} < ${2:ParentClass}
-	def initialize${3/(^.*?\S.*)|.*/(?1:\()/}${3:args}${3/(^.*?\S.*)|.*/(?1:\))/}
-		$0
-	end
-	
-	
-end'
+  s.scope = 'source.ruby'
+  s.output = :insert_as_snippet
+  s.input = :none
+  s.invoke do |context|
+    class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
+    class_name = class_name[0, 1].upcase + class_name[1..-1]
+    "class ${1:#{class_name}} < ${2:ParentClass}
+  def initialize(${3:args})
+    $0
+  end
+  
+  
+end"
+  end
 end
-# FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
-snippet 'ClassName = Struct .. do .. end' do |s|
+
+command 'ClassName = Struct .. do .. end' do |s|
   s.trigger = 'cla'
-  s.expansion = '${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}} = Struct.new(:${2:attr_names}) do
-	def ${3:method_name}
-		$0
-	end
-	
-	
-end'
+  s.scope = 'source.ruby'
+  s.output = :insert_as_snippet
+  s.input = :none
+  s.invoke do |context|
+    class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
+    class_name = class_name[0, 1].upcase + class_name[1..-1]
+    "${1:#{class_name}} = Struct.new(:${2:attr_names}) do
+  def ${3:method_name}
+    $0
+  end
+  
+  
+end"
+  end
 end
-# FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
+
 snippet 'class .. < Test::Unit::TestCase .. end' do |s|
   s.trigger = 'tc'
   s.expansion = 'require "test/unit"
 
 require "${1:library_file_name}"
 
-class Test${2:${1/([\w&&[^_]]+)|./\u$1/g}} < Test::Unit::TestCase
+class Test${2:ClassName} < Test::Unit::TestCase
 	def test_${3:case_name}
 		$0
 	end
 end'
 end
-# FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
-snippet 'class .. end' do |s|
+
+command 'class .. end' do |s|
   s.trigger = 'cla'
-  s.expansion = 'class ${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}}
-	$0
-end'
+  s.scope = 'source.ruby'
+  s.output = :insert_as_snippet
+  s.input = :none
+  s.invoke do |context|
+    class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
+    class_name = class_name[0, 1].upcase + class_name[1..-1]
+    "class ${1:#{class_name}}
+  $0
+end"
+  end
 end
-# FIXME Turn into command so we can grab filename and do the right manipulation to generate snippet
-snippet 'class .. initialize .. end' do |s|
+
+command 'class .. initialize .. end' do |s|
   s.trigger = 'cla'
-  s.expansion = 'class ${1:${TM_FILENAME/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/(?2::\u$1)/g}}
-	def initialize${2/(^.*?\S.*)|.*/(?1:\()/}${2:args}${2/(^.*?\S.*)|.*/(?1:\))/}
-		$0
-	end
-	
-	
-end'
+  s.scope = 'source.ruby'
+  s.output = :insert_as_snippet
+  s.input = :none
+  s.invoke do |context|
+    class_name = ENV['TM_FILENAME'].gsub(/(?:\A|_)([A-Za-z0-9]+)(?:\.rb)?/, '\1')
+    class_name = class_name[0, 1].upcase + class_name[1..-1]
+    "class ${1:#{class_name}}
+  def initialize(${2:args})
+    $0
+  end
+  
+  
+end"
+  end
 end
 
 snippet 'class BlankSlate .. initialize .. end' do |s|
@@ -278,7 +305,7 @@ end
 
 snippet 'deep_copy(..)' do |s|
   s.trigger = 'deec'
-  s.expansion = 'Marshal.load(Marshal.dump(${0:obj_to_copy}))'
+  s.expansion = 'Marshal.load(Marshal.dump(${1:obj_to_copy}))'
 end
 
 snippet 'def É end' do |s|
@@ -331,12 +358,12 @@ end
 
 snippet 'Dir.glob("..") { |file| .. }' do |s|
   s.trigger = 'Dir'
-  s.expansion = 'Dir.glob(${1:"${2:dir/glob/*}"}) { |${3:file}| $0 }'
+  s.expansion = 'Dir.glob("${1:dir/glob/*}") { |${2:file}| $0 }'
 end
 
 snippet 'Dir[".."]' do |s|
   s.trigger = 'Dir'
-  s.expansion = 'Dir[${1:"${2:glob/**/*.rb}"}]'
+  s.expansion = 'Dir["${1:glob/**/*.rb}"]'
 end
 
 snippet 'directory()' do |s|
@@ -407,11 +434,6 @@ snippet 'elsif ...' do |s|
 	$0'
 end
 
-# FIXME No tab trigger, probably needs to become command
-snippet 'Embedded Code Ñ #{...}' do |s|
-  s.expansion = '#{${1:$TM_SELECTED_TEXT}}'
-end
-
 snippet 'fetch(name) { |key| .. }' do |s|
   s.trigger = 'fet'
   s.expansion = 'fetch(${1:name}) { ${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:|)/}${2:key}${2/(^(?<var>\s*(?:\*|\*?[a-z_])[a-zA-Z0-9_]*\s*)(,\g<var>)*,?\s*$)|.*/(?1:| )/}$0 }'
@@ -419,17 +441,17 @@ end
 
 snippet 'File.foreach ("..") { |line| .. }' do |s|
   s.trigger = 'File'
-  s.expansion = 'File.foreach(${1:"${2:path_to_file}"}) { |${3:line}| $0 }'
+  s.expansion = 'File.foreach("${1:path_to_file}") { |${3:line}| $0 }'
 end
 
 snippet 'File.open("..") { |file| .. }' do |s|
   s.trigger = 'File'
-  s.expansion = 'File.open(${1:"${2:path_to_file}"}${3/(^[rwab+]+$)|.*/(?1:, ")/}${3:w}${3/(^[rwab+]+$)|.*/(?1:")/}) { |${4:file}| $0 }'
+  s.expansion = 'File.open("${1:path_to_file}"${3/(^[rwab+]+$)|.*/(?1:, ")/}${3:w}${3/(^[rwab+]+$)|.*/(?1:")/}) { |${4:file}| $0 }'
 end
 
 snippet 'File.read("..")' do |s|
   s.trigger = 'File'
-  s.expansion = 'File.read(${1:"${2:path/to/file}"})'
+  s.expansion = 'File.read("${1:path_to_file}")'
 end
 
 snippet 'fill(range) { |i| .. }' do |s|
@@ -459,7 +481,7 @@ end
 
 snippet 'grep(/pattern/) { |match| .. }' do |s|
   s.trigger = 'gre'
-  s.expansion = 'grep(${1:/${2:pattern}/}) { |${3:match}| $0 }'
+  s.expansion = 'grep(/${1:pattern}/) { |${2:match}| $0 }'
 end
 
 snippet 'gsub(/../) { |match| .. }' do |s|
@@ -469,7 +491,7 @@ end
 
 snippet 'Hash Pair - :key => "value"' do |s|
   s.trigger = ':'
-  s.expansion = ':${1:key} => ${2:"${3:value}"}${4:, }'
+  s.expansion = ':${1:key} => ${2:"value"}${3:, }'
 end
 
 snippet 'Hash.new { |hash, key| hash[key] = .. }' do |s|
