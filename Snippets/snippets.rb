@@ -635,11 +635,6 @@ snippet 'path_from_here( .. )' do |s|
   s.expansion = 'File.join(File.dirname(__FILE__), *%w[${1:rel path here}])'
 end
 
-snippet 'PStore.new( .. )' do |s|
-  s.trigger = 'Pn-'
-  s.expansion = 'PStore.new("${1:file_name.pstore}")'
-end
-
 snippet 'randomize()' do |s|
   s.trigger = 'ran'
   s.expansion = 'sort_by { rand }'
