@@ -24,8 +24,8 @@ end'
   snippet 'if ... end' do |s|
     s.trigger = 'if'
     s.expansion = 'if ${1:condition}
-  	$0
-  end'
+  $0
+end'
   end
   
   snippet 'case ... end' do |s|
