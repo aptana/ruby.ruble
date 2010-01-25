@@ -9,6 +9,6 @@ command 'each_slice(..) { |group| .. }' do |cmd|
     require 'ruby_requires'
     require 'insert'
     
-    insert_at_cursor(context.in.read, 'each_slice(${1:2}) { |${2:group}| $0 }') {|code| RubyRequires.add_requires(code, 'enumerator') }
+    insert_at_cursor(STDIN.read, 'each_slice(${1:2}) { |${2:group}| $0 }') {|code| RubyRequires.add_requires(code, 'enumerator') }
   end
 end

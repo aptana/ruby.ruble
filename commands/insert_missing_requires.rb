@@ -98,7 +98,7 @@ command "Insert Missing requires" do |cmd|
                  "zlib"             => [/\bZlib\b/] }
     CURSOR = [0xFFFC].pack("U").freeze
     line, col = ENV["TM_LINE_NUMBER"].to_i - 1, ENV["TM_LINE_INDEX"].to_i
-    code = context.in.read.to_a
+    code = STDIN.read.to_a
     unless ENV.has_key?('TM_SELECTED_TEXT')
       if code[line].nil?  # if cursor was on the last line and it was blank
         code << CURSOR

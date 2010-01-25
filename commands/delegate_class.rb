@@ -21,6 +21,6 @@ command 'class .. < DelegateClass .. initialize .. end' do |cmd|
   
   
 end"
-    insert_at_cursor(context.in.read, snippet) {|code| RubyRequires.add_requires(code, 'delegate') }
+    insert_at_cursor(STDIN.read, snippet) {|code| RubyRequires.add_requires(code, 'delegate') }
   end
 end

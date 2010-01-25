@@ -20,7 +20,7 @@ command 'Open require' do |cmd|
     requires = if ENV['TM_CURRENT_LINE'].to_s =~ REQUIRE_RE
                  ["#{$2}.rb"]
                else
-                 context.in.read.scan(REQUIRE_RE).map { |_, path| "#{path}.rb" }
+                 STDIN.read.scan(REQUIRE_RE).map { |_, path| "#{path}.rb" }
                end
     abort 'No includes found.' if requires.empty?
     

@@ -6,7 +6,7 @@ command "Toggle String / Symbol" do |cmd|
   cmd.input = :selection, :scope
   cmd.scope = "source.ruby string.quoted, source.ruby constant.other.symbol.ruby"
   cmd.invoke do |context|
-    case str = context.in.read
+    case str = STDIN.read
       # Handle standard quotes
       when /\A["'](\w+)["']\z/ then ":" + $1
       when /\A:(\w+)\z/ then '"' + $1 + '"'

@@ -743,7 +743,7 @@ with_defaults :output => :insert_as_snippet, :input => :selection, :scope => 'so
 
   command 'begin ... rescue ... end' do |s|
     s.invoke do |context|
-      selected = context.in.read      
+      selected = STDIN.read      
 "begin
   ${3:#{selected.gsub(/(\A.*)|(.+)|\n\z/, '$0')}}
 rescue ${1:Exception} => ${2:e}

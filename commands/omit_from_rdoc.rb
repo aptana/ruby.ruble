@@ -6,7 +6,7 @@ command 'Omit' do |cmd|
   cmd.output = :insert_as_snippet
   cmd.input = :selection, :line
   cmd.invoke do |context|
-    s = context.in.read
+    s = STDIN.read
     str = "\#--\n"
     if s == ""
       str << "\# $0\n\#++\n"

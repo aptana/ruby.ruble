@@ -8,7 +8,7 @@ command "Validate Syntax" do |cmd|
   cmd.scope = "source.ruby"
   cmd.invoke do |context|
     result = IO.popen("ruby -wc 2>&1", "r+") do |io|
-      io.write context.in.read
+      io.write STDIN.read
       io.close_write # let the process know you've given it all the data 
       io.read
     end

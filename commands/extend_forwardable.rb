@@ -9,6 +9,6 @@ command 'Extend Forwardable (Forw)' do |cmd|
     require 'ruby_requires'
     require 'insert'
     
-    insert_at_cursor(context.in.read, '${0}extend Forwardable') {|code| RubyRequires.add_requires(code, 'forwardable') }
+    insert_at_cursor(STDIN.read, '${0}extend Forwardable') {|code| RubyRequires.add_requires(code, 'forwardable') }
   end
 end

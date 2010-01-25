@@ -10,7 +10,7 @@ command 'Add ! to Method in Line' do |cmd|
     require "escape"
 
     CURSOR = [0xFFFC].pack("U").freeze
-    line = context.in.read
+    line = STDIN.read
     begin
       line[ENV["TM_LINE_INDEX"].to_i, 0] = CURSOR
     rescue

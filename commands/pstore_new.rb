@@ -10,6 +10,6 @@ command 'PStore.new( .. )' do |cmd|
     require 'insert'
     
     snippet = 'PStore.new("${1:file_name.pstore}")${0}'
-    result = insert_at_cursor(context.in.read, snippet) {|code| RubyRequires.add_requires(code, 'pstore') }
+    result = insert_at_cursor(STDIN.read, snippet) {|code| RubyRequires.add_requires(code, 'pstore') }
   end
 end

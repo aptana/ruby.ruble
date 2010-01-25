@@ -40,7 +40,7 @@ EOF
     tmp.close
     # popen a ruby process running the tempfile and grab the result
     result = IO.popen("ruby \"#{tmp.path}\" #{context.input_type.downcase} 2>&1", "r+") do |io|
-      io.write context.in.read
+      io.write STDIN.read
       io.close_write # let the process know you've given it all the data 
       io.read
     end

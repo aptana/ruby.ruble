@@ -9,7 +9,7 @@ command 'New Method' do |cmd|
   cmd.invoke do |context|
     require "escape"
     
-    method_name = context.in.read
+    method_name = STDIN.read
     if method_name.nil? || method_name.strip == ""
       RadRails::UI.tool_tip("Please type the new function's name or use the def? snippet.")
       nil

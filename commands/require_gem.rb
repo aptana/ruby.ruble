@@ -10,6 +10,6 @@ command 'require_gem ".."' do |cmd|
     require 'insert'
     
     snippet = 'require "$0"'
-    result = insert_at_cursor(context.in.read, snippet) {|code| RubyRequires.add_requires(code, 'rubygems') }
+    result = insert_at_cursor(STDIN.read, snippet) {|code| RubyRequires.add_requires(code, 'rubygems') }
   end
 end

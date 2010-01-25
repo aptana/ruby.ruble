@@ -41,7 +41,7 @@ command "Completion: Ruby (rcodetools)" do |cmd|
 END_COMMAND
 
     result = IO.popen(command, "r+") do |io|
-      io.write context.in.read
+      io.write STDIN.read
       io.close_write # let the process know you've given it all the data 
       io.read
     end

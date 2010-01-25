@@ -17,7 +17,7 @@ command 'Toggle Quote Style' do |cmd|
       end
     end
     
-    case str = context.in.read
+    case str = STDIN.read
     # Handle standard quotes
     when /\A"(.*)"\z/m
       "'"   + $1.unescape('"').escape("'") + "'"

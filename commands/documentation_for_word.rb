@@ -42,7 +42,7 @@ command "Documentation for Word" do |cmd|
   cmd.input = :selection, :word
   cmd.scope = "source.ruby", "source.ruby.rails"
   cmd.invoke do |context|
-   term = context.in.read.strip
+   term = STDIN.read.strip
    if term.empty?
      "Please select a term to look up."
    else

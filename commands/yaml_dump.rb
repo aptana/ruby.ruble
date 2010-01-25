@@ -10,6 +10,6 @@ command 'YAML.dump(.., file)' do |cmd|
     require 'insert'
     
     snippet = 'File.open("${1:path_to_file}.yaml", "w") { |${2:file}| YAML.dump(${3:obj}, ${2:file}) }${0}'
-    insert_at_cursor(context.in.read, snippet) {|code| RubyRequires.add_requires(code, 'yaml') }
+    insert_at_cursor(STDIN.read, snippet) {|code| RubyRequires.add_requires(code, 'yaml') }
   end
 end

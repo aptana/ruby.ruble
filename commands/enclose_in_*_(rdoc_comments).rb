@@ -6,7 +6,7 @@ command 'Bold' do |cmd|
   cmd.output = :insert_as_snippet
   cmd.input = :selection, :word
   cmd.invoke do |context|
-    s = context.in.read
+    s = STDIN.read
     case s
     when /^\w+$/
       "*#{s}*$0"

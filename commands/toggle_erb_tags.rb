@@ -19,7 +19,7 @@ command 'Toggle ERb Tags' do |cmd|
     end
     
     # read input
-    input = context.in.read
+    input = STDIN.read
     
     # snippetize output
     lines       = input.to_a

@@ -5,6 +5,6 @@ command "Insert ERb's <% .. %> or <%= ..  %>" do |cmd|
   cmd.output = :insert_as_snippet
   cmd.input = :selection
   cmd.invoke do |context|
-    "<%= ${0:#{context.in.read}} %>"
+    "<%= ${0:#{STDIN.read}} %>"
   end
 end

@@ -13,6 +13,6 @@ command 'Benchmark.bmbm do .. end' do |cmd|
 Benchmark.bmbm do |results|
   $0
 end'
-    result = insert_at_cursor(context.in.read, snippet) { |code| RubyRequires.add_requires(code, 'benchmark') }
+    result = insert_at_cursor(STDIN.read, snippet) { |code| RubyRequires.add_requires(code, 'benchmark') }
   end
 end

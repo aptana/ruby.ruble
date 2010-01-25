@@ -8,7 +8,7 @@ command 'Validate Syntax (ERB)' do |cmd|
   cmd.input = :document
   cmd.invoke do |context|
     result = IO.popen("erb -T - -x | ruby -c 2>&1", "r+") do |io|
-      io.write context.in.read
+      io.write STDIN.read
       io.close_write # let the process know you've given it all the data 
       io.read
     end

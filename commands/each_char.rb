@@ -10,6 +10,6 @@ command 'each_char { |chr| .. }' do |cmd|
     require 'insert'
     
     snippet = 'each_char { |${1:chr}| $0 }'
-    result = insert_at_cursor(context.in.read, snippet) {|code| RubyRequires.add_requires(code, 'jcode') }
+    result = insert_at_cursor(STDIN.read, snippet) {|code| RubyRequires.add_requires(code, 'jcode') }
   end
 end
