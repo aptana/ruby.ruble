@@ -16,7 +16,7 @@ Support for the Ruby programming language (http://www.ruby-lang.org),
 converted from TextMate to RadRails by Aptana.
 END
 
-  bundle.repository = "git@github.com:aptana/ruby-rrbundle.git"
+  bundle.repository = "git@github.com:aptana/ruby-ruble.git"
 
   # most commands install into a dedicated rails menu
   # See also the alternative, HAML-style syntax in menu.rrmenu
