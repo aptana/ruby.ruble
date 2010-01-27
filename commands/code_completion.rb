@@ -1,5 +1,5 @@
-require 'radrails'
-require 'radrails/ui'
+require 'ruble'
+require 'ruble/ui'
 
 command "Completion: Ruby (rcodetools)" do |cmd|
   cmd.key_binding = 'M3+ESC'
@@ -49,13 +49,13 @@ END_COMMAND
 	completions = result.to_a.map { |l| l.strip }.select { |l| l.length > 0 && l =~ /\S/ }
 
 	if not $?.success?
-	  RadRails::UI.tool_tip "Parse error."
+	  Ruble::UI.tool_tip "Parse error."
 	elsif completions.size == 1
 	  selected = completions.first
 	elsif completions.size > 1
-	  selected = completions[RadRails::UI.menu(completions)] rescue exit
+	  selected = completions[Ruble::UI.menu(completions)] rescue exit
 	else
-	  RadRails::UI.tool_tip "No matches were found."
+	  Ruble::UI.tool_tip "No matches were found."
 	end
 	
 	if selected

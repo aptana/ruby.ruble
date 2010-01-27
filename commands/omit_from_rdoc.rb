@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'Omit' do |cmd|
   cmd.key_binding = 'Command+Shift+Control+O'

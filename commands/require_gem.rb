@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'require_gem ".."' do |cmd|
   cmd.trigger = 'reqg'

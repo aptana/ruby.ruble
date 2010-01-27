@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'Execute Line / Selection as Ruby' do |cmd|
   cmd.key_binding = 'Shift+Control+E'

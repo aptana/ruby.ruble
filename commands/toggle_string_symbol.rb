@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command "Toggle String / Symbol" do |cmd|
   cmd.key_binding = 'CTRL+:'

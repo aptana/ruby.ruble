@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'Italic' do |cmd|
   cmd.key_binding = 'M1+I'

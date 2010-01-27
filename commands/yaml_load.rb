@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'YAML.load(file)' do |cmd|
   cmd.trigger = 'Yl'

@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'xmlread(..)' do |cmd|
   cmd.trigger = 'xml'

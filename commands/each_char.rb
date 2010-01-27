@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'each_char { |chr| .. }' do |cmd|
   cmd.trigger = 'eac'

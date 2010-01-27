@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'Benchmark.bmbm do .. end' do |cmd|
   cmd.trigger = 'bm'

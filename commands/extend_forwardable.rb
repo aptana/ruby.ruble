@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'Extend Forwardable (Forw)' do |cmd|
   cmd.trigger = 'Forw'

@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'map_with_index { |e, i| .. }' do |cmd|
   cmd.trigger = 'mapwi'

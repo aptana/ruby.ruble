@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 # its ruby, so this just addscommands/snippets in bundle (or replaces those with same name)
 # many ruby files could add to a single bundle
@@ -13,10 +13,10 @@ END
 
   bundle.description = <<END
 Support for the Ruby programming language (http://www.ruby-lang.org),
-converted from TextMate to RadRails by Aptana.
+converted from TextMate to ruble by Aptana.
 END
 
-  bundle.repository = "git@github.com:aptana/ruby-rrbundle.git"
+  bundle.repository = "git@github.com:aptana/ruby-ruble.git"
 
   # most commands install into a dedicated rails menu
   # See also the alternative, HAML-style syntax in menu.rrmenu
@@ -61,8 +61,8 @@ END
   end
 end
 
-# Extend RadRails::Editor to add special ENV vars
-module RadRails
+# Extend Ruble::Editor to add special ENV vars
+module Ruble
   class Editor
     alias :to_env_pre_ruby_bundle :to_env
     def to_env

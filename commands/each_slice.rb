@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'each_slice(..) { |group| .. }' do |cmd|
   cmd.trigger = 'eas'

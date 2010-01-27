@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'Bold' do |cmd|
   cmd.key_binding = 'M1+B'

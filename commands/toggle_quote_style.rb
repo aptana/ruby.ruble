@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'Toggle Quote Style' do |cmd|
   cmd.key_binding = 'Control+"'

@@ -1,5 +1,5 @@
-require 'radrails'
-require 'radrails/ui'
+require 'ruble'
+require 'ruble/ui'
 
 def ri(term, recurse = true)
   # TODO this won't work for windows
@@ -18,7 +18,7 @@ def ri(term, recurse = true)
   elsif documentation.sub!(/\A>>\s*/, "")
     return "Unable to determine unambiguous name" if !recurse
     choices = documentation.split
-    choice  = RadRails::UI.menu(choices)
+    choice  = Ruble::UI.menu(choices)
     return nil if choice.nil?
     ri(choices[choice], false)
   elsif documentation =~ /\AMore than one method matched your request/
@@ -28,7 +28,7 @@ def ri(term, recurse = true)
     choices = choices.collect {|w| w.strip }
     choices = choices.select {|w| w.strip.length > 0 }
     choices.uniq!
-    choice  = RadRails::UI.menu(choices)
+    choice  = Ruble::UI.menu(choices)
     return nil if choice.nil?
     ri(choices[choice], false)
   else  

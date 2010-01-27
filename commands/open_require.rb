@@ -1,6 +1,6 @@
-require 'radrails'
-require 'radrails/ui'
-require 'radrails/editor'
+require 'ruble'
+require 'ruble/ui'
+require 'ruble/editor'
 
 command 'Open require' do |cmd|
   cmd.key_binding = 'Shift+M1+D'
@@ -25,7 +25,7 @@ command 'Open require' do |cmd|
     abort 'No includes found.' if requires.empty?
     
     file = if requires.size > 1
-             choice = RadRails::UI.menu(requires) or exit
+             choice = Ruble::UI.menu(requires) or exit
              requires[choice]
            else
              requires.pop
@@ -39,7 +39,7 @@ command 'Open require' do |cmd|
       dir.sub!(%r{\A\.(?=/|\z)}, ENV['TM_DIRECTORY']) if ENV['TM_DIRECTORY']
       file_path = File.join(dir, file)
       # puts file_path
-      RadRails::Editor.go_to :file => file_path
+      Ruble::Editor.go_to :file => file_path
       nil
     else
       "File not found: #{file}"

@@ -1,5 +1,5 @@
-require 'radrails'
-require 'radrails/terminal'
+require 'ruble'
+require 'ruble/terminal'
 
 command 'Run Focused Unit Test' do |cmd|
   cmd.key_binding = 'M1+M2+R'
@@ -59,6 +59,6 @@ command 'Run Focused Unit Test' do |cmd|
     cmd << ENV["TM_FILEPATH"]
     cmd_line = "\"#{cmd.join('" "')}\" -- "
     cmd_line << "\"#{args.join('" "')}\""
-    RadRails::Terminal.open(cmd_line, ENV['TM_PROJECT_DIRECTORY'])
+    Ruble::Terminal.open(cmd_line, ENV['TM_PROJECT_DIRECTORY'])
   end
 end

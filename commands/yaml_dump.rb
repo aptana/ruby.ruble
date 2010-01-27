@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'YAML.dump(.., file)' do |cmd|
   cmd.trigger = 'Yd'

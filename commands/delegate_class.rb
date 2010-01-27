@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'class .. < DelegateClass .. initialize .. end' do |cmd|
   cmd.trigger = 'cla'

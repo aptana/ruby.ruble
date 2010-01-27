@@ -1,5 +1,5 @@
-require 'radrails'
-require 'radrails/editor'
+require 'ruble'
+require 'ruble/editor'
 
 command "Validate Syntax" do |cmd|
   cmd.key_binding = 'Control+Shift+V'
@@ -12,7 +12,7 @@ command "Validate Syntax" do |cmd|
       io.close_write # let the process know you've given it all the data 
       io.read
     end
-    RadRails::Editor.go_to :line => $1 if result =~ /-:(\d+):/
+    Ruble::Editor.go_to :line => $1 if result =~ /-:(\d+):/
     result
   end
 end

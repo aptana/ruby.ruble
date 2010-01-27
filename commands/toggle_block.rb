@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 require 'toggle_block'
 
 command "Toggle 'do ... end' / '{ ... }'" do |cmd|

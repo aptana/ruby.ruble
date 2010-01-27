@@ -1,6 +1,6 @@
-require 'radrails'
-require 'radrails/ui'
-require 'radrails/terminal'
+require 'ruble'
+require 'ruble/ui'
+require 'ruble/terminal'
 require 'escape'
 
 DEFAULT_TASK     = "(default task)".freeze
@@ -14,7 +14,7 @@ command 'Run Rake Task' do |cmd|
     Dir.chdir ENV['TM_PROJECT_DIRECTORY']
     tasks = `rake --tasks`
     tasks = [DEFAULT_TASK] + tasks.grep(/^rake\s+(\S+)/) { |t| t.split[1] }
-    task = RadRails::UI.request_item( :title   => "Rake Tasks",
+    task = Ruble::UI.request_item( :title   => "Rake Tasks",
                                :prompt  => "Select a task to execute:",
                                :items   => tasks,
                                :button1 => "Run Task")
@@ -22,6 +22,6 @@ command 'Run Rake Task' do |cmd|
     
     cmd_line = "rake"
     cmd_line << " " << e_sh(task) unless task.nil?
-    RadRails::Terminal.open(cmd_line, ENV['TM_PROJECT_DIRECTORY'])
+    Ruble::Terminal.open(cmd_line, ENV['TM_PROJECT_DIRECTORY'])
   end
 end

@@ -1,5 +1,5 @@
-require 'radrails'
-require 'radrails/ui'
+require 'ruble'
+require 'ruble/ui'
 
 command 'New Method' do |cmd|
   cmd.key_binding = 'Shift+Return'
@@ -11,7 +11,7 @@ command 'New Method' do |cmd|
     
     method_name = STDIN.read
     if method_name.nil? || method_name.strip == ""
-      RadRails::UI.tool_tip("Please type the new function's name or use the def? snippet.")
+      Ruble::UI.tool_tip("Please type the new function's name or use the def? snippet.")
       nil
     else
 "def #{e_sn method_name}(${1:args})

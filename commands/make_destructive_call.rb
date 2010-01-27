@@ -1,5 +1,5 @@
-require 'radrails'
-require 'radrails/ui'
+require 'ruble'
+require 'ruble/ui'
 
 command 'Add ! to Method in Line' do |cmd|
   cmd.key_binding = 'CTRL+!'
@@ -20,7 +20,7 @@ command 'Add ! to Method in Line' do |cmd|
     line = e_sn(line)
     line.sub!(CURSOR, "$0")
     if line == ""
-      RadRails::UI.tool_tip "Retry this command without a selection."
+      Ruble::UI.tool_tip "Retry this command without a selection."
       nil
     else
       line  

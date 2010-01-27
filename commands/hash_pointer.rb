@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command "Hash Pointer - =>" do |cmd|
   cmd.key_binding = 'Control+L'

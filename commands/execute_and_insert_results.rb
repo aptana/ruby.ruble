@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command "Execute and Update '# =>' Markers" do |cmd|
   cmd.key_binding = 'COMMAND+CONTROL+SHIFT+E'

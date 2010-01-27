@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'each_cons(..) { |group| .. }' do |cmd|
   cmd.trigger = 'eac'

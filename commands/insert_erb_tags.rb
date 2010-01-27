@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command "Insert ERb's <% .. %> or <%= ..  %>" do |cmd|
   cmd.key_binding = 'Control+>'

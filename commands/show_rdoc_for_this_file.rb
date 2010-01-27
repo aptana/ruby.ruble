@@ -1,4 +1,4 @@
-require 'radrails'
+require 'ruble'
 
 command 'Show for Current File / Project' do |cmd|
   cmd.scope = 'source.ruby'
