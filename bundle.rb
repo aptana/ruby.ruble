@@ -64,7 +64,7 @@ end
 # Extend Ruble::Editor to add special ENV vars
 module Ruble
   class Editor
-    unless method_defined?(:to_env_pre_rails_bundle)
+    unless method_defined?(:to_env_pre_ruby_bundle)
       alias :to_env_pre_ruby_bundle :to_env
       def to_env
         env_hash = to_env_pre_ruby_bundle
