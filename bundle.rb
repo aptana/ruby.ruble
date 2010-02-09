@@ -16,7 +16,7 @@ Support for the Ruby programming language (http://www.ruby-lang.org),
 converted from TextMate to ruble by Aptana.
 END
 
-  bundle.repository = "git@github.com:aptana/ruby-ruble.git"
+  bundle.repository = "git@github.com:aptana/ruby.ruble.git"
   start_folding = /(\s*+(module|class|def(?!.*\bend\s*$)|unless|if|case|begin|for|while|until|^=begin|("(\\.|[^"])*+"|'(\\.|[^'])*+'|[^#"'])*(\s(do|begin|case)|(?<!\$)[-+=&|*\/~%^<>~]\s*+(if|unless)))\b(?![^;]*+;.*?\bend\b)|("(\\.|[^"])*+"|'(\\.|[^'])*+'|[^#"'])*(\{(?![^}]*+\})|\[(?![^\]]*+\]))).*$|[#].*?\(fold\)\s*+$/
   end_folding = /((^|;)\s*+end\s*+([#].*)?$|(^|;)\s*+end\..*$|^\s*+[}\]],?\s*+([#].*)?$|[#].*?\(end\)\s*+$|^=end)/
   bundle.set_folding_markers('source.ruby', start_folding, end_folding)
