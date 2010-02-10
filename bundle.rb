@@ -6,7 +6,7 @@ bundle 'Ruby' do |bundle|
   bundle.author = "James Edward Gray II et al"
   bundle.author_email_rot13 = "wnzrf@tenlcebqhpgvbaf.arg"
   bundle.copyright = <<END
-© Copyright 2009 Aptana Inc. Distributed under GPLv3 and Aptana Source license.
+© Copyright 2010 Aptana Inc. Distributed under GPLv3 and Aptana Source license.
 
 Portions © Copyright 2006 James Edward Gray II, distributed under the terms of the MIT License.
 END
@@ -17,9 +17,14 @@ converted from TextMate to ruble by Aptana.
 END
 
   bundle.repository = "git@github.com:aptana/ruby.ruble.git"
+  # Folding
   start_folding = /(\s*+(module|class|def(?!.*\bend\s*$)|unless|if|case|begin|for|while|until|^=begin|("(\\.|[^"])*+"|'(\\.|[^'])*+'|[^#"'])*(\s(do|begin|case)|(?<!\$)[-+=&|*\/~%^<>~]\s*+(if|unless)))\b(?![^;]*+;.*?\bend\b)|("(\\.|[^"])*+"|'(\\.|[^'])*+'|[^#"'])*(\{(?![^}]*+\})|\[(?![^\]]*+\]))).*$|[#].*?\(fold\)\s*+$/
   end_folding = /((^|;)\s*+end\s*+([#].*)?$|(^|;)\s*+end\..*$|^\s*+[}\]],?\s*+([#].*)?$|[#].*?\(end\)\s*+$|^=end)/
   bundle.folding['source.ruby'] = start_folding, end_folding
+  # Indentation
+  increase_indent = /(?x)^(\s*(module|class|def|unless|if|else|elsif|case|when|begin|rescue|ensure|for|while|until|(?=.*?\b(do|begin|case|if|unless)\b)("(\\.|[^\\"])*+"|'(\\.|[^\\'])*+'|[^#"'])*(\s(do|begin|case)|[-+=&|*\/~%^<>~](?<!\$.) \s*+ (if|unless)))\b(?![^;]*+;.*?\bend\b)|("(\\.|[^\\"])*+"|'(\\.|[^\\'])*+'|[^#"'])*(\{(?![^}]*+\})|\[(?![^\]]*+\]))).*$/
+  decrease_indent = /^\s*([}\]]\s*$|(end|rescue|ensure|else|elsif|when)\b)/
+  bundle.indent['source.ruby'] = increase_indent, decrease_indent
   
   # most commands install into a dedicated rails menu
   # See also the alternative, HAML-style syntax in menu.rrmenu
