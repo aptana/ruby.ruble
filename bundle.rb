@@ -3,20 +3,19 @@ require 'ruble'
 # its ruby, so this just addscommands/snippets in bundle (or replaces those with same name)
 # many ruby files could add to a single bundle
 bundle 'Ruby' do |bundle|
-  bundle.author = "James Edward Gray II et al"
-  bundle.author_email_rot13 = "wnzrf@tenlcebqhpgvbaf.arg"
+  bundle.author = 'Christopher Williams'
   bundle.copyright = <<END
-© Copyright 2010 Aptana Inc. Distributed under GPLv3 and Aptana Source license.
+© Copyright 2010 Aptana Inc. Distributed under the MIT license.
 
 Portions © Copyright 2006 James Edward Gray II, distributed under the terms of the MIT License.
 END
 
   bundle.description = <<END
 Support for the Ruby programming language (http://www.ruby-lang.org),
-converted from TextMate to ruble by Aptana.
+converted from TextMate to Ruble by Aptana.
 END
 
-  bundle.repository = "git@github.com:aptana/ruby.ruble.git"
+  bundle.repository = "git://github.com/aptana/ruby.ruble.git"
   # Folding
   start_folding = /(\s*+(module|class|def(?!.*\bend\s*$)|unless|if|case|begin|for|while|until|^=begin|("(\\.|[^"])*+"|'(\\.|[^'])*+'|[^#"'])*(\s(do|begin|case)|(?<!\$)[-+=&|*\/~%^<>~]\s*+(if|unless)))\b(?![^;]*+;.*?\bend\b)|("(\\.|[^"])*+"|'(\\.|[^'])*+'|[^#"'])*(\{(?![^}]*+\})|\[(?![^\]]*+\]))).*$|[#].*?\(fold\)\s*+$/
   end_folding = /((^|;)\s*+end\s*+([#].*)?$|(^|;)\s*+end\..*$|^\s*+[}\]],?\s*+([#].*)?$|[#].*?\(end\)\s*+$|^=end)/
