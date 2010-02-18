@@ -78,9 +78,10 @@ module Ruble
         scopes = current_scope.split(' ')
         if !scopes.select {|scope| scope.start_with? "source.ruby" }.empty?
           env_hash['TM_COMMENT_START'] = "# "
-          #env_hash['TM_COMMENT_END'] = nil
+          env_hash.delete('TM_COMMENT_END')
           env_hash['TM_COMMENT_START_2'] = "=begin"
           env_hash['TM_COMMENT_END_2'] = "=end"
+          env_hash.delete('TM_COMMENT_DISABLE_INDENT')
         end
         env_hash
       end
