@@ -9,9 +9,9 @@ command "Insert ERb's <% .. %> or <%= ..  %>" do |cmd|
     s = STDIN.read
     case s
     when ""
-      "<%${1:=} ${0} %>"
+      "<%${2:=} ${1} %>${0}"
     else
-      "<%${2:=} ${1:#{s}} ${0} %>"
+      "<%${2:=} ${1:#{s}}%>${0}"
     end
   end
 end
