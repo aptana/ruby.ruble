@@ -7,7 +7,7 @@ command "Insert Missing requires" do |cmd|
   cmd.input = :selection, :document
   cmd.scope = "source.ruby"
   cmd.invoke do |context|
-    REQUIRES = { "abbrev"           => [/\babbrev\b/],
+    requires = { "abbrev"           => [/\babbrev\b/],
                  "base64"           => [/\bBase64\b/],
                  "benchmark"        => [/\bBenchmark\b/],
                  "bigdecimal"       => [/\bBigDecimal\b/],
@@ -96,19 +96,19 @@ command "Insert Missing requires" do |cmd|
                  "xmlrpc"           => [/\bXMLRPC\b/],
                  "yaml"             => [/\bYAML\b/],
                  "zlib"             => [/\bZlib\b/] }
-    CURSOR = [0xFFFC].pack("U").freeze
+    cursor = [0xFFFC].pack("U").freeze
     line, col = ENV["TM_LINE_NUMBER"].to_i - 1, ENV["TM_LINE_INDEX"].to_i
     code = STDIN.read.to_a
     unless ENV.has_key?('TM_SELECTED_TEXT')
       if code[line].nil?  # if cursor was on the last line and it was blank
-        code << CURSOR
+        code << cursor
       else
-        code[line][col...col] = CURSOR
+        code[line][col...col] = cursor
       end
     end
     code = code.join
-    libs = REQUIRES.select { |lib, usage| usage.any? { |test| code =~ test } }.map { |kv| kv.first }
+    libs = requires.select { |lib, usage| usage.any? { |test| code =~ test } }.map { |kv| kv.first }
     output = RubyRequires.add_requires(code, libs)
-    output.split(CURSOR).join('${0}')
+    output.split(cursor).join('${0}')
   end
 end
