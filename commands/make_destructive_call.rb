@@ -9,16 +9,16 @@ command 'Add ! to Method in Line' do |cmd|
   cmd.invoke do |context|
     require "escape"
 
-    CURSOR = [0xFFFC].pack("U").freeze
+    cursor = [0xFFFC].pack("U").freeze
     line = STDIN.read
     begin
-      line[ENV["TM_LINE_INDEX"].to_i, 0] = CURSOR
+      line[ENV["TM_LINE_INDEX"].to_i, 0] = cursor
     rescue
       exit
     end
     line.sub!(/\b(chomp|chop|collect|compact|delete|downcase|exit|flatten|gsub|lstrip|map|next|reject|reverse|rstrip|slice|sort|squeeze|strip|sub|succs|swapcase|tr|tr_s|uniq|upcase)\b(?!\!)/, "\\1!")
     line = e_sn(line)
-    line.sub!(CURSOR, "$0")
+    line.sub!(cursor, "$0")
     if line == ""
       Ruble::UI.tool_tip "Retry this command without a selection."
       nil
