@@ -8,7 +8,7 @@ command 'Show for Current File / Project' do |cmd|
     output = ENV['TM_FILENAME']
     input = output
     wd = ENV['TM_DIRECTORY']
-    project_directory = ['TM_PROJECT_DIRECTORY']
+    project_directory = ENV['TM_PROJECT_DIRECTORY']
     if File.directory?(project_directory)
       wd = project_directory
       output = `basename #{wd}`.strip # FIXME This probably doesn't work across systems!
