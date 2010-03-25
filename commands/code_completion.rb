@@ -1,5 +1,6 @@
 require 'ruble'
 require 'ruble/ui'
+require 'rbconfig'
 
 command "Completion: Ruby (rcodetools)" do |cmd|
   cmd.key_binding = 'M3+ESC'
@@ -29,15 +30,21 @@ command "Completion: Ruby (rcodetools)" do |cmd|
 	  end
 	end
 	
+	if RbConfig::CONFIG['target_os'] =~ /(win|w)32$/
+	  null = "NUL"
+	else
+	  null = "/dev/null"
+	end
+		 
 	command     = <<END_COMMAND.tr("\n", " ").strip
-"#{ruby_exe}"
+#{ruby_exe}
 -I "#{rcodetools_dir}/lib"
 --
 "#{rcodetools_dir}/bin/rct-complete"
 #{"-r \"#{RAILS_DIR}/config/environment.rb\"" if RAILS_DIR}
 --line=#{ENV['TM_LINE_NUMBER']}
 --column=#{ENV['TM_LINE_INDEX']}
-2> /dev/null
+2> #{null}
 END_COMMAND
 
     result = IO.popen(command, "r+") do |io|
