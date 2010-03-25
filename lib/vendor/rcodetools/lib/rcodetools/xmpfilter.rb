@@ -117,13 +117,13 @@ end || #{v}
     stdin.puts code
     stdin.close
     exe_line = <<-EOF.map{|l| l.strip}.join(";")
-      $stdout.reopen('#{stdout.path}', 'w')
-      $stderr.reopen('#{stderr.path}', 'w')
-      $0.replace '#{stdin.path}'
+      STDOUT.reopen('#{stdout.path}', 'w')
+      STDERR.reopen('#{stderr.path}', 'w')
       ARGV.replace(#{@options.inspect})
-      load #{stdin.path.inspect}
-      #{@evals.join(";")}
+      load '#{stdin.path}'
+      #{@evals.join(';')}
     EOF
+
     system(*(interpreter_command << "-e" << exe_line))
     [stdout, stderr]
   end
