@@ -6,5 +6,5 @@ command 'Run' do |cmd|
   cmd.scope = 'source.ruby'
   cmd.output = :discard
   cmd.input = :none
-  cmd.invoke {|context| Ruble::Terminal.open("ruby -KU -- \"#{ENV['TM_FILEPATH']}\"", ENV['TM_PROJECT_DIRECTORY']) }
+  cmd.invoke { Ruble::Terminal.open("ruby -KU -- '#{ENV['TM_FILEPATH']}'", ENV['TM_PROJECT_DIRECTORY']) }
 end
