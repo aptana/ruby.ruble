@@ -1,3 +1,5 @@
+require 'ruble'
+
 with_defaults :scope => "source.ruby" do |bundle|
 
   snippet '#!/usr/bin/env ruby -wKU' do |s|
