@@ -1,7 +1,7 @@
 require 'ruble'
 
 command "Toggle String / Symbol" do |cmd|
-  cmd.key_binding = 'CTRL+:'
+  cmd.key_binding = 'CTRL+M2+;' # CTRL+:
   cmd.output = :replace_selection
   cmd.input = :selection, :scope
   cmd.scope = "source.ruby string.quoted, source.ruby constant.other.symbol.ruby"

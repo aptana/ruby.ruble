@@ -2,7 +2,7 @@ require 'ruble'
 require 'ruby_requires'
 
 command "Insert Missing requires" do |cmd|
-  cmd.key_binding = 'M1+#'
+  cmd.key_binding = 'M1+M2+3'
   cmd.output = :insert_as_snippet
   cmd.input = :selection, :document
   cmd.scope = "source.ruby"

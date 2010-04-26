@@ -2,7 +2,7 @@ require 'ruble'
 require 'toggle_block'
 
 command "Toggle 'do ... end' / '{ ... }'" do |cmd|
-  cmd.key_binding = 'CONTROL+{'
+  cmd.key_binding = 'CONTROL+M2+['
   cmd.scope = 'source.ruby'
   cmd.output = :insert_as_snippet
   cmd.input = :selection, :document

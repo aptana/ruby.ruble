@@ -1,7 +1,7 @@
 require 'ruble'
 
 command 'Toggle Quote Style' do |cmd|
-  cmd.key_binding = 'Control+"'
+  cmd.key_binding = 'Control+M2+\''
   #cmd.scope = 'source.ruby string.quoted.double, source.ruby string.quoted.single, source.ruby string'
   cmd.scope = 'source.ruby'
   cmd.output = :replace_selection

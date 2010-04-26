@@ -2,7 +2,7 @@ require 'ruble'
 require 'ruble/ui'
 
 command 'Add ! to Method in Line' do |cmd|
-  cmd.key_binding = 'CTRL+!'
+  cmd.key_binding = 'CTRL+M2+1'
   cmd.scope = 'source.ruby'
   cmd.output = :insert_as_snippet
   cmd.input = :selection, :line
