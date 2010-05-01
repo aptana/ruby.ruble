@@ -57,7 +57,7 @@ command 'Run Focused Unit Test' do |cmd|
     end
     
     cmd << ENV["TM_FILEPATH"]
-    cmd_line = "\"#{cmd.join('" "')}\" -- "
+    cmd_line = "\"#{cmd.join('" "')}\" "
     cmd_line << "\"#{args.join('" "')}\""
     Ruble::Terminal.open(cmd_line, ENV['TM_PROJECT_DIRECTORY'])
   end
