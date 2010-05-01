@@ -31,8 +31,9 @@ command 'Run Focused Unit Test' do |cmd|
     elsif spec and !spec.empty? and context and !context.empty?
       args << %Q{--name="/test_spec \\{.*#{context}\\} \\d{3} \\[#{spec}\\]/"}
     else
-      # FIXME Show a tooltip of this here!
-      puts "Error:  This doesn't appear to be a TestCase or spec."
+      title = "Error!!"
+      summary = "This doesn't appear to be a TestCase or spec.\nMake sure a TestCase or spec is focused to us this command."
+      Ruble::UI.simple_notification(:title => title, :summary => summary)
       exit
     end
     
