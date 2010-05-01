@@ -5,9 +5,9 @@ require 'ruble'
 bundle do |bundle|
   bundle.author = 'Christopher Williams'
   bundle.copyright = <<END
-© Copyright 2010 Aptana Inc. Distributed under the MIT license.
+ï¿½ Copyright 2010 Aptana Inc. Distributed under the MIT license.
 
-Portions © Copyright 2006 James Edward Gray II, distributed under the terms of the MIT License.
+Portions ï¿½ Copyright 2006 James Edward Gray II, distributed under the terms of the MIT License.
 END
 
   bundle.display_name = 'Ruby'
@@ -34,6 +34,7 @@ END
     
     menu.command "Run"
     menu.command "Run Focused Unit Test"
+    menu.command 'Run Tests in Current File'
     menu.command "Run Rake Task"
     menu.separator
     menu.command "Documentation for Word"
