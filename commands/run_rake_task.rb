@@ -18,10 +18,10 @@ command 'Run Rake Task' do |cmd|
                                :prompt  => "Select a task to execute:",
                                :items   => tasks,
                                :button1 => "Run Task")
-    task = nil if task == DEFAULT_TASK
-    
-    cmd_line = "rake"
-    cmd_line << " " << e_sh(task) unless task.nil?
-    Ruble::Terminal.open(cmd_line, ENV['TM_PROJECT_DIRECTORY'])
+    if task
+      cmd_line = "rake"
+      cmd_line << " " << e_sh(task) unless task == DEFAULT_TASK
+      Ruble::Terminal.open(cmd_line, ENV['TM_PROJECT_DIRECTORY'])
+    end
   end
 end
