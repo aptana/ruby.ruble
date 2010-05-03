@@ -3,17 +3,21 @@ require 'ruble'
 # its ruby, so this just addscommands/snippets in bundle (or replaces those with same name)
 # many ruby files could add to a single bundle
 bundle do |bundle|
-  bundle.author = 'Christopher Williams'
+  bundle.author = 'Christopher Williams et al'
   bundle.copyright = <<END
-� Copyright 2010 Aptana Inc. Distributed under the MIT license.
+(C) Copyright 2010 Aptana Inc. Distributed under the MIT license.
 
-Portions � Copyright 2006 James Edward Gray II, distributed under the terms of the MIT License.
+Portions (C) Copyright 2006 James Edward Gray II, distributed under the terms of the MIT License.
 END
 
   bundle.display_name = 'Ruby'
   bundle.description = <<END
 Support for the Ruby programming language (http://www.ruby-lang.org),
 converted from TextMate to Ruble by Aptana.
+
+Special thanks to our contributors:
+
+  Kenny Ortmann (http://github.com/yairgo)
 END
 
   bundle.repository = "git://github.com/aptana/ruby.ruble.git"
