@@ -3,14 +3,14 @@ require 'java'
 class NodeLocator < com.aptana.editor.ruby.parsing.ast.InOrderVisitor
   
   protected
-  def nodeDoesSpanOffset(node, offset)
+  def spans_offset?(node, offset)
     # TODO Add a method to org.jruby.ast.Node to implement this on the node itself!
     return false if node.nil? or node.position.nil?
     
     return node.position.start_offset <= offset && node.position.end_offset > offset
   end
 
-  def nodeSpanLength(node)
+  def span_length(node)
     return 0 if node.nil? || node.position.nil?
     return node.position.end_offset - node.position.start_offset
   end
