@@ -1,4 +1,4 @@
-require 'node_locator'
+require 'content_assist/node_locator'
 
 # Visitor to find the closest node that spans a given offset that satisfies a given condition.
 # 

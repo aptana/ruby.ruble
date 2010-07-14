@@ -1,4 +1,4 @@
-require 'node_locator'
+require 'content_assist/node_locator'
 
 # Visitor to find all nodes within a specific scope adhering to a certain condition.
 # 

@@ -1,4 +1,4 @@
-require 'node_locator'
+require 'content_assist/node_locator'
 
 # FIXME Should be able to make a special subclass of ClosestSpanningNodeLocator that accepts everything (except newlines)
 class OffsetNodeLocator < NodeLocator
