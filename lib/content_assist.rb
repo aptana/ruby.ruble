@@ -1,4 +1,24 @@
+require 'content_assist/index'
+require 'content_assist/offset_node_locator'
+require 'content_assist/closest_spanning_node_locator'
+require 'content_assist/scoped_node_locator'
+
+# Ruby Content Assistant
 class ContentAssistant
+  
+  # ID of the ruby plugin that we're reusing icons from
+  RUBY_PLUGIN_ID = "com.aptana.editor.ruby"
+  
+  # Images used
+  LOCAL_VAR_IMAGE = "icons/local_var_obj.gif"
+  CLASS_VAR_IMAGE = "icons/class_var_obj.gif"
+  GLOBAL_VAR_IMAGE = "icons/global_obj.png"
+  CLASS_IMAGE = "icons/class_obj.png"
+  CONSTANT_IMAGE = "icons/constant_obj.gif"
+  MODULE_IMAGE = "icons/module_obj.png"
+  INSTANCE_VAR_IMAGE = "icons/instance_var_obj.gif"
+  PUBLIC_METHOD_IMAGE = "icons/method_public_obj.png"
+  
   # A simple way to "cheat" on type inference. If we hit one of these common method calls, we assume a fixed return type
   COMMON_METHODS = {
     "capitalize" => "String",
@@ -56,13 +76,10 @@ class ContentAssistant
   # Returns an array of code assists proposals for a given caret offset in the source
   def assist    
     return [] if root_node.nil?    
-    # Awesome, we have an AST!
     
     # Now try and get the node that matches our offset!      
-    require 'offset_node_locator'
     node_at_offset = OffsetNodeLocator.new.find(root_node, offset)
     
-    require 'index'    
     case node_at_offset.node_type
     when org.jrubyparser.ast.NodeType::CALLNODE # Method call, infer type of receiver, then suggest methods on type
       suggest_methods(infer(node_at_offset.getReceiverNode), prefix)
@@ -73,9 +90,8 @@ class ContentAssistant
       # VCall could also be an attempt to refer to a local/dynamic var that is incomplete
       if node_at_offset.node_type == org.jrubyparser.ast.NodeType::VCALLNODE
         # Find innermost method scope and suggest local vars in scope!
-        require 'closest_spanning_node_locator'
         method_node = ClosestSpanningNodeLocator.new.find(root_node, offset) {|node| node.node_type == org.jrubyparser.ast.NodeType::DEFNNODE }
-        method_node.scope.getVariables.each {|v| suggestions << create_proposal(v, prefix, "icons/local_var_obj.gif") } unless method_node.nil?
+        method_node.scope.getVariables.each {|v| suggestions << create_proposal(v, prefix, LOCAL_VAR_IMAGE) } unless method_node.nil?
       end
       suggestions
     when org.jrubyparser.ast.NodeType::INSTVARNODE, org.jrubyparser.ast.NodeType::INSTASGNNODE, org.jrubyparser.ast.NodeType::CLASSVARNODE, org.jrubyparser.ast.NodeType::CLASSVARASGNNODE
@@ -83,10 +99,9 @@ class ContentAssistant
       suggestions = []      
       # Find enclosing type and suggest instance/class vars defined within that type's scope!
       type_node = enclosing_type(offset)
-      require 'scoped_node_locator'
       variables = ScopedNodeLocator.new.find(type_node) {|node| node.node_type == org.jrubyparser.ast.NodeType::INSTASGNNODE || node.node_type == org.jrubyparser.ast.NodeType::CLASSVARASGNNODE || node.node_type == org.jrubyparser.ast.NodeType::CLASSVARDECLNODE }
       variables.each {|v| suggestions << v.name if v.name.start_with? prefix } unless variables.nil?
-      suggestions.uniq.sort.map {|proposal| create_proposal(proposal, prefix, proposal.start_with?("@@") ? "icons/class_var_obj.gif" : "icons/instance_var_obj.gif") }
+      suggestions.uniq.sort.map {|proposal| create_proposal(proposal, prefix, proposal.start_with?("@@") ? CLASS_VAR_IMAGE : INSTANCE_VAR_IMAGE) }
     when org.jrubyparser.ast.NodeType::GLOBALVARNODE, org.jrubyparser.ast.NodeType::GLOBALASGNNODE
       # Suggest global vars with matching prefix
       suggestions = []
@@ -95,20 +110,20 @@ class ContentAssistant
           prefix, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
         results.each {|r| suggestions << r.word } unless results.nil?
       end  
-      suggestions.uniq.sort.map {|proposal| create_proposal(proposal, prefix, "icons/global_obj.png") }
+      suggestions.uniq.sort.map {|proposal| create_proposal(proposal, prefix, GLOBAL_VAR_IMAGE) }
     when org.jrubyparser.ast.NodeType::COLON2NODE, org.jrubyparser.ast.NodeType::COLON3NODE, org.jrubyparser.ast.NodeType::CONSTNODE
       # Suggest all types with matching prefix
       suggestions = []
       all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
         results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL],
           prefix, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
-        results.each {|r| suggestions << create_proposal(r.word.split('/').first, prefix, r.word.split('/').last == "M" ? "icons/module_obj.png" : "icons/class_obj.png") } unless results.nil?
+        results.each {|r| suggestions << create_proposal(r.word.split('/').first, prefix, r.word.split('/').last == "M" ? MODULE_IMAGE : CLASS_IMAGE) } unless results.nil?
       end
       # TODO Use the AST to grab constants in file/scope
       # Now add constants in project
       results = index(ENV['TM_FILEPATH']).query([com.aptana.editor.ruby.index.IRubyIndexConstants::CONSTANT_DECL],
           prefix, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
-      results.each {|r| suggestions << create_proposal(r.word, prefix, "icons/constant_obj.gif") } unless results.nil?
+      results.each {|r| suggestions << create_proposal(r.word, prefix, CONSTANT_IMAGE) } unless results.nil?
       suggestions
     else
       # FIXME For debug purposes we currently spit out node type when it doesn't match our current categories...
@@ -147,7 +162,7 @@ class ContentAssistant
   # Generate a hash representing a proposal with an optional image path
   def create_proposal(proposal, prefix, image = nil, location = nil)
    hash = { :insert => proposal[prefix.length..-1], :display => proposal }
-   hash[:image] = image_url("com.aptana.editor.ruby", image).toString unless image.nil?
+   hash[:image] = image_url(RUBY_PLUGIN_ID, image).toString unless image.nil?
    hash[:location] = location unless location.nil?
    hash
   end
@@ -182,7 +197,6 @@ class ContentAssistant
   
   # Given the root node of the AST and an offset, traverse to find the innermost enclosing type at the offset
   def enclosing_type(offset)
-    require 'closest_spanning_node_locator'
     ClosestSpanningNodeLocator.new.find(root_node, offset) {|node| node.node_type == org.jrubyparser.ast.NodeType::CLASSNODE or node.node_type == org.jrubyparser.ast.NodeType::MODULENODE }
   end
   
@@ -193,7 +207,7 @@ class ContentAssistant
       # FIXME Should really be using the user's indices and runtime to determine the methods, but this is a nice workable shortcut for now
       methods = eval(type_name).public_instance_methods(true)
       methods = methods.sort.select {|m| m.start_with? prefix }
-      methods.map {|m| create_proposal(m, prefix, "icons/method_public_obj.png")}
+      methods.map {|m| create_proposal(m, prefix, PUBLIC_METHOD_IMAGE)}
     rescue
       # Damn, we have to do things the hard way!
       proposals = []
@@ -226,7 +240,7 @@ class ContentAssistant
             # Now we grab that type's methods
             t.getMethods.each do |m|
               # FIXME Use the correct image given the visibility!
-              proposals << create_proposal(m.name, prefix, "icons/method_public_obj.png", type_name) if m.name.start_with?(prefix) && (m.visibility == com.aptana.editor.ruby.core.IRubyMethod::Visibility::PUBLIC || doc == ENV['TM_FILEPATH'])
+              proposals << create_proposal(m.name, prefix, PUBLIC_METHOD_IMAGE, type_name) if m.name.start_with?(prefix) && (m.visibility == com.aptana.editor.ruby.core.IRubyMethod::Visibility::PUBLIC || doc == ENV['TM_FILEPATH'])
             end
           end
         rescue
@@ -269,11 +283,12 @@ class ContentAssistant
     when org.jrubyparser.ast.NodeType::CONSTNODE
       node.name # Assume if a receiver is a constant, that it's a type name # FIXME Actually check by searching for a type/constant with that name...
     when org.jrubyparser.ast.NodeType::CALLNODE
-      return COMMON_METHODS[node.name] if COMMON_METHODS.has_key? node.name
+      return COMMON_METHODS[node.name] if COMMON_METHODS.has_key? node.name # FIXME Allow us to cheat on "query?" methods to return TrueClass/FalseClass
       # FIXME Recursive inference on this method's receiver is probably not the right thing to do here. We should try and determine the method return type
+      # Should return receiver as type when method is "new", or receiver is a constant that we can resolve to a type in our index
       infer(root_node, node.getReceiverNode)
     when org.jrubyparser.ast.NodeType::FCALLNODE, org.jrubyparser.ast.NodeType::VCALLNODE
-      return COMMON_METHODS[node.name] if COMMON_METHODS.has_key? node.name
+      return COMMON_METHODS[node.name] if COMMON_METHODS.has_key? node.name # FIXME Allow us to cheat on "query?" methods to return TrueClass/FalseClass
       # Implicit self is the receiver, so traverse AST to determine the enclosing type's name
       get_self(root_node, node.position.start_offset)
     else
