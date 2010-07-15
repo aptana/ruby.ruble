@@ -2,6 +2,7 @@ require 'content_assist/index'
 require 'content_assist/offset_node_locator'
 require 'content_assist/closest_spanning_node_locator'
 require 'content_assist/scoped_node_locator'
+require 'content_assist/first_precursor_node_locator'
 
 # Ruby Content Assistant
 class ContentAssistant
@@ -307,8 +308,24 @@ class ContentAssistant
       node.name
     when org.jrubyparser.ast.NodeType::CALLNODE, org.jrubyparser.ast.NodeType::FCALLNODE, org.jrubyparser.ast.NodeType::VCALLNODE
       infer_return_type(node)
+    when org.jrubyparser.ast.NodeType::LOCALVARNODE
+      # When its a variable, we need to trace back it's assignments using dataflow analysis!
+      preceding_assign = FirstPrecursorNodeLocator.new.find(root_node, node.position.start_offset - 1) {|n| n.node_type == org.jrubyparser.ast.NodeType::LOCALASGNNODE && n.name == node.name }
+      return "Object" unless preceding_assign
+      infer(preceding_assign.value_node)
+      
+    # Class and Instance vars are kind of special. Look for any assignments in type
+    when org.jrubyparser.ast.NodeType::INSTVARNODE      
+      assigns = ScopedNodeLocator.new.find(enclosing_type(node.position.start_offset))  {|n| n.node_type == org.jrubyparser.ast.NodeType::INSTASGNNODE && n.name == node.name }
+      types = []
+      assigns.each {|a| types << infer(a.value_node) }
+      types.flatten
+     when org.jrubyparser.ast.NodeType::CLASSVARNODE
+      assigns = ScopedNodeLocator.new.find(enclosing_type(node.position.start_offset))  {|n| (n.node_type == org.jrubyparser.ast.NodeType::CLASSVARASGNNODE || n.node_type == org.jrubyparser.ast.NodeType::CLASSVARDECLNODE) && n.name == node.name }
+      types = []
+      assigns.each {|a| types << infer(a.value_node) }
+      types.flatten
     else
-      # TODO When its a variable, we need to trace back it's assignments using dataflow analysis!
       "Object"
     end
   end
@@ -332,6 +349,7 @@ class ContentAssistant
       # Grab enclosing type, search it's hierarchy for this method, grab it's return type(s)
       type_node = enclosing_type(method_node.position.start_offset)
       methods = ScopedNodeLocator.new.find(type_node) {|node| node.node_type == org.jrubyparser.ast.NodeType::DEFNNODE }
+      # FIXME This doesn't take hierarchy of type into account!
       methods = methods.select {|m| m.name == method_node.name } if methods
       return "Object" if methods.nil? or methods.empty?
       # Now traverse the method and gather return types
