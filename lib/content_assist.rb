@@ -22,23 +22,23 @@ class ContentAssistant
   # A simple way to "cheat" on type inference. If we hit one of these common method calls, we assume a fixed return type
   COMMON_METHODS = {
     "capitalize" => "String",
-    # "capitalize!" => ["String", "NilClass"]
+    "capitalize!" => ["String", "NilClass"],
     "ceil" => "Fixnum",
     "center" => "String",
     "chomp" => "String",
-    # "chomp!" => ["String", "NilClass"]
+    "chomp!" => ["String", "NilClass"],
     "chop" => "String",
-    # "chop!" => ["String", "NilClass"]
+    "chop!" => ["String", "NilClass"],
     "concat" => "String",
     "count" => "Fixnum",
     "crypt" => "String",
     "downcase" => "String",
-    # "downcase!" => ["String", "NilClass"]
+    "downcase!" => ["String", "NilClass"],
     "dump" => "String",
     "floor" => "Fixnum",
-    # "gets" => ["String", "NilClass"],
+    "gets" => ["String", "NilClass"],
     "gsub" => "String",
-    # "gsub!" => ["String", "NilClass"]
+    "gsub!" => ["String", "NilClass"],
     "hash" => "Fixnum",
     "index" => "Fixnum",
     "inspect" => "String",
@@ -47,14 +47,14 @@ class ContentAssistant
     "now" => "Time",
     "round" => "Fixnum",
     "size" => "Fixnum",
-    # "slice" => ["String", "Array", "NilClass", "Object", "Fixnum"],
-    # "slice!" => ["String", "Array", "NilClass", "Object", "Fixnum"],
+    "slice" => ["String", "Array", "NilClass", "Object", "Fixnum"],
+    "slice!" => ["String", "Array", "NilClass", "Object", "Fixnum"],
     "strip" => "String",
-    # "strip!" => ["String", "NilClass"]
+    "strip!" => ["String", "NilClass"],
     "sub" => "String",
-    # "sub!" => ["String", "NilClass"]
+    "sub!" => ["String", "NilClass"],
     "swapcase" => "String",
-    # "swapcase!" => ["String", "NilClass"]
+    "swapcase!" => ["String", "NilClass"],
     "to_a" => "Array",
     "to_ary" => "Array",
     "to_i" => "Fixnum",
@@ -74,7 +74,8 @@ class ContentAssistant
   end
   
   # Returns an array of code assists proposals for a given caret offset in the source
-  def assist    
+  def assist
+    Ruble::Logger.log_level = :trace
     return [] if root_node.nil?    
     
     # Now try and get the node that matches our offset!      
@@ -82,8 +83,16 @@ class ContentAssistant
     
     case node_at_offset.node_type
     when org.jrubyparser.ast.NodeType::CALLNODE # Method call, infer type of receiver, then suggest methods on type
-      suggest_methods(infer(node_at_offset.getReceiverNode), prefix)
+      types = infer(node_at_offset.getReceiverNode)
       # TODO If we were unable to infer type (beyond "Object"), then we should do a global method name search for any methods with same prefix
+      if types.respond_to? :each
+        suggestions = []
+        types.each {|t| suggestions << suggest_methods(t, prefix) }
+        # FIXME Sort and limit to uniques!
+        suggestions.flatten
+      else
+        suggest_methods(types, prefix)
+      end      
     when org.jrubyparser.ast.NodeType::FCALLNODE, org.jrubyparser.ast.NodeType::VCALLNODE # Implicit self
       # Infer type of 'self', suggest methods on that type matching the prefix
       suggestions = suggest_methods(get_self(offset), prefix)
@@ -103,14 +112,7 @@ class ContentAssistant
       variables.each {|v| suggestions << v.name if v.name.start_with? prefix } unless variables.nil?
       suggestions.uniq.sort.map {|proposal| create_proposal(proposal, prefix, proposal.start_with?("@@") ? CLASS_VAR_IMAGE : INSTANCE_VAR_IMAGE) }
     when org.jrubyparser.ast.NodeType::GLOBALVARNODE, org.jrubyparser.ast.NodeType::GLOBALASGNNODE
-      # Suggest global vars with matching prefix
-      suggestions = []
-      all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
-        results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::GLOBAL_DECL],
-          prefix, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
-        results.each {|r| suggestions << r.word } unless results.nil?
-      end  
-      suggestions.uniq.sort.map {|proposal| create_proposal(proposal, prefix, GLOBAL_VAR_IMAGE) }
+      suggest_globals(node_at_offset)
     when org.jrubyparser.ast.NodeType::COLON2NODE, org.jrubyparser.ast.NodeType::COLON3NODE, org.jrubyparser.ast.NodeType::CONSTNODE
       # Suggest all types with matching prefix
       suggestions = []
@@ -126,12 +128,24 @@ class ContentAssistant
       results.each {|r| suggestions << create_proposal(r.word, prefix, CONSTANT_IMAGE) } unless results.nil?
       suggestions
     else
-      # FIXME For debug purposes we currently spit out node type when it doesn't match our current categories...
-      [node_at_offset.node_type.to_s]
+      # A node type we currently don't handle
+      Ruble::Logger.trace node_at_offset.node_type
+      []
     end
   end
   
   private
+  # Suggest global vars with matching prefix
+  def suggest_globals
+    suggestions = []
+    all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
+      results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::GLOBAL_DECL],
+        prefix, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+      results.each {|r| suggestions << r.word } unless results.nil?
+    end  
+    suggestions.uniq.sort.map {|proposal| create_proposal(proposal, prefix, GLOBAL_VAR_IMAGE) }
+  end
+  
   def offset
     @offset
   end
@@ -175,18 +189,18 @@ class ContentAssistant
   # Read backwards from our offset in the src until we hit a space, period or colon
   def prefix
     return @prefix if @prefix
-    @prefix = @src[0...offset]
-    
+    @prefix = @src[0...offset + 1]
+
     # find last period/space/:
     index = @prefix.rindex('.')
     @prefix = @prefix[(index + 1)..-1] if !index.nil?
-    
+
     index = @prefix.rindex(':')
     @prefix = @prefix[(index + 1)..-1] if !index.nil?
-    
+
     index = @prefix.rindex(' ')
     @prefix = @prefix[(index + 1)..-1] if !index.nil?
-    
+
     return @prefix
   end
   
@@ -202,13 +216,16 @@ class ContentAssistant
   
   # Given a type name, we try to reconstruct the type to get at it's methods. Then we generate proposals from that listing
   def suggest_methods(type_name, prefix)
+    Ruble::Logger.trace "Suggesting methods for: #{type_name} with prefix: #{prefix}"
     begin
       # Sneaky haxor! Try and see if this is a type we can grab in our JRuby runtime and inspect!
       # FIXME Should really be using the user's indices and runtime to determine the methods, but this is a nice workable shortcut for now
       methods = eval(type_name).public_instance_methods(true)
       methods = methods.sort.select {|m| m.start_with? prefix }
+      Ruble::Logger.trace "Instantiated in JRuby, grabbed methods: #{methods}"
       methods.map {|m| create_proposal(m, prefix, PUBLIC_METHOD_IMAGE)}
     rescue
+      Ruble::Logger.trace "Instantiation in JRuby failed, constructing type from indices"
       # Damn, we have to do things the hard way!
       proposals = []
       
@@ -252,12 +269,16 @@ class ContentAssistant
     end  
   end
   
-  # Returns the name of a Type (string) that we have deemed as the inferred type to try
+  # Returns the name of a Type (string) that we have deemed as the inferred type to try. 
+  # Called when we're trying to do code assist with a method call having a receiver. This guesses the type of the receiver.
   def infer(node)
+    # TODO We will probably need to do something here to avoid infinite recursion! Limit recursive depth? track nodes?
     return nil if node.nil?
+    
+    Ruble::Logger.trace "Inferring type of: #{node}"
   
     # If the node is a literal, grab it's type
-    type = case node.node_type
+    case node.node_type
     when org.jrubyparser.ast.NodeType::ARRAYNODE, org.jrubyparser.ast.NodeType::ZARRAYNODE
       "Array"
     when org.jrubyparser.ast.NodeType::SYMBOLNODE, org.jrubyparser.ast.NodeType::DSYMBOLNODE
@@ -281,18 +302,60 @@ class ContentAssistant
     when org.jrubyparser.ast.NodeType::HASHNODE
       "Hash"
     when org.jrubyparser.ast.NodeType::CONSTNODE
-      node.name # Assume if a receiver is a constant, that it's a type name # FIXME Actually check by searching for a type/constant with that name...
-    when org.jrubyparser.ast.NodeType::CALLNODE
-      return COMMON_METHODS[node.name] if COMMON_METHODS.has_key? node.name # FIXME Allow us to cheat on "query?" methods to return TrueClass/FalseClass
-      # FIXME Recursive inference on this method's receiver is probably not the right thing to do here. We should try and determine the method return type
-      # Should return receiver as type when method is "new", or receiver is a constant that we can resolve to a type in our index
-      infer(root_node, node.getReceiverNode)
-    when org.jrubyparser.ast.NodeType::FCALLNODE, org.jrubyparser.ast.NodeType::VCALLNODE
-      return COMMON_METHODS[node.name] if COMMON_METHODS.has_key? node.name # FIXME Allow us to cheat on "query?" methods to return TrueClass/FalseClass
-      # Implicit self is the receiver, so traverse AST to determine the enclosing type's name
-      get_self(root_node, node.position.start_offset)
+      # Assume if a receiver is a constant, that it's a type name
+      # FIXME Actually check by searching for a type/constant with that name... if no type exists, assume constant, so we need to infer type of it?
+      node.name
+    when org.jrubyparser.ast.NodeType::CALLNODE, org.jrubyparser.ast.NodeType::FCALLNODE, org.jrubyparser.ast.NodeType::VCALLNODE
+      infer_return_type(node)
     else
       # TODO When its a variable, we need to trace back it's assignments using dataflow analysis!
+      "Object"
+    end
+  end
+  
+  # Tries to infer the return type of a method
+  def infer_return_type(method_node)
+    # First let's cheat and return boolean for methods ending in "?"
+    return ["TrueClass", "FalseClass"] if method_node.name.end_with? "?"
+    # Then let's look at common method names and cheat their return types too
+    return COMMON_METHODS[method_node.name] if COMMON_METHODS.has_key? method_node.name
+    # Ok, we can't cheat. We need to actually try to figure out the return type!
+    case method_node.node_type
+    when org.jrubyparser.ast.NodeType::CALLNODE
+      # Figure out the type of the receiver...
+      receiver_types = infer(root_node, method_node.getReceiverNode)
+      # If method name is "new" return receiver as type
+      return receiver_types if method_node.name == "new"
+      # TODO grab this method on the receiver type and grab the return type from it
+      "Object"
+    when org.jrubyparser.ast.NodeType::FCALLNODE, org.jrubyparser.ast.NodeType::VCALLNODE
+      # Grab enclosing type, search it's hierarchy for this method, grab it's return type(s)
+      type_node = enclosing_type(method_node.position.start_offset)
+      methods = ScopedNodeLocator.new.find(type_node) {|node| node.node_type == org.jrubyparser.ast.NodeType::DEFNNODE }
+      methods = methods.select {|m| m.name == method_node.name } if methods
+      return "Object" if methods.nil? or methods.empty?
+      # Now traverse the method and gather return types
+      return_nodes = ScopedNodeLocator.new.find(methods.first) {|node| node.node_type == org.jrubyparser.ast.NodeType::RETURNNODE }
+      types = []
+      return_nodes.each {|r| types << infer(r.value_node) } if return_nodes
+      
+      # Get method body as a BlockNode, grab last child, that's the implicit return.
+      implicit_return = methods.first.body_node
+      if implicit_return
+        implicit_return = implicit_return.last if implicit_return.node_type == org.jrubyparser.ast.NodeType::BLOCKNODE
+        implicit_return = implicit_return.next_node if implicit_return.node_type == org.jrubyparser.ast.NodeType::NEWLINENODE
+        # TODO If it's something like an if/case, we need to recurse into the bodies with each branch's last line as the return type
+        case implicit_return.node_type
+        when org.jrubyparser.ast.NodeType::RETURNNODE
+          # Ignore
+        else
+          types << infer(implicit_return)
+        end
+      end
+      return "Object" if types.empty?
+      types.flatten
+    else
+      # Should never end up here...
       "Object"
     end
   end
