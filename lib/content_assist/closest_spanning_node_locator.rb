@@ -12,8 +12,7 @@ class ClosestSpanningNodeLocator < NodeLocator
   # +offset+
   #            Offset to search for
   # +acceptor+
-  #            INodeAcceptor defining the condition which the desired node fulfills.
-  # @return First precursor or null.
+  #            block returning boolean on whether node fulfills conditions to be able to be selected
   def find(root_node, offset, &node_acceptor)
     return nil if root_node.nil?
     
