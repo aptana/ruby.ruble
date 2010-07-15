@@ -89,9 +89,9 @@ class ContentAssistant
       if types.respond_to? :each
         suggestions = []
         types.each {|t| suggestions << suggest_methods(t, prefix) }
-        # FIXME Sort and limit to uniques!
-        suggestions.flatten
-      else
+        # Sort and limit to uniques!
+        suggestions.flatten.uniq {|p| p[:insert] }.sort_by {|p| p[:display] }
+      else # Single type
         suggest_methods(types, prefix)
       end      
     when org.jrubyparser.ast.NodeType::FCALLNODE, org.jrubyparser.ast.NodeType::VCALLNODE # Implicit self
@@ -224,7 +224,7 @@ class ContentAssistant
       methods = eval(type_name).public_instance_methods(true)
       methods = methods.sort.select {|m| m.start_with? prefix }
       Ruble::Logger.trace "Instantiated in JRuby, grabbed methods: #{methods}"
-      methods.map {|m| create_proposal(m, prefix, PUBLIC_METHOD_IMAGE)}
+      methods.map {|m| create_proposal(m, prefix, PUBLIC_METHOD_IMAGE, type_name)}
     rescue
       Ruble::Logger.trace "Instantiation in JRuby failed, constructing type from indices"
       # Damn, we have to do things the hard way!
@@ -336,6 +336,7 @@ class ContentAssistant
     return ["TrueClass", "FalseClass"] if method_node.name.end_with? "?"
     # Then let's look at common method names and cheat their return types too
     return COMMON_METHODS[method_node.name] if COMMON_METHODS.has_key? method_node.name
+    
     # Ok, we can't cheat. We need to actually try to figure out the return type!
     case method_node.node_type
     when org.jrubyparser.ast.NodeType::CALLNODE
@@ -352,20 +353,26 @@ class ContentAssistant
       # FIXME This doesn't take hierarchy of type into account!
       methods = methods.select {|m| m.name == method_node.name } if methods
       return "Object" if methods.nil? or methods.empty?
+      
       # Now traverse the method and gather return types
       return_nodes = ScopedNodeLocator.new.find(methods.first) {|node| node.node_type == org.jrubyparser.ast.NodeType::RETURNNODE }
       types = []
       return_nodes.each {|r| types << infer(r.value_node) } if return_nodes
       
       # Get method body as a BlockNode, grab last child, that's the implicit return.
-      implicit_return = methods.first.body_node
+      implicit_return = last_statement(methods.first.body_node)
       if implicit_return
-        implicit_return = implicit_return.last if implicit_return.node_type == org.jrubyparser.ast.NodeType::BLOCKNODE
-        implicit_return = implicit_return.next_node if implicit_return.node_type == org.jrubyparser.ast.NodeType::NEWLINENODE
-        # TODO If it's something like an if/case, we need to recurse into the bodies with each branch's last line as the return type
         case implicit_return.node_type
+        when org.jrubyparser.ast.NodeType::IFNODE
+          types << infer(last_statement(implicit_return.then_body)) if implicit_return.then_body
+          types << infer(last_statement(implicit_return.else_body)) if implicit_return.else_body
+        when org.jrubyparser.ast.NodeType::CASENODE
+          implicit_return.cases.child_nodes.each do |c|
+            types << infer(last_statement(c.body_node)) if c
+          end
+          types << infer(last_statement(implicit_return.else_node)) if implicit_return.else_node       
         when org.jrubyparser.ast.NodeType::RETURNNODE
-          # Ignore
+          # Ignore this because it's picked up in our explicit return traversal
         else
           types << infer(implicit_return)
         end
@@ -376,5 +383,33 @@ class ContentAssistant
       # Should never end up here...
       "Object"
     end
+  end
+  
+  # Given a node, return the last statement in the block (if in one), and unwrap from newline node (if in one)
+  def last_statement(node)
+    return nil if node.nil?
+    node = node.last if node.node_type == org.jrubyparser.ast.NodeType::BLOCKNODE
+    node = node.next_node if node.node_type == org.jrubyparser.ast.NodeType::NEWLINENODE
+    node
+  end
+end
+
+
+# Define a "uniq" method that can take a block to determine what makes the element unique
+class Array
+  def uniq(&blk)
+    require 'set'
+    blk ||= lambda {|x| x}
+    already_seen = Set.new
+    uniq_array = []
+
+    self.each_with_index do |value, i|
+      x = blk.call(value)
+      unless already_seen.include? x
+        already_seen << x
+        uniq_array << value
+      end
+    end
+    uniq_array
   end
 end
