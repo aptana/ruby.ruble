@@ -85,15 +85,24 @@ class ContentAssistant
     case node_at_offset.node_type
     when org.jrubyparser.ast.NodeType::CALLNODE # Method call, infer type of receiver, then suggest methods on type
       types = infer(node_at_offset.getReceiverNode)
-      # TODO If we were unable to infer type (beyond "Object"), then we should do a global method name search for any methods with same prefix
-      if types.respond_to? :each
-        suggestions = []
+      types = [types].flatten
+      
+      suggestions = []      
+      if types.size == 1 && types.first == "Object" && prefix.length > 0
+        # Only inferred to "Object", do global method prefix search
+        all_applicable_indices(ENV['TM_FILEPATH']).each do |index|          
+          prefix_search(index, com.aptana.editor.ruby.index.IRubyIndexConstants::METHOD_DECL) do |r|
+            # TODO Include r.documents joined to a string as :location
+            suggestions << create_proposal(r.word.split('/').first, prefix, PUBLIC_METHOD_IMAGE)
+          end
+        end
+      else
+        # Inferred actual types!
         types.each {|t| suggestions << suggest_methods(t, prefix) }
-        # Sort and limit to uniques!
-        suggestions.flatten.uniq {|p| p[:insert] }.sort_by {|p| p[:display] }
-      else # Single type
-        suggest_methods(types, prefix)
-      end      
+        suggestions.flatten!
+      end
+      # Sort and limit method proposals to uniques
+      suggestions.uniq {|p| p[:insert] }.sort_by {|p| p[:display] }
     when org.jrubyparser.ast.NodeType::FCALLNODE, org.jrubyparser.ast.NodeType::VCALLNODE # Implicit self
       # Infer type of 'self', suggest methods on that type matching the prefix
       suggestions = suggest_methods(get_self(offset), prefix)
@@ -118,15 +127,15 @@ class ContentAssistant
       # Suggest all types with matching prefix
       suggestions = []
       all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
-        results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL],
-          prefix, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
-        results.each {|r| suggestions << create_proposal(r.word.split('/').first, prefix, r.word.split('/').last == "M" ? MODULE_IMAGE : CLASS_IMAGE) } unless results.nil?
+        prefix_search(index, com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL) do |r|
+          suggestions << create_proposal(r.word.split('/').first, prefix, r.word.split('/').last == "M" ? MODULE_IMAGE : CLASS_IMAGE)
+        end
       end
       # TODO Use the AST to grab constants in file/scope
       # Now add constants in project
-      results = index(ENV['TM_FILEPATH']).query([com.aptana.editor.ruby.index.IRubyIndexConstants::CONSTANT_DECL],
-          prefix, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
-      results.each {|r| suggestions << create_proposal(r.word, prefix, CONSTANT_IMAGE) } unless results.nil?
+      prefix_search(index(ENV['TM_FILEPATH']), com.aptana.editor.ruby.index.IRubyIndexConstants::CONSTANT_DECL) do |r|
+        suggestions << create_proposal(r.word, prefix, CONSTANT_IMAGE)
+      end
       suggestions
     else
       # A node type we currently don't handle
@@ -136,13 +145,17 @@ class ContentAssistant
   end
   
   private
+  def prefix_search(index, *rest)
+    results = index.query(rest, prefix, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+    results.each {|r| yield r } if block_given? and results
+    results
+  end
+  
   # Suggest global vars with matching prefix
   def suggest_globals
     suggestions = []
     all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
-      results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::GLOBAL_DECL],
-        prefix, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
-      results.each {|r| suggestions << r.word } unless results.nil?
+      prefix_search(index, com.aptana.editor.ruby.index.IRubyIndexConstants::GLOBAL_DECL) {|r| suggestions << r.word }
     end  
     suggestions.uniq.sort.map {|proposal| create_proposal(proposal, prefix, GLOBAL_VAR_IMAGE) }
   end
