@@ -20,6 +20,10 @@ class ContentAssistant
   INSTANCE_VAR_IMAGE = "icons/instance_var_obj.gif"
   PUBLIC_METHOD_IMAGE = "icons/method_public_obj.png"
   
+  # String representation of index separator char (so I can insert into strings and have it be right)
+  INDEX_SEPARATOR = com.aptana.editor.ruby.index.IRubyIndexConstants::SEPARATOR.chr # '/'
+  MODULE_SUFFIX = com.aptana.editor.ruby.index.IRubyIndexConstants::MODULE_SUFFIX.chr # "M"
+  
   # A simple way to "cheat" on type inference. If we hit one of these common method calls, we assume a fixed return type
   COMMON_METHODS = {
     "capitalize" => "String",
@@ -82,6 +86,8 @@ class ContentAssistant
     # Now try and get the node that matches our offset!      
     node_at_offset = OffsetNodeLocator.new.find(root_node, offset)
     
+    Ruble::Logger.trace node_at_offset.node_type # Log node type for debug purposes
+    
     case node_at_offset.node_type
     when org.jrubyparser.ast.NodeType::CALLNODE # Method call, infer type of receiver, then suggest methods on type
       types = infer(node_at_offset.getReceiverNode)
@@ -93,7 +99,7 @@ class ContentAssistant
         all_applicable_indices(ENV['TM_FILEPATH']).each do |index|          
           prefix_search(index, com.aptana.editor.ruby.index.IRubyIndexConstants::METHOD_DECL) do |r|
             # TODO Include r.documents joined to a string as :location
-            suggestions << create_proposal(r.word.split('/').first, prefix, PUBLIC_METHOD_IMAGE)
+            suggestions << create_proposal(r.word.split(INDEX_SEPARATOR).first, prefix, PUBLIC_METHOD_IMAGE)
           end
         end
       else
@@ -101,6 +107,13 @@ class ContentAssistant
         types.each {|t| suggestions << suggest_methods(t, prefix) }
         suggestions.flatten!
       end
+      
+      # If we hacked the source after a ::, we'll end up here. This means we also need to suggest constants
+      if full_prefix.end_with? "::"
+        suggestions << suggest_types_and_constants(full_prefix)
+        suggestions.flatten!        
+      end
+      
       # Sort and limit method proposals to uniques
       suggestions.uniq {|p| p[:insert] }.sort_by {|p| p[:display] }
     when org.jrubyparser.ast.NodeType::FCALLNODE, org.jrubyparser.ast.NodeType::VCALLNODE # Implicit self
@@ -128,7 +141,7 @@ class ContentAssistant
       suggestions = []
       all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
         prefix_search(index, com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL) do |r|
-          suggestions << create_proposal(r.word.split('/').first, prefix, r.word.split('/').last == "M" ? MODULE_IMAGE : CLASS_IMAGE)
+          suggestions << create_proposal(r.word.split(INDEX_SEPARATOR).first, prefix, r.word.split(INDEX_SEPARATOR).last == MODULE_SUFFIX ? MODULE_IMAGE : CLASS_IMAGE)
         end
       end
       # TODO Use the AST to grab constants in file/scope
@@ -151,12 +164,79 @@ class ContentAssistant
     results
   end
   
+  # Suggest all types and constants that live under the namespace
+  def suggest_types_and_constants(namespace)    
+    namespace = namespace[0..-3] if namespace.end_with? "::"
+    Ruble::Logger.trace namespace
+    
+    suggestions = []
+    search_key = "^(.+)?#{INDEX_SEPARATOR}#{namespace}#{INDEX_SEPARATOR}.*$"    
+    all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
+      results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL], search_key, com.aptana.index.core.SearchPattern::REGEX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+      results.each {|r| suggestions << create_proposal(r.word.split(INDEX_SEPARATOR).first, '', r.word.split(INDEX_SEPARATOR).last == MODULE_SUFFIX ? MODULE_IMAGE : CLASS_IMAGE) } if results
+    end
+    types = find_type_declarations(namespace)    
+    types.each do |t|
+      # Collect all the constants declared/assigned under this type!
+      constants = t.getChildrenOfType(com.aptana.editor.ruby.core.IRubyElement::CONSTANT)
+      constants.each {|c| suggestions << create_proposal(c.name, '', CONSTANT_IMAGE)}
+    end
+    suggestions
+  end
+  
+  def find_type_declarations(type_name)
+    # Need to handle when type_name has namespace!
+    simple_name = type_name.split("::").last
+    last_separator = type_name.rindex("::")
+    namespace = last_separator.nil? ? type_name : type_name[0..last_separator - 1]
+    Ruble::Logger.trace "Raw: #{type_name}, Namespace: #{namespace}, Simple: #{simple_name}"
+    types = []
+    docs = []
+    all_applicable_indices(ENV['TM_FILEPATH']).each do |index|      
+      results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL], simple_name + INDEX_SEPARATOR + namespace + INDEX_SEPARATOR, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+      results.each {|r| r.getDocuments.each {|d| docs << d } } unless results.nil?
+    end
+    docs.flatten!
+    # Now iterate over files containing a type with this name...
+    docs.each do |doc|
+      doc = doc[5..-1] if doc.start_with? "file:" # Need to convert doc from a URI to a filepath
+      
+      # Parse the file into an AST...
+      begin
+        # If this is pointing to currently edited file, use our pre-parsed AST so we pick up changes since last save
+        ast = (doc == ENV['TM_FILEPATH'] ? root_node : org.jrubyparser.Parser.new.parse(doc, java.io.FileReader.new(doc), parser_config))
+
+        # Traverse the AST into an in-memory model...
+        script = com.aptana.editor.ruby.parsing.ast.RubyScript.new(0, -1)
+        builder = com.aptana.editor.ruby.parsing.RubyStructureBuilder.new(script)
+        com.aptana.editor.ruby.parsing.SourceElementVisitor.new(builder).acceptNode(ast)
+        
+        # Now grab the matching type(s) from the model...
+        possible_types = get_children_recursive(script, com.aptana.editor.ruby.core.IRubyElement::TYPE)
+        types << possible_types.select {|t| t.name == simple_name } # FIXME Need to handle namespaces here!
+      rescue => e
+        # couldn't parse the file
+        Ruble::Logger.log_error "Couldn't parse #{doc}: #{e}"
+      end
+    end
+    types.flatten!
+    types
+  end
+  
+  def get_children_recursive(parent, type)
+    children = parent.getChildrenOfType(type) 
+    partial = []
+    children.each {|c| partial << c; partial << get_children_recursive(c, type) }
+    partial.flatten!
+    partial
+  end
+  
   # Suggest global vars with matching prefix
   def suggest_globals
     suggestions = []
     all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
       prefix_search(index, com.aptana.editor.ruby.index.IRubyIndexConstants::GLOBAL_DECL) {|r| suggestions << r.word }
-    end  
+    end
     suggestions.uniq.sort.map {|proposal| create_proposal(proposal, prefix, GLOBAL_VAR_IMAGE) }
   end
   
@@ -218,6 +298,26 @@ class ContentAssistant
     return @prefix
   end
   
+  def full_prefix
+    return @full_prefix if @full_prefix
+    @full_prefix = @src[0...offset + 1]
+
+    # find last space/newline
+    index = @full_prefix.rindex(' ')
+    @full_prefix = @full_prefix[(index + 1)..-1] if !index.nil?
+    
+    index = @full_prefix.rindex('\n')
+    @full_prefix = @full_prefix[(index + 1)..-1] if !index.nil?
+    
+    index = @full_prefix.rindex('\r')
+    @full_prefix = @full_prefix[(index + 1)..-1] if !index.nil?
+    
+    index = @full_prefix.rindex('\t')
+    @full_prefix = @full_prefix[(index + 1)..-1] if !index.nil?
+
+    return @full_prefix
+  end
+  
   # Returns the innermost wrapping type's name
   def get_self(offset)
     enclosing_type(offset).getCPath.name
@@ -241,44 +341,15 @@ class ContentAssistant
     rescue
       Ruble::Logger.trace "Instantiation in JRuby failed, constructing type from indices"
       # Damn, we have to do things the hard way!
-      proposals = []
-      
-      # Find all declarations of types with this exact name, and hold onto the filename for each occurence
-      docs = []
-      all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
-        results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL], type_name + "/", com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
-        results.each {|r| r.getDocuments.each {|d| docs << d } } unless results.nil?
-      end
-      docs.flatten
-      # Now iterate over files containing a type with this name...
-      docs.each do |doc|
-        doc = doc[5..-1] if doc.start_with? "file:" # Need to convert doc from a URI to a filepath
-        
-        # Parse the file into an AST...
-        begin
-          # If this is pointing to currently edited file, use our pre-parsed AST so we pick up changes since last save
-          ast = (doc == ENV['TM_FILEPATH'] ? root_node : org.jrubyparser.Parser.new.parse(doc, java.io.FileReader.new(doc), parser_config))
-
-          # Traverse the AST into an in-memory model...
-          script = com.aptana.editor.ruby.parsing.ast.RubyScript.new(0, -1)
-          builder = com.aptana.editor.ruby.parsing.RubyStructureBuilder.new(script)
-          com.aptana.editor.ruby.parsing.SourceElementVisitor.new(builder).acceptNode(ast)
-          
-          # Now grab the matching type(s) from the model...
-          types = script.getChildrenOfType(com.aptana.editor.ruby.core.IRubyElement::TYPE) # FIXME This assumes the type is a direct child of the toplevel in this script, which won't be right a lot of the time!
-          types = types.select {|t| t.name == type_name }
-          types.each do |t|
-            # Now we grab that type's methods
-            t.getMethods.each do |m|
-              # FIXME Use the correct image given the visibility!
-              proposals << create_proposal(m.name, prefix, PUBLIC_METHOD_IMAGE, type_name) if m.name.start_with?(prefix) && (m.visibility == com.aptana.editor.ruby.core.IRubyMethod::Visibility::PUBLIC || doc == ENV['TM_FILEPATH'])
-            end
-          end
-        rescue
-          # couldn't parse the file
-          Ruble::Logger.log_error "Couldn't parse #{doc}"
+      proposals = []      
+      types = find_type_declarations(type_name)
+      types.each do |t|
+        t.getMethods.each do |m|
+          # FIXME Use the correct image given the visibility!
+          # FIXME Don't filter out non-public methods if they're on type that encloses us!
+          proposals << create_proposal(m.name, prefix, PUBLIC_METHOD_IMAGE, type_name) if m.name.start_with?(prefix) && (m.visibility == com.aptana.editor.ruby.core.IRubyMethod::Visibility::PUBLIC)
         end
-      end
+      end      
       proposals
     end  
   end
@@ -315,6 +386,12 @@ class ContentAssistant
       "Bignum"
     when org.jrubyparser.ast.NodeType::HASHNODE
       "Hash"
+    when org.jrubyparser.ast.NodeType::COLON2NODE
+      names = []
+      # FIXME Handle multiple left nodes!
+      names << node.left_node.name
+      names << node.name
+      names.join("::")
     when org.jrubyparser.ast.NodeType::CONSTNODE
       # Assume if a receiver is a constant, that it's a type name
       # FIXME Actually check by searching for a type/constant with that name... if no type exists, assume constant, so we need to infer type of it?
@@ -332,12 +409,14 @@ class ContentAssistant
       assigns = ScopedNodeLocator.new.find(enclosing_type(node.position.start_offset))  {|n| n.node_type == org.jrubyparser.ast.NodeType::INSTASGNNODE && n.name == node.name }
       types = []
       assigns.each {|a| types << infer(a.value_node) }
-      types.flatten
+      types.flatten!
+      types
      when org.jrubyparser.ast.NodeType::CLASSVARNODE
       assigns = ScopedNodeLocator.new.find(enclosing_type(node.position.start_offset))  {|n| (n.node_type == org.jrubyparser.ast.NodeType::CLASSVARASGNNODE || n.node_type == org.jrubyparser.ast.NodeType::CLASSVARDECLNODE) && n.name == node.name }
       types = []
       assigns.each {|a| types << infer(a.value_node) }
-      types.flatten
+      types.flatten!
+      types
     else
       "Object"
     end
@@ -391,7 +470,8 @@ class ContentAssistant
         end
       end
       return "Object" if types.empty?
-      types.flatten
+      types.flatten!
+      types
     else
       # Should never end up here...
       "Object"
