@@ -320,7 +320,8 @@ class ContentAssistant
   
   # Returns the innermost wrapping type's name
   def get_self(offset)
-    enclosing_type(offset).getCPath.name
+    type = enclosing_type(offset)
+    type.nil? ? "Object" : type.getCPath.name
   end
   
   # Given the root node of the AST and an offset, traverse to find the innermost enclosing type at the offset
