@@ -29,7 +29,7 @@ class FirstPrecursorNodeLocator < NodeLocator
 # TODO This will include nodes that envelop nodeStart, not only those starting strictly before it.
 #      If this behavior is unwanted, remove the || (node.position.start_offset <= offset)
 #    in the conditional    
-    if (node.position.end_offset <= offset) || (node.position.start_offset <= offset)
+    if (node.position.end_offset <= @offset) || (node.position.start_offset <= @offset)
       @located_node = node if @acceptor.call(node)  
     end
      
