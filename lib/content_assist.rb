@@ -192,7 +192,8 @@ class ContentAssistant
     Ruble::Logger.trace "Raw: #{type_name}, Namespace: #{namespace}, Simple: #{simple_name}"
     types = []
     docs = []
-    all_applicable_indices(ENV['TM_FILEPATH']).each do |index|      
+    all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
+      next unless index
       results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL], simple_name + INDEX_SEPARATOR + namespace + INDEX_SEPARATOR, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
       results.each {|r| r.getDocuments.each {|d| docs << d } } unless results.nil?
     end
