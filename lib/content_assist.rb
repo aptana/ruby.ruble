@@ -205,7 +205,7 @@ class ContentAssistant
       # Parse the file into an AST...
       begin
         # If this is pointing to currently edited file, use our pre-parsed AST so we pick up changes since last save
-        ast = (doc == ENV['TM_FILEPATH'] ? root_node : org.jrubyparser.Parser.new.parse(doc, java.io.FileReader.new(doc), parser_config))
+        ast = (doc == ENV['TM_FILEPATH'] ? root_node : parser.parse(doc, java.io.FileReader.new(doc), parser_config))
 
         # Traverse the AST into an in-memory model...
         script = com.aptana.editor.ruby.parsing.ast.RubyScript.new(0, -1)
@@ -245,6 +245,10 @@ class ContentAssistant
     @offset
   end
   
+  def parser
+    @parser ||= org.jrubyparser.Parser.new
+  end
+  
   def parser_config
     org.jrubyparser.parser.ParserConfiguration.new(0, org.jrubyparser.CompatVersion::RUBY1_8)
   end
@@ -254,7 +258,7 @@ class ContentAssistant
     return @root_node unless @root_node.nil?
     
     @src = @io.read
-    @root_node = org.jrubyparser.Parser.new.parse(ENV['TM_FILENAME'], java.io.StringReader.new(@src), parser_config) rescue nil
+    @root_node = parser.parse(ENV['TM_FILENAME'], java.io.StringReader.new(@src), parser_config) rescue nil
     if @root_node.nil?
       # if the syntax is broken because we're mid-edit try to fix common cases of "@|", "$|" or "something.|"
       char = @src[offset, 1]
@@ -262,7 +266,7 @@ class ContentAssistant
       when ".", ":", "@", "$"
         modified_src = @src
         modified_src[offset] = char + "a"
-        @root_node = org.jrubyparser.Parser.new.parse(ENV['TM_FILENAME'], java.io.StringReader.new(modified_src), parser_config) rescue nil
+        @root_node = parser.parse(ENV['TM_FILENAME'], java.io.StringReader.new(modified_src), parser_config) rescue nil
       end
     end
     @root_node
