@@ -74,22 +74,8 @@ END
   end
 end
 
-# Extend Ruble::Editor to add special ENV vars
-module Ruble
-  class Editor
-    unless method_defined?(:modify_env_pre_ruby_bundle)
-      alias :modify_env_pre_ruby_bundle :modify_env
-      def modify_env(scope, env)
-        env_hash = modify_env_pre_ruby_bundle(scope, env)
-        if scope.start_with? "source.ruby"
-          env_hash['TM_COMMENT_START'] = "# "
-          env_hash.delete('TM_COMMENT_END')
-          env_hash['TM_COMMENT_START_2'] = "=begin"
-          env_hash['TM_COMMENT_END_2'] = "=end"
-          env_hash.delete('TM_COMMENT_DISABLE_INDENT')
-        end
-        env_hash
-      end
-    end
-  end
+env 'source.ruby' do |e|
+  e['TM_COMMENT_START'] = "# "
+  e['TM_COMMENT_START_2'] = "=begin\n"
+  e['TM_COMMENT_END_2'] = "=end\n"
 end
