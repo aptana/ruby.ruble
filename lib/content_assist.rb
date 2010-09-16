@@ -188,7 +188,7 @@ class ContentAssistant
     # Need to handle when type_name has namespace!
     simple_name = type_name.split("::").last
     last_separator = type_name.rindex("::")
-    namespace = last_separator.nil? ? type_name : type_name[0..last_separator - 1]
+    namespace = last_separator.nil? ? "" : type_name[0..last_separator - 1]
     Ruble::Logger.trace "Raw: #{type_name}, Namespace: #{namespace}, Simple: #{simple_name}"
     types = []
     docs = []
@@ -198,6 +198,7 @@ class ContentAssistant
       results.each {|r| r.getDocuments.each {|d| docs << d } } unless results.nil?
     end
     docs.flatten!
+    Ruble::Logger.trace "Found type declarations in documents: #{docs.join(', ')}"
     # Now iterate over files containing a type with this name...
     docs.each do |doc|
       doc = doc[5..-1] if doc.start_with? "file:" # Need to convert doc from a URI to a filepath
@@ -439,7 +440,7 @@ class ContentAssistant
     case method_node.node_type
     when org.jrubyparser.ast.NodeType::CALLNODE
       # Figure out the type of the receiver...
-      receiver_types = infer(root_node, method_node.getReceiverNode)
+      receiver_types = infer(method_node.getReceiverNode)
       # If method name is "new" return receiver as type
       return receiver_types if method_node.name == "new"
       # TODO grab this method on the receiver type and grab the return type from it
