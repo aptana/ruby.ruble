@@ -96,7 +96,7 @@ class ContentAssistant
       suggestions = []      
       if types.size == 1 && types.first == "Object" && prefix.length > 0
         # Only inferred to "Object", do global method prefix search
-        all_applicable_indices(ENV['TM_FILEPATH']).each do |index|          
+        all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
           prefix_search(index, com.aptana.editor.ruby.index.IRubyIndexConstants::METHOD_DECL) do |r|
             # TODO Include r.documents joined to a string as :location
             suggestions << create_proposal(r.word.split(INDEX_SEPARATOR).first, prefix, PUBLIC_METHOD_IMAGE)
