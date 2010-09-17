@@ -72,9 +72,17 @@ class GoToDefinition
       Ruble::Logger.trace node_at_offset.node_type
     end
 
-    # TODO Now pop up a menu UI if there's more than one location so user chooses the one they want
-    # TODO Now open the editor to the file/line of the declaration chosen
-    locations.each {|l| Ruble::Editor.go_to(:file => l) }
+    location = nil
+    if locations.size == 1
+      location = locations[0]
+    else
+      # Now pop up a menu UI if there's more than one location so user chooses the one they want
+      require 'ruble/ui'
+      index = Ruble::UI.menu(locations)
+      location = locations[index] if index
+    end
+    # Now open the editor to the file/line of the declaration chosen
+    Ruble::Editor.go_to(:file => location) if location
   end
 
   private
