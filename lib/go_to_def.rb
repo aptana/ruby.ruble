@@ -53,7 +53,7 @@ class GoToDefinition
         next unless results
         results.each do |result|
           result.documents.each do |doc|
-            # TODO find in the document!
+            # FIXME find in the document!
             locations << Location.new(doc)
           end
         end
@@ -67,7 +67,7 @@ class GoToDefinition
         next unless results
         results.each do |result|
           result.documents.each do |doc|
-            # TODO find in the document!
+            # FIXME find in the document!
             locations << Location.new(doc)
           end
         end
@@ -91,13 +91,39 @@ class GoToDefinition
         next unless results
         results.each do |result|
           result.documents.each do |doc|
-            # TODO find in the document!
+            # FIXME find in the document!
             locations << Location.new(doc)
           end
         end
       end
-    when org.jrubyparser.ast.NodeType::COLON2NODE, org.jrubyparser.ast.NodeType::COLON3NODE, org.jrubyparser.ast.NodeType::CONSTNODE
-      # TODO Find the declaration of the type/constant
+    # COLON3Node = toplevel constant/type name. No namespace
+    when org.jrubyparser.ast.NodeType::COLON3NODE, org.jrubyparser.ast.NodeType::CONSTNODE
+      constant_name = node_at_offset.name
+      all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
+        results = []
+        # FIXME Search for constant up the scope!
+        # search for constant
+        partial_results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::CONSTANT_DECL], constant_name, com.aptana.index.core.SearchPattern::EXACT_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+        partial_results.each {|r| results << r }
+        # search for type with no namespace
+        partial_results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL], constant_name + com.aptana.editor.ruby.index.IRubyIndexConstants::SEPARATOR.chr + com.aptana.editor.ruby.index.IRubyIndexConstants::SEPARATOR.chr, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+        partial_results.each {|r| results << r }
+
+        results.each do |result|
+          next unless result
+          result.documents.each do |doc|
+            # FIXME find in the document!
+            locations << Location.new(doc)
+          end
+        end
+      end
+    # Colon2Node = namespaced constant/type name
+    when org.jrubyparser.ast.NodeType::COLON2NODE
+      # TODO Search the indices using the namespace
+    # ConstNode = constant/type name with no namespace
+    # when org.jrubyparser.ast.NodeType::CONSTNODE
+      # TODO Find the declaration of the type/constant.
+      # TODO First search enclosing type, then pop up the scopes
     else
       # A node type we currently don't handle. Are there other types of nodes that can be traced back to "declarations"?
       Ruble::Logger.trace node_at_offset.node_type
