@@ -1,7 +1,28 @@
-require 'ruble/editor'
 require 'content_assist/offset_node_locator'
-require 'content_assist/index'
+require 'content_assist/scoped_node_locator' # TODO Move to only the code portions using this (instance/class vars)
+require 'content_assist/index' # TODO Move to only the portions of code using this
 
+# A class used to wrap up a pointer to a file, and optionally a selection within that file.
+# Used to hold all the delcarations to choose from and then to actually open them in our editor
+class Location
+  attr_reader :file
+
+  def initialize(file, offset = nil, length = nil)
+    @file = file
+    @offset = offset
+    @length = length || 0
+  end
+
+  # Opens an editor to this location
+  def open
+    require 'ruble/editor'
+    editor = Ruble::Editor.go_to(:file => @file)
+    editor.selection = [@offset, @length] if editor && @offset
+    editor
+  end
+end
+
+# A class which takes in a src file and an offset and then tries to determine what lives position and trace it back to it's declaration.
 class GoToDefinition
 
   def initialize(io, caret_offset)
@@ -18,9 +39,10 @@ class GoToDefinition
 
     Ruble::Logger.trace node_at_offset.node_type # Log node type for debug purposes
 
-    # Now based on the node, trace back to declaration node/file/index entry
-    # TODO Save up all the locations, pop up a menu UI at the end for user to choose which to open
+    # Save up all the locations, pop up a menu UI at the end for user to choose which to open if more than one...
     locations = []
+    
+    # Now based on the node, trace back to declaration node/file/index entry
     case node_at_offset.node_type
     when org.jrubyparser.ast.NodeType::CALLNODE
       # FIXME infer type of receiver, then find the method def on type hierarchy
@@ -32,7 +54,7 @@ class GoToDefinition
         results.each do |result|
           result.documents.each do |doc|
             # TODO find in the document!
-            locations << doc
+            locations << Location.new(doc)
           end
         end
       end
@@ -46,12 +68,21 @@ class GoToDefinition
         results.each do |result|
           result.documents.each do |doc|
             # TODO find in the document!
-            locations << doc
+            locations << Location.new(doc)
           end
         end
       end
-    when org.jrubyparser.ast.NodeType::INSTVARNODE, org.jrubyparser.ast.NodeType::INSTASGNNODE, org.jrubyparser.ast.NodeType::CLASSVARNODE, org.jrubyparser.ast.NodeType::CLASSVARASGNNODE
-      # TODO Find the declaration of the var in this file
+    when org.jrubyparser.ast.NodeType::INSTVARNODE
+      # Find enclosing type and suggest instance vars defined within that type's scope!
+      type_node = enclosing_type(offset)
+      variables = ScopedNodeLocator.new.find(type_node) {|node| node.node_type == org.jrubyparser.ast.NodeType::INSTASGNNODE }
+      # FIXME Only grab the variable portion on the assignment node
+      variables.each {|v| locations << Location.new(ENV['TM_FILEPATH'], v.position.start_offset, v.position.end_offset - v.position.start_offset) } unless variables.nil?
+    when org.jrubyparser.ast.NodeType::CLASSVARNODE
+      # Find enclosing type and suggest class vars defined within that type's scope!
+      type_node = enclosing_type(offset)
+      variables = ScopedNodeLocator.new.find(type_node) {|node| node.node_type == org.jrubyparser.ast.NodeType::CLASSVARASGNNODE || node.node_type == org.jrubyparser.ast.NodeType::CLASSVARDECLNODE }
+      variables.each {|v| locations << Location.new(ENV['TM_FILEPATH'], v.position.start_offset, v.position.end_offset - v.position.start_offset) } unless variables.nil?
     when org.jrubyparser.ast.NodeType::GLOBALVARNODE, org.jrubyparser.ast.NodeType::GLOBALASGNNODE
       # Search for all declarations of the global
       global_name = node_at_offset.name
@@ -61,28 +92,29 @@ class GoToDefinition
         results.each do |result|
           result.documents.each do |doc|
             # TODO find in the document!
-            locations << doc
+            locations << Location.new(doc)
           end
         end
       end
     when org.jrubyparser.ast.NodeType::COLON2NODE, org.jrubyparser.ast.NodeType::COLON3NODE, org.jrubyparser.ast.NodeType::CONSTNODE
       # TODO Find the declaration of the type/constant
     else
-      # A node type we currently don't handle
+      # A node type we currently don't handle. Are there other types of nodes that can be traced back to "declarations"?
       Ruble::Logger.trace node_at_offset.node_type
     end
 
+    # We're done tracing back to possible declarations, pick the one to open
     location = nil
-    if locations.size == 1
+    if locations.size == 1 # There is only one, so use it
       location = locations[0]
     else
-      # Now pop up a menu UI if there's more than one location so user chooses the one they want
+      # Pop up a menu UI if there's more than one location so user chooses the one they want
       require 'ruble/ui'
-      index = Ruble::UI.menu(locations)
+      index = Ruble::UI.menu(locations.map {|l| l.file }) # TODO Display positions, trim file to relative path from index root or maybe display the enclosing type or something instead
       location = locations[index] if index
     end
     # Now open the editor to the file/line of the declaration chosen
-    Ruble::Editor.go_to(:file => location) if location
+    location.open if location
   end
 
   private
@@ -115,5 +147,11 @@ class GoToDefinition
       end
     end
     @root_node
+  end
+  
+  # Given the root node of the AST and an offset, traverse to find the innermost enclosing type at the offset
+  def enclosing_type(offset)
+    require 'content_assist/closest_spanning_node_locator'
+    ClosestSpanningNodeLocator.new.find(root_node, offset) {|node| node.node_type == org.jrubyparser.ast.NodeType::CLASSNODE or node.node_type == org.jrubyparser.ast.NodeType::MODULENODE }
   end
 end
