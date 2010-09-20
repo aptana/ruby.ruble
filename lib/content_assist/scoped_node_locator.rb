@@ -5,7 +5,7 @@ require 'content_assist/node_locator'
 # @author Jason Morrison
 class ScopedNodeLocator < NodeLocator
 
-  # Finds the first node preceding the given offset that is accepted by the acceptor.
+  # Finds all nodes within the scoping node that is accepted by the acceptor.
   # 
   # +scoping_node+
   #            Root Node that contains all nodes to search.
