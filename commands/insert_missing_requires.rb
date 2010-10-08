@@ -1,5 +1,4 @@
 require 'ruble'
-require 'ruby_requires'
 
 command "Insert Missing requires" do |cmd|
   cmd.key_binding = 'M1+M2+3'
@@ -98,7 +97,7 @@ command "Insert Missing requires" do |cmd|
                  "zlib"             => [/\bZlib\b/] }
     cursor = [0xFFFC].pack("U").freeze
     line, col = ENV["TM_LINE_NUMBER"].to_i - 1, ENV["TM_LINE_INDEX"].to_i
-    code = STDIN.read.to_a
+    code = $stdin.read.to_a
     unless ENV.has_key?('TM_SELECTED_TEXT')
       if code[line].nil?  # if cursor was on the last line and it was blank
         code << cursor
@@ -108,6 +107,9 @@ command "Insert Missing requires" do |cmd|
     end
     code = code.join
     libs = requires.select { |lib, usage| usage.any? { |test| code =~ test } }.map { |kv| kv.first }
+    
+    require 'ruby_requires'
+    
     output = RubyRequires.add_requires(code, libs)
     output.split(cursor).join('${0}')
   end
