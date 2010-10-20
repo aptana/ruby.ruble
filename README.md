@@ -4,7 +4,7 @@ A bundle to enable related commands in Aptana Studio. Ported from a TextMate bun
 
 ## Authors
 
-* Textmate Contributors
+* TextMate Contributors
 * Modifications by Aptana
 
 # Installation
@@ -29,10 +29,10 @@ Ruby 1.8.7 or greater is required.
 
 ## License
 
-This bundle is licensed under the Textmate license, available here:
+This bundle is licensed under the TextMate license, available here:
 
-* [Textmate license](http://svn.textmate.org/trunk/LICENSE)
+* [TextMate license](http://svn.textmate.org/trunk/LICENSE)
 
-## Other Stuff
+## Bugs/Requests
 
 * You can [report a bug or request a feature here](http://github.com/aptana/ruby.ruble/issues)
