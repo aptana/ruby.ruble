@@ -11,14 +11,16 @@ class ContentAssistant
   RUBY_PLUGIN_ID = "com.aptana.editor.ruby"
   
   # Images used
-  LOCAL_VAR_IMAGE = "icons/local_var_obj.gif"
-  CLASS_VAR_IMAGE = "icons/class_var_obj.gif"
+  LOCAL_VAR_IMAGE = "icons/local_var_obj.png"
+  CLASS_VAR_IMAGE = "icons/class_var_obj.png"
   GLOBAL_VAR_IMAGE = "icons/global_obj.png"
   CLASS_IMAGE = "icons/class_obj.png"
-  CONSTANT_IMAGE = "icons/constant_obj.gif"
+  CONSTANT_IMAGE = "icons/constant_obj.png"
   MODULE_IMAGE = "icons/module_obj.png"
-  INSTANCE_VAR_IMAGE = "icons/instance_var_obj.gif"
+  INSTANCE_VAR_IMAGE = "icons/instance_var_obj.png"
   PUBLIC_METHOD_IMAGE = "icons/method_public_obj.png"
+  PRIVATE_METHOD_IMAGE = "icons/method_private_obj.png"
+  PROTECTED_METHOD_IMAGE = "icons/method_protected_obj.png"
   
   # String representation of index separator char (so I can insert into strings and have it be right)
   INDEX_SEPARATOR = com.aptana.editor.ruby.index.IRubyIndexConstants::SEPARATOR.chr # '/'
@@ -117,14 +119,18 @@ class ContentAssistant
       # Sort and limit method proposals to uniques
       suggestions.uniq {|p| p[:insert] }.sort_by {|p| p[:display] }
     when org.jrubyparser.ast.NodeType::FCALLNODE, org.jrubyparser.ast.NodeType::VCALLNODE # Implicit self
-      # Infer type of 'self', suggest methods on that type matching the prefix
-      suggestions = suggest_methods(get_self(offset), prefix)
+      suggestions = []
       # VCall could also be an attempt to refer to a local/dynamic var that is incomplete
       if node_at_offset.node_type == org.jrubyparser.ast.NodeType::VCALLNODE
         # Find innermost method scope and suggest local vars in scope!
         method_node = ClosestSpanningNodeLocator.new.find(root_node, offset) {|node| node.node_type == org.jrubyparser.ast.NodeType::DEFNNODE }
-        method_node.scope.getVariables.each {|v| suggestions << create_proposal(v, prefix, LOCAL_VAR_IMAGE) } unless method_node.nil?
+        method_node.scope.getVariables.select {|v| v.start_with?(prefix) }.each {|v| suggestions << create_proposal(v, prefix, LOCAL_VAR_IMAGE) } unless method_node.nil?
       end
+      # Infer type of 'self', suggest methods on that type matching the prefix
+      suggestions << suggest_methods(get_self(offset), prefix)
+      suggestions << suggest_methods("Kernel", prefix)
+      suggestions.flatten!
+      # TODO When there are two suggestions with same exact insertion value, try and merge them down to one!
       suggestions
     when org.jrubyparser.ast.NodeType::INSTVARNODE, org.jrubyparser.ast.NodeType::INSTASGNNODE, org.jrubyparser.ast.NodeType::CLASSVARNODE, org.jrubyparser.ast.NodeType::CLASSVARASGNNODE
       # Suggest instance/class vars with matching prefix in file/enclosing type
@@ -341,8 +347,17 @@ class ContentAssistant
     begin
       # Sneaky haxor! Try and see if this is a type we can grab in our JRuby runtime and inspect!
       # FIXME Should really be using the user's indices and runtime to determine the methods, but this is a nice workable shortcut for now
-      methods = eval(type_name).public_instance_methods(true)
-      methods = methods.sort.select {|m| m.start_with? prefix }
+      type = eval(type_name)
+      # If type is a module, we want singleton_methods and instance_methods. For classes we want instance methods
+      methods = []
+      if type.class == Module
+        methods = type.instance_methods(true)
+        methods << type.singleton_methods
+        methods = methods.flatten.sort.select {|m| m.start_with? prefix }
+      else
+        methods = type.public_instance_methods(true)
+        methods = methods.sort.select {|m| m.start_with? prefix }
+      end
       Ruble::Logger.trace "Instantiated in JRuby, grabbed methods: #{methods}"
       methods.map {|m| create_proposal(m, prefix, PUBLIC_METHOD_IMAGE, type_name)}
     rescue
