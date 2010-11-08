@@ -83,10 +83,14 @@ class ContentAssistant
   # Returns an array of code assists proposals for a given caret offset in the source
   def assist
     Ruble::Logger.log_level = :trace
-    return [] if root_node.nil?    
+    return [] if root_node.nil?
     
     # Now try and get the node that matches our offset!      
     node_at_offset = OffsetNodeLocator.new.find(root_node, offset)
+    if node_at_offset.nil?
+      Ruble::Logger.trace "No node found at offset: #{offset}"
+      return []
+    end
     
     Ruble::Logger.trace node_at_offset.node_type # Log node type for debug purposes
     
