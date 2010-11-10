@@ -292,7 +292,7 @@ class ContentAssistant
   
   def replace_non_ruby_code_with_whitespace(source)
     source = source.gsub(/(%|-)?%>.*?<%(%|=)?/m) {|m| ';' + (' ' * (m.length - 1))}
-    source = source.gsub(/.*?<%(%|=)?/) {|m| ' ' * m.length }
+    source = source.gsub(/^.*?<%(%|=)?/m) {|m| ' ' * m.length }
     last_chunk = source.rindex(/(%|-)?%>.*?$/m, -1)
     if last_chunk
       blah = source.length - last_chunk
