@@ -89,6 +89,7 @@ class ContentAssistant
     node_at_offset = OffsetNodeLocator.new.find(root_node, offset)
     if node_at_offset.nil?
       Ruble::Logger.trace "No node found at offset: #{offset}"
+      # TODO Empty file, empty line? What should we suggest? Types in all indices? Globals? Pre-defined constants?
       return []
     end
     
@@ -269,6 +270,12 @@ class ContentAssistant
     return @root_node unless @root_node.nil?
     
     @src = @io.read
+    # If this is an ERB file, we need to replace all non-erb content with whitespaces!
+    if ENV['TM_FILENAME'].end_with?(".erb") || ENV['TM_FILENAME'].end_with?(".rhtml")
+      Ruble::Logger.trace "Original source: #{@src}"
+      @src = replace_non_ruby_code_with_whitespace(@src)
+      Ruble::Logger.trace "Fixed source: #{@src}"
+    end
     @root_node = parser.parse(ENV['TM_FILENAME'], java.io.StringReader.new(@src), parser_config) rescue nil
     if @root_node.nil?
       # if the syntax is broken because we're mid-edit try to fix common cases of "@|", "$|" or "something.|"
@@ -281,6 +288,17 @@ class ContentAssistant
       end
     end
     @root_node
+  end
+  
+  def replace_non_ruby_code_with_whitespace(source)
+    source = source.gsub(/(%|-)?%>.*?<%(%|=)?/m) {|m| ';' + (' ' * (m.length - 1))}
+    source = source.gsub(/.*?<%(%|=)?/) {|m| ' ' * m.length }
+    last_chunk = source.rindex(/(%|-)?%>.*?$/m, -1)
+    if last_chunk
+      blah = source.length - last_chunk
+      source = source[0...last_chunk] + (' ' * blah)
+    end
+    source
   end
   
   # Generate a hash representing a proposal with an optional image path
