@@ -82,7 +82,7 @@ class ContentAssistant
   
   # Returns an array of code assists proposals for a given caret offset in the source
   def assist
-    Ruble::Logger.log_level = :trace
+    # Ruble::Logger.log_level = :trace
     return [] if root_node.nil?
     
     # Now try and get the node that matches our offset!      
@@ -132,7 +132,17 @@ class ContentAssistant
         method_node.scope.getVariables.select {|v| v.start_with?(prefix) }.each {|v| suggestions << create_proposal(v, prefix, LOCAL_VAR_IMAGE) } unless method_node.nil?
       end
       # Infer type of 'self', suggest methods on that type matching the prefix
-      suggestions << suggest_methods(get_self(offset), prefix)
+      self_type = enclosing_type(offset)
+      self_class = "Object"
+      if !self_type.nil?
+        self_class = self_type.getCPath.name
+        # Check supertype!
+        # TODO Handle traversing up hierarchy beyond just supertype one level above!
+        super_node = self_type.getSuperNode
+        suggestions << suggest_methods(infer(super_node), prefix) if super_node
+      end
+      suggestions << suggest_methods(self_class, prefix)
+      # TODO Handle included modules
       suggestions << suggest_methods("Kernel", prefix)
       suggestions.flatten!
       # TODO When there are two suggestions with same exact insertion value, try and merge them down to one!
