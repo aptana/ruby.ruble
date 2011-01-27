@@ -74,7 +74,7 @@ END
   end
 end
 
-smart_typing_pairs['source.ruby'] = ['"', '"', '|', '|', '(', ')', '{', '}', '[', ']', '“', '”', '‘', '’', "'", "'", '`', '`']
+smart_typing_pairs['source.ruby'] = ['"', '"', '|', '|', '(', ')', '{', '}', '[', ']', "'", "'", '`', '`']
 
 env 'source.ruby' do |e|
   e['TM_COMMENT_START'] = "# "
