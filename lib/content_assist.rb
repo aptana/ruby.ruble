@@ -82,7 +82,8 @@ class ContentAssistant
   
   # Returns an array of code assists proposals for a given caret offset in the source
   def assist
-    # Ruble::Logger.log_level = :trace
+    #Ruble::Logger.log_level = :trace
+    Ruble::Logger.trace "Starting Code Assist"
     return [] if root_node.nil?
     
     # Now try and get the node that matches our offset!      
@@ -94,6 +95,8 @@ class ContentAssistant
     end
     
     Ruble::Logger.trace node_at_offset.node_type # Log node type for debug purposes
+    Ruble::Logger.trace "Prefix: #{prefix}"
+    Ruble::Logger.trace "Full Prefix: #{full_prefix}"
     
     case node_at_offset.node_type
     when org.jrubyparser.ast.NodeType::CALLNODE # Method call, infer type of receiver, then suggest methods on type
@@ -327,17 +330,11 @@ class ContentAssistant
   # Read backwards from our offset in the src until we hit a space, period or colon
   def prefix
     return @prefix if @prefix
-    @prefix = @src[0...offset + 1]
+    @prefix = full_prefix
 
-    # find last period/space/:
-    index = @prefix.rindex('.')
-    @prefix = @prefix[(index + 1)..-1] if !index.nil?
-
-    index = @prefix.rindex(':')
-    @prefix = @prefix[(index + 1)..-1] if !index.nil?
-
-    index = @prefix.rindex(' ')
-    @prefix = @prefix[(index + 1)..-1] if !index.nil?
+    # find last period/space/:    
+    parts = @prefix.split(/(\.|:)+/)
+    @prefix = parts.last if parts
 
     return @prefix
   end
@@ -347,17 +344,8 @@ class ContentAssistant
     @full_prefix = @src[0...offset + 1]
 
     # find last space/newline
-    index = @full_prefix.rindex(' ')
-    @full_prefix = @full_prefix[(index + 1)..-1] if !index.nil?
-    
-    index = @full_prefix.rindex('\n')
-    @full_prefix = @full_prefix[(index + 1)..-1] if !index.nil?
-    
-    index = @full_prefix.rindex('\r')
-    @full_prefix = @full_prefix[(index + 1)..-1] if !index.nil?
-    
-    index = @full_prefix.rindex('\t')
-    @full_prefix = @full_prefix[(index + 1)..-1] if !index.nil?
+    parts = @full_prefix.split(/\s+/)
+    @full_prefix = parts.last if parts
 
     return @full_prefix
   end
