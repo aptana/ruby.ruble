@@ -335,7 +335,7 @@ class ContentAssistant
     # find last period/space/:    
     parts = @prefix.split(/(\.|:)+/)
     @prefix = parts.last if parts
-
+    @prefix = '' if @prefix == '.' || @prefix == ':'
     return @prefix
   end
   
