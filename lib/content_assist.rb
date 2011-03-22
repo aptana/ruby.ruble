@@ -7,6 +7,7 @@ require 'content_assist/first_precursor_node_locator'
 # Ruby Content Assistant
 class ContentAssistant
   
+  KEYWORDS = %w{alias and BEGIN begin break case class def defined do else elsif END end ensure false for if in module next nil not or redo rescue retry return self super then true undef unless until when while yield}
   # ID of the ruby plugin that we're reusing icons from
   RUBY_PLUGIN_ID = "com.aptana.editor.ruby"
   
@@ -84,9 +85,17 @@ class ContentAssistant
   def assist
     #Ruble::Logger.log_level = :trace
     Ruble::Logger.trace "Starting Code Assist"
-    return [] if root_node.nil?
+    # If we can't parse because syntax is broken, fallback to keyword suggestions only...
+    if root_node.nil?
+      suggestions = []
+      # TODO Are there other suggestions we can give without having the AST?
+      # TODO If prefix begins with "@", search the input src with a regexp for instance variables?
+      KEYWORDS.select {|k| k.start_with?(prefix) }.each {|k| suggestions << create_proposal(k, prefix) }
+      return suggestions
+    end
     
-    # Now try and get the node that matches our offset!      
+    # Ok, we coudl parse and have an AST to work off of
+    # Now try and get the node that matches our offset!
     node_at_offset = OffsetNodeLocator.new.find(root_node, offset)
     if node_at_offset.nil?
       Ruble::Logger.trace "No node found at offset: #{offset}"
@@ -130,6 +139,8 @@ class ContentAssistant
       suggestions = []
       # VCall could also be an attempt to refer to a local/dynamic var that is incomplete
       if node_at_offset.node_type == org.jrubyparser.ast.NodeType::VCALLNODE
+        # TODO Add keywords like 'def', 'class', 'module'
+        KEYWORDS.select {|k| k.start_with?(prefix) }.each {|k| suggestions << create_proposal(k, prefix) }
         # Find innermost method scope and suggest local vars in scope!
         method_node = ClosestSpanningNodeLocator.new.find(root_node, offset) {|node| node.node_type == org.jrubyparser.ast.NodeType::DEFNNODE }
         method_node.scope.getVariables.select {|v| v.start_with?(prefix) }.each {|v| suggestions << create_proposal(v, prefix, LOCAL_VAR_IMAGE) } unless method_node.nil?

@@ -1,6 +1,8 @@
 # Given a filepath as a string, we resolve to a file in the workspace, grab it's project and then grab the relevant index for that project
+# Return nil if the file is outside the workspace
 def index(filepath)
   file = org.eclipse.core.resources.ResourcesPlugin.workspace.root.getFileForLocation(org.eclipse.core.runtime.Path.new(filepath))
+  return nil unless file
   project = file.project
   index_manager.getIndex(project.locationURI)
 end
@@ -25,7 +27,9 @@ end
 
 # returns an array of the project index, ruby core index, std lib indiced and all gem indices
 def all_applicable_indices(filepath)
-  indices = [index(filepath)]
+  indices = []
+  project_index = index(filepath)
+  indices << project_index if project_index
   indices << ruby_core_index
   indices << std_lib_indices
   indices << gem_indices
