@@ -78,6 +78,7 @@ smart_typing_pairs['source.ruby'] = ['"', '"', '|', '|', '(', ')', '{', '}', '['
 
 env 'source.ruby' do |e|
   e['TM_COMMENT_START'] = "# "
+  e.delete('TM_COMMENT_END')
   e['TM_COMMENT_START_2'] = "=begin\n"
   e['TM_COMMENT_END_2'] = "=end\n"
 end
