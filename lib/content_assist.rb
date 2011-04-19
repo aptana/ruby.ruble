@@ -94,7 +94,7 @@ class ContentAssistant
       return suggestions
     end
     
-    # Ok, we coudl parse and have an AST to work off of
+    # Ok, we could parse and have an AST to work off of
     # Now try and get the node that matches our offset!
     node_at_offset = OffsetNodeLocator.new.find(root_node, offset)
     if node_at_offset.nil?
@@ -148,19 +148,12 @@ class ContentAssistant
       # Infer type of 'self', suggest methods on that type matching the prefix
       self_type = enclosing_type(offset)
       self_class = "Object"
-      if !self_type.nil?
-        self_class = self_type.getCPath.name
-        # Check supertype!
-        # TODO Handle traversing up hierarchy beyond just supertype one level above!
-        super_node = self_type.getSuperNode
-        suggestions << suggest_methods(infer(super_node), prefix) if super_node
-      end
-      suggestions << suggest_methods(self_class, prefix)
-      # TODO Handle included modules
-      suggestions << suggest_methods("Kernel", prefix)
+      self_class = self_type.getCPath.name if self_type
+      super_type_names = super_types(self_class)
+      super_type_names << self_class # TODO Include namespace!
+      super_type_names.each {|t| suggestions << suggest_methods(t, prefix) }
       suggestions.flatten!
-      # TODO When there are two suggestions with same exact insertion value, try and merge them down to one!
-      suggestions
+      suggestions.uniq {|p| p[:insert] }.sort_by {|p| p[:display] }
     when org.jrubyparser.ast.NodeType::INSTVARNODE, org.jrubyparser.ast.NodeType::INSTASGNNODE, org.jrubyparser.ast.NodeType::CLASSVARNODE, org.jrubyparser.ast.NodeType::CLASSVARASGNNODE
       # Suggest instance/class vars with matching prefix in file/enclosing type
       suggestions = []      
@@ -185,6 +178,15 @@ class ContentAssistant
         suggestions << create_proposal(r.word, prefix, CONSTANT_IMAGE)
       end
       suggestions
+    when org.jrubyparser.ast.NodeType::CLASSNODE
+      # FIXME This happens when we're in empty space inside class declaration, what about when we're actually on class/super name?
+      self_class = node_at_offset.getCPath.name
+      suggestions = []
+      super_type_names = super_types(self_class)
+      super_type_names << self_class # TODO Include namespace!
+      super_type_names.each {|t| suggestions << suggest_methods(t, prefix) }
+      suggestions.flatten!
+      suggestions.uniq {|p| p[:insert] }.sort_by {|p| p[:display] }
     else
       # A node type we currently don't handle
       Ruble::Logger.trace node_at_offset.node_type
@@ -193,6 +195,46 @@ class ContentAssistant
   end
   
   private
+  
+  def extract_super_type_from_ref_key(key)
+    parts = key.split('/')
+    simple_name = parts[0] # simple name
+    namespace = parts[1] # namespace
+    if namespace.length > 0
+      "#{namespace}::#{simple_name}"
+    else
+      simple_name
+    end
+  end
+  
+  # Breaks a fully qualified type name into namespace and base/simple name
+  def namespace_type(fully_qualified_type_name)
+    simple_name = fully_qualified_type_name.split("::").last
+    last_separator = fully_qualified_type_name.rindex("::")
+    namespace = last_separator.nil? ? "" : fully_qualified_type_name[0..last_separator - 1]
+    return [namespace, simple_name]
+  end
+  
+  # Actually generate the list of super types and return them all, so we can query up the hierarchy for methods!
+  def super_types(type_name)
+    return ['Kernel'] if type_name == 'Object'
+    # Break type_name up into type name and namespace...
+    namespace, type_name = namespace_type(type_name)
+    fully_qualified_type_names = []
+    # Take the type name and find all the super types and included modules
+    all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
+      next unless index
+      results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::SUPER_REF], "*#{INDEX_SEPARATOR}*#{INDEX_SEPARATOR}#{type_name}#{INDEX_SEPARATOR}#{namespace}#{INDEX_SEPARATOR}*", com.aptana.index.core.SearchPattern::PATTERN_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+      results.each {|r| fully_qualified_type_names << extract_super_type_from_ref_key(r.getWord) } unless results.nil?
+    end
+    Ruble::Logger.trace "Supertypes of #{type_name}: #{fully_qualified_type_names}"
+    # Now grab all the supertypes of these super types!
+    to_add = []
+    fully_qualified_type_names.each {|name| to_add << super_types(name) }
+    fully_qualified_type_names << to_add
+    fully_qualified_type_names.flatten.uniq
+  end
+  
   def prefix_search(index, *rest)
     results = index.query(rest, prefix, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
     results.each {|r| yield r } if block_given? and results
@@ -221,9 +263,7 @@ class ContentAssistant
   
   def find_type_declarations(type_name)
     # Need to handle when type_name has namespace!
-    simple_name = type_name.split("::").last
-    last_separator = type_name.rindex("::")
-    namespace = last_separator.nil? ? "" : type_name[0..last_separator - 1]
+    namespace, simple_name = namespace_type(type_name)
     Ruble::Logger.trace "Raw: #{type_name}, Namespace: #{namespace}, Simple: #{simple_name}"
     types = []
     docs = []
@@ -256,6 +296,7 @@ class ContentAssistant
         Ruble::Logger.log_error "Couldn't parse #{doc}: #{e}"
       end
     end
+    Ruble::Logger.trace "Grabbed type model elements: #{types.join(', ')}"
     types.flatten!
     types
   end
@@ -327,10 +368,11 @@ class ContentAssistant
   
   # Generate a hash representing a proposal with an optional image path
   def create_proposal(proposal, prefix, image = nil, location = nil)
-   hash = { :insert => proposal[prefix.length..-1], :display => proposal }
-   hash[:image] = image_url(RUBY_PLUGIN_ID, image).toString unless image.nil?
-   hash[:location] = location unless location.nil?
-   hash
+    Ruble::Logger.trace "Creating proposal: #{proposal}"
+    hash = { :insert => proposal[prefix.length..-1], :display => proposal }
+    hash[:image] = image_url(RUBY_PLUGIN_ID, image).toString unless image.nil?
+    hash[:location] = location unless location.nil?
+    hash
   end
   
   # Return an URL that can be used to refer to an image packaged in a plugin
@@ -346,12 +388,17 @@ class ContentAssistant
     # find last period/space/:    
     parts = @prefix.split(/(\.|:)+/)
     @prefix = parts.last if parts
-    @prefix = '' if @prefix == '.' || @prefix == ':'
+    @prefix = '' if @prefix.nil? || @prefix == '.' || @prefix == ':'
     return @prefix
   end
   
   def full_prefix
     return @full_prefix if @full_prefix
+    # If we're actually on whitespace, there should be no prefix!
+    if @src[offset...offset + 1] =~ /\s/
+      @full_prefix = ''
+      return @full_prefix
+    end
     @full_prefix = @src[0...offset + 1]
 
     # find last space/newline
@@ -371,10 +418,10 @@ class ContentAssistant
   def enclosing_type(offset)
     ClosestSpanningNodeLocator.new.find(root_node, offset) {|node| node.node_type == org.jrubyparser.ast.NodeType::CLASSNODE or node.node_type == org.jrubyparser.ast.NodeType::MODULENODE }
   end
-  
+
   # Given a type name, we try to reconstruct the type to get at it's methods. Then we generate proposals from that listing
   def suggest_methods(type_name, prefix)
-    Ruble::Logger.trace "Suggesting methods for: #{type_name} with prefix: #{prefix}"
+    Ruble::Logger.trace "Suggesting methods for: #{type_name} with prefix: '#{prefix}'"
     begin
       # Sneaky haxor! Try and see if this is a type we can grab in our JRuby runtime and inspect!
       # FIXME Should really be using the user's indices and runtime to determine the methods, but this is a nice workable shortcut for now
@@ -384,10 +431,10 @@ class ContentAssistant
       if type.class == Module
         methods = type.instance_methods(true)
         methods << type.singleton_methods
-        methods = methods.flatten.sort.select {|m| m.start_with? prefix }
+        methods = methods.flatten.sort.select {|m| m.start_with?(prefix) }
       else
         methods = type.public_instance_methods(true)
-        methods = methods.sort.select {|m| m.start_with? prefix }
+        methods = methods.sort.select {|m| m.start_with?(prefix) }
       end
       Ruble::Logger.trace "Instantiated in JRuby, grabbed methods: #{methods}"
       methods.map {|m| create_proposal(m, prefix, PUBLIC_METHOD_IMAGE, type_name)}
@@ -397,10 +444,17 @@ class ContentAssistant
       proposals = []      
       types = find_type_declarations(type_name)
       types.each do |t|
+        Ruble::Logger.trace "Iterating over methods on type element: #{t}"
         t.getMethods.each do |m|
+          Ruble::Logger.trace "Checking method: #{m.name}, #{m.visibility}"
+          Ruble::Logger.trace "Prefix matches method name" if m.name.start_with?(prefix)
+          Ruble::Logger.trace "Is public method" if m.visibility == com.aptana.editor.ruby.core.IRubyMethod::Visibility::PUBLIC
           # FIXME Use the correct image given the visibility!
           # FIXME Don't filter out non-public methods if they're on type that encloses us!
-          proposals << create_proposal(m.name, prefix, PUBLIC_METHOD_IMAGE, type_name) if m.name.start_with?(prefix) && (m.visibility == com.aptana.editor.ruby.core.IRubyMethod::Visibility::PUBLIC)
+          if m.name.start_with?(prefix) && (m.visibility == com.aptana.editor.ruby.core.IRubyMethod::Visibility::PUBLIC)
+            Ruble::Logger.trace "Prefix matches and method is public, adding CA entry"
+            proposals << create_proposal(m.name, prefix, PUBLIC_METHOD_IMAGE, type_name)
+          end
         end
       end      
       proposals
