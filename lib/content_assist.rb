@@ -19,6 +19,7 @@ class ContentAssistant
   CONSTANT_IMAGE = "icons/constant_obj.png"
   MODULE_IMAGE = "icons/module_obj.png"
   INSTANCE_VAR_IMAGE = "icons/instance_var_obj.png"
+  SINGLETON_METHOD_IMAGE = "icons/class_method.png"
   PUBLIC_METHOD_IMAGE = "icons/method_public_obj.png"
   PRIVATE_METHOD_IMAGE = "icons/method_private_obj.png"
   PROTECTED_METHOD_IMAGE = "icons/method_protected_obj.png"
@@ -109,6 +110,7 @@ class ContentAssistant
     
     case node_at_offset.node_type
     when org.jrubyparser.ast.NodeType::CALLNODE # Method call, infer type of receiver, then suggest methods on type
+      Ruble::Logger.trace "Receiver: #{node_at_offset.getReceiverNode}"
       types = infer(node_at_offset.getReceiverNode)
       types = [types].flatten
       
@@ -123,6 +125,7 @@ class ContentAssistant
         end
       else
         # Inferred actual types!
+        # TODO Based on receiver, pass in flags to control if we include instance or singleton methods! i.e. if it's a ConstNode for a class, probably just include singleton
         types.each {|t| suggestions << suggest_methods(t, prefix) }
         suggestions.flatten!
       end
@@ -373,24 +376,47 @@ class ContentAssistant
   end
   
   # Given a type name, we try to reconstruct the type to get at it's methods. Then we generate proposals from that listing
-  def suggest_methods(type_name, prefix)
-    Ruble::Logger.trace "Suggesting methods for: #{type_name} with prefix: #{prefix}"
+  def suggest_methods(type_name, prefix, include_instance = true, include_singleton = true)
+    Ruble::Logger.trace "Suggesting methods for: #{type_name} with prefix: '#{prefix}'"
     begin
       # Sneaky haxor! Try and see if this is a type we can grab in our JRuby runtime and inspect!
       # FIXME Should really be using the user's indices and runtime to determine the methods, but this is a nice workable shortcut for now
       type = eval(type_name)
-      # If type is a module, we want singleton_methods and instance_methods. For classes we want instance methods
-      methods = []
+      proposals = []
       if type.class == Module
-        methods = type.instance_methods(true)
-        methods << type.singleton_methods
-        methods = methods.flatten.sort.select {|m| m.start_with? prefix }
+        # instance methods
+        if include_instance
+          methods = type.instance_methods(true)
+          methods = methods.flatten.sort.select {|m| m.start_with?(prefix) }
+          Ruble::Logger.trace "Instantiated in JRuby, grabbed instance methods: #{methods}"
+          proposals << methods.map {|m| create_proposal(m, prefix, PUBLIC_METHOD_IMAGE, type_name)}
+        end
+        
+        # Singleton methods
+        if include_singleton
+          methods = type.singleton_methods
+          methods = methods.flatten.sort.select {|m| m.start_with?(prefix) }
+          Ruble::Logger.trace "Instantiated in JRuby, grabbed singleton methods: #{methods}"
+          proposals <<  methods.map {|m| create_proposal(m, prefix, SINGLETON_METHOD_IMAGE, type_name)}
+        end
       else
-        methods = type.public_instance_methods(true)
-        methods = methods.sort.select {|m| m.start_with? prefix }
+        # Public instance methods
+        if include_instance
+          methods = type.public_instance_methods(true)
+          methods = methods.flatten.sort.select {|m| m.start_with?(prefix) }
+          Ruble::Logger.trace "Instantiated in JRuby, grabbed public instance methods: #{methods}"
+          proposals <<  methods.map {|m| create_proposal(m, prefix, PUBLIC_METHOD_IMAGE, type_name)}
+        end
+        
+        # Singleton methods
+        if include_singleton
+          methods = type.singleton_methods(true) # include singletons from included modules
+          methods = methods.flatten.sort.select {|m| m.start_with?(prefix) }
+          Ruble::Logger.trace "Instantiated in JRuby, grabbed singleton methods: #{methods}"
+          proposals <<  methods.map {|m| create_proposal(m, prefix, SINGLETON_METHOD_IMAGE, type_name)}
+        end
       end
-      Ruble::Logger.trace "Instantiated in JRuby, grabbed methods: #{methods}"
-      methods.map {|m| create_proposal(m, prefix, PUBLIC_METHOD_IMAGE, type_name)}
+      proposals
     rescue
       Ruble::Logger.trace "Instantiation in JRuby failed, constructing type from indices"
       # Damn, we have to do things the hard way!
@@ -400,7 +426,11 @@ class ContentAssistant
         t.getMethods.each do |m|
           # FIXME Use the correct image given the visibility!
           # FIXME Don't filter out non-public methods if they're on type that encloses us!
-          proposals << create_proposal(m.name, prefix, PUBLIC_METHOD_IMAGE, type_name) if m.name.start_with?(prefix) && (m.visibility == com.aptana.editor.ruby.core.IRubyMethod::Visibility::PUBLIC)
+          # FIXME check include_singleton and include_instance flags!
+          if m.name.start_with?(prefix) && (m.visibility == com.aptana.editor.ruby.core.IRubyMethod::Visibility::PUBLIC)
+            Ruble::Logger.trace "Prefix matches and method is public, adding CA entry"
+            proposals << create_proposal(m.name, prefix, PUBLIC_METHOD_IMAGE, type_name)
+          end
         end
       end      
       proposals
