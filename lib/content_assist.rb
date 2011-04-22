@@ -180,7 +180,7 @@ class ContentAssistant
       prefix_search(index(ENV['TM_FILEPATH']), com.aptana.editor.ruby.index.IRubyIndexConstants::CONSTANT_DECL) do |r|
         suggestions << create_proposal(r.word, prefix, CONSTANT_IMAGE)
       end
-      suggestions
+      suggestions.uniq {|p| p[:insert] }.sort_by {|p| p[:display] }
     when org.jrubyparser.ast.NodeType::CLASSNODE
       # FIXME This happens when we're in empty space inside class declaration, what about when we're actually on class/super name?
       self_class = node_at_offset.getCPath.name
@@ -331,7 +331,7 @@ class ContentAssistant
   end
   
   def parser_config
-    org.jrubyparser.parser.ParserConfiguration.new(0, org.jrubyparser.CompatVersion::RUBY1_8)
+    org.jrubyparser.parser.ParserConfiguration.new(0, org.jrubyparser.CompatVersion::BOTH)
   end
   
   # Lazily parse the source
