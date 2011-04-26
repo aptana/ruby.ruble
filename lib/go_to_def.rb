@@ -191,7 +191,7 @@ class GoToDefinition
   end
 
   def parser_config
-    org.jrubyparser.parser.ParserConfiguration.new(0, org.jrubyparser.CompatVersion::RUBY1_8)
+    org.jrubyparser.parser.ParserConfiguration.new(0, org.jrubyparser.CompatVersion::BOTH)
   end
 
   # Lazily parse the source
