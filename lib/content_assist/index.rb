@@ -1,5 +1,7 @@
 # Given a filepath as a string, we resolve to a file in the workspace, grab it's project and then grab the relevant index for that project
 # Return nil if the file is outside the workspace
+CoreStubber = com.aptana.ruby.internal.core.index.CoreStubber rescue com.aptana.editor.ruby.CoreStubber
+
 def index(filepath)
   file = org.eclipse.core.resources.ResourcesPlugin.workspace.root.getFileForLocation(org.eclipse.core.runtime.Path.new(filepath))
   return nil unless file
@@ -12,16 +14,16 @@ def index_manager
 end
 
 def ruby_core_index
-  com.aptana.editor.ruby.CoreStubber.getRubyCoreIndex
+  CoreStubber.getRubyCoreIndex
 end
 
 def std_lib_indices 
-  loadpaths = com.aptana.editor.ruby.CoreStubber.getLoadpaths
+  loadpaths = CoreStubber.getLoadpaths
   loadpaths.collect {|l| index_manager.getIndex(l.toFile.toURI) }.compact
 end
 
 def gem_indices
-  gem_paths = com.aptana.editor.ruby.CoreStubber.getGemPaths
+  gem_paths = CoreStubber.getGemPaths
   gem_paths.collect {|g| index_manager.getIndex(g.toFile.toURI) }.compact
 end
 

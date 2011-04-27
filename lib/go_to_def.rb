@@ -25,6 +25,8 @@ end
 # A class which takes in a src file and an offset and then tries to determine what lives position and trace it back to it's declaration.
 class GoToDefinition
 
+  IRubyIndexConstants = com.aptana.ruby.core.index.IRubyIndexConstants rescue com.aptana.editor.ruby.index.IRubyIndexConstants
+
   def initialize(io, caret_offset)
     @io = io
     @offset = caret_offset - 1 # Move back one char...
@@ -54,7 +56,7 @@ class GoToDefinition
           type_name = receiver.name
           # FIXME Find definition of "initialize" on the type, if it exists!
           all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
-            results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL], type_name + com.aptana.editor.ruby.index.IRubyIndexConstants::SEPARATOR.chr + com.aptana.editor.ruby.index.IRubyIndexConstants::SEPARATOR.chr, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+            results = index.query([IRubyIndexConstants::TYPE_DECL], type_name + IRubyIndexConstants::SEPARATOR.chr + IRubyIndexConstants::SEPARATOR.chr, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
             next unless results
             results.each do |result|
               result.documents.each do |doc|
@@ -67,7 +69,7 @@ class GoToDefinition
         # Grab the right indices
         all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
           Ruble::Logger.trace "Searching #{index} for methods with name #{method_name}"
-          results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::METHOD_DECL], method_name + com.aptana.editor.ruby.index.IRubyIndexConstants::SEPARATOR.chr, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+          results = index.query([IRubyIndexConstants::METHOD_DECL], method_name + IRubyIndexConstants::SEPARATOR.chr, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
           next unless results
           results.each do |result|
             result.documents.each do |doc|
@@ -81,7 +83,7 @@ class GoToDefinition
       method_name = node_at_offset.name
       # Grab the right indices
       all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
-        results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::METHOD_DECL], method_name + com.aptana.editor.ruby.index.IRubyIndexConstants::SEPARATOR.chr, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+        results = index.query([IRubyIndexConstants::METHOD_DECL], method_name + IRubyIndexConstants::SEPARATOR.chr, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
         next unless results
         results.each do |result|
           result.documents.each do |doc|
@@ -104,7 +106,7 @@ class GoToDefinition
       # Search for all declarations of the global
       global_name = node_at_offset.name
       all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
-        results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::GLOBAL_DECL], global_name, com.aptana.index.core.SearchPattern::EXACT_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+        results = index.query([IRubyIndexConstants::GLOBAL_DECL], global_name, com.aptana.index.core.SearchPattern::EXACT_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
         next unless results
         results.each do |result|
           result.documents.each do |doc|
@@ -118,7 +120,7 @@ class GoToDefinition
       all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
         # FIXME Search for constant up the scope!
         # search for constant
-        results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::CONSTANT_DECL], constant_name, com.aptana.index.core.SearchPattern::EXACT_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+        results = index.query([IRubyIndexConstants::CONSTANT_DECL], constant_name, com.aptana.index.core.SearchPattern::EXACT_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
         if results
           results.each do |result|
             next unless result
@@ -130,7 +132,7 @@ class GoToDefinition
         end
         
         # search for type with no namespace
-        results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL], constant_name + com.aptana.editor.ruby.index.IRubyIndexConstants::SEPARATOR.chr + com.aptana.editor.ruby.index.IRubyIndexConstants::SEPARATOR.chr, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+        results = index.query([IRubyIndexConstants::TYPE_DECL], constant_name + IRubyIndexConstants::SEPARATOR.chr + IRubyIndexConstants::SEPARATOR.chr, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
         if results
           results.each do |result|
             next unless result
@@ -147,7 +149,7 @@ class GoToDefinition
       namespace = namespace(node_at_offset)
       all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
         # search for type with namespace
-        results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL], type_name + com.aptana.editor.ruby.index.IRubyIndexConstants::SEPARATOR.chr + namespace + com.aptana.editor.ruby.index.IRubyIndexConstants::SEPARATOR.chr, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+        results = index.query([IRubyIndexConstants::TYPE_DECL], type_name + IRubyIndexConstants::SEPARATOR.chr + namespace + IRubyIndexConstants::SEPARATOR.chr, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
         if results
           results.each do |result|
             next unless result

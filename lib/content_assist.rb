@@ -7,6 +7,13 @@ require 'content_assist/first_precursor_node_locator'
 # Ruby Content Assistant
 class ContentAssistant
   
+  IRubyIndexConstants = com.aptana.ruby.core.index.IRubyIndexConstants rescue com.aptana.editor.ruby.index.IRubyIndexConstants
+  IRubyMethod = com.aptana.ruby.core.IRubyMethod rescue com.aptana.editor.ruby.core.IRubyMethod
+  IRubyElement = com.aptana.ruby.core.IRubyElement rescue com.aptana.editor.ruby.core.IRubyElement
+  SourceElementVisitor = com.aptana.ruby.core.ast.SourceElementVisitor rescue com.aptana.editor.ruby.parsing.SourceElementVisitor
+  RubyStructureBuilder = com.aptana.ruby.core.RubyStructureBuilder rescue com.aptana.editor.ruby.parsing.RubyStructureBuilder
+  RubyScript = com.aptana.ruby.internal.core.RubyScript rescue com.aptana.editor.ruby.parsing.ast.RubyScript
+
   KEYWORDS = %w{alias and BEGIN begin break case class def defined do else elsif END end ensure false for if in module next nil not or redo rescue retry return self super then true undef unless until when while yield}
   # ID of the ruby plugin that we're reusing icons from
   RUBY_PLUGIN_ID = "com.aptana.editor.ruby"
@@ -25,8 +32,8 @@ class ContentAssistant
   PROTECTED_METHOD_IMAGE = "icons/method_protected_obj.png"
   
   # String representation of index separator char (so I can insert into strings and have it be right)
-  INDEX_SEPARATOR = com.aptana.editor.ruby.index.IRubyIndexConstants::SEPARATOR.chr # '/'
-  MODULE_SUFFIX = com.aptana.editor.ruby.index.IRubyIndexConstants::MODULE_SUFFIX.chr # "M"
+  INDEX_SEPARATOR = IRubyIndexConstants::SEPARATOR.chr # '/'
+  MODULE_SUFFIX = IRubyIndexConstants::MODULE_SUFFIX.chr # "M"
   
   # A simple way to "cheat" on type inference. If we hit one of these common method calls, we assume a fixed return type
   COMMON_METHODS = {
@@ -118,7 +125,7 @@ class ContentAssistant
       if types.size == 1 && types.first == "Object" && prefix.length > 0
         # Only inferred to "Object", do global method prefix search
         all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
-          prefix_search(index, com.aptana.editor.ruby.index.IRubyIndexConstants::METHOD_DECL) do |r|
+          prefix_search(index, IRubyIndexConstants::METHOD_DECL) do |r|
             # TODO Include r.documents joined to a string as :location
             suggestions << create_proposal(r.word.split(INDEX_SEPARATOR).first, prefix, PUBLIC_METHOD_IMAGE)
           end
@@ -171,13 +178,13 @@ class ContentAssistant
       # Suggest all types with matching prefix
       suggestions = []
       all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
-        prefix_search(index, com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL) do |r|
+        prefix_search(index, IRubyIndexConstants::TYPE_DECL) do |r|
           suggestions << create_proposal(r.word.split(INDEX_SEPARATOR).first, prefix, r.word.split(INDEX_SEPARATOR).last == MODULE_SUFFIX ? MODULE_IMAGE : CLASS_IMAGE)
         end
       end
       # TODO Use the AST to grab constants in file/scope
       # Now add constants in project
-      prefix_search(index(ENV['TM_FILEPATH']), com.aptana.editor.ruby.index.IRubyIndexConstants::CONSTANT_DECL) do |r|
+      prefix_search(index(ENV['TM_FILEPATH']), IRubyIndexConstants::CONSTANT_DECL) do |r|
         suggestions << create_proposal(r.word, prefix, CONSTANT_IMAGE)
       end
       suggestions.uniq {|p| p[:insert] }.sort_by {|p| p[:display] }
@@ -228,7 +235,7 @@ class ContentAssistant
     # Take the type name and find all the super types and included modules
     all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
       next unless index
-      results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::SUPER_REF], "*#{INDEX_SEPARATOR}*#{INDEX_SEPARATOR}#{type_name}#{INDEX_SEPARATOR}#{namespace}#{INDEX_SEPARATOR}*", com.aptana.index.core.SearchPattern::PATTERN_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+      results = index.query([IRubyIndexConstants::SUPER_REF], "*#{INDEX_SEPARATOR}*#{INDEX_SEPARATOR}#{type_name}#{INDEX_SEPARATOR}#{namespace}#{INDEX_SEPARATOR}*", com.aptana.index.core.SearchPattern::PATTERN_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
       results.each {|r| fully_qualified_type_names << extract_super_type_from_ref_key(r.getWord) } unless results.nil?
     end
     Ruble::Logger.trace "Supertypes of #{type_name}: #{fully_qualified_type_names}"
@@ -253,13 +260,13 @@ class ContentAssistant
     suggestions = []
     search_key = "^(.+)?#{INDEX_SEPARATOR}#{namespace}#{INDEX_SEPARATOR}.*$"    
     all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
-      results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL], search_key, com.aptana.index.core.SearchPattern::REGEX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+      results = index.query([IRubyIndexConstants::TYPE_DECL], search_key, com.aptana.index.core.SearchPattern::REGEX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
       results.each {|r| suggestions << create_proposal(r.word.split(INDEX_SEPARATOR).first, '', r.word.split(INDEX_SEPARATOR).last == MODULE_SUFFIX ? MODULE_IMAGE : CLASS_IMAGE) } if results
     end
     types = find_type_declarations(namespace)    
     types.each do |t|
       # Collect all the constants declared/assigned under this type!
-      constants = t.getChildrenOfType(com.aptana.editor.ruby.core.IRubyElement::CONSTANT)
+      constants = t.getChildrenOfType(IRubyElement::CONSTANT)
       constants.each {|c| suggestions << create_proposal(c.name, '', CONSTANT_IMAGE)}
     end
     suggestions
@@ -273,7 +280,7 @@ class ContentAssistant
     docs = []
     all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
       next unless index
-      results = index.query([com.aptana.editor.ruby.index.IRubyIndexConstants::TYPE_DECL], simple_name + INDEX_SEPARATOR + namespace + INDEX_SEPARATOR, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
+      results = index.query([IRubyIndexConstants::TYPE_DECL], simple_name + INDEX_SEPARATOR + namespace + INDEX_SEPARATOR, com.aptana.index.core.SearchPattern::PREFIX_MATCH | com.aptana.index.core.SearchPattern::CASE_SENSITIVE)
       results.each {|r| r.getDocuments.each {|d| docs << d } } unless results.nil?
     end
     docs.flatten!
@@ -288,12 +295,12 @@ class ContentAssistant
         ast = (doc == ENV['TM_FILEPATH'] ? root_node : parser.parse(doc, java.io.FileReader.new(doc), parser_config))
 
         # Traverse the AST into an in-memory model...
-        script = com.aptana.editor.ruby.parsing.ast.RubyScript.new(0, -1)
-        builder = com.aptana.editor.ruby.parsing.RubyStructureBuilder.new(script)
-        com.aptana.editor.ruby.parsing.SourceElementVisitor.new(builder).acceptNode(ast)
+        script = RubyScript.new(0, -1)
+        builder = RubyStructureBuilder.new(script)
+        SourceElementVisitor.new(builder).acceptNode(ast)
         
         # Now grab the matching type(s) from the model...
-        possible_types = get_children_recursive(script, com.aptana.editor.ruby.core.IRubyElement::TYPE)
+        possible_types = get_children_recursive(script, IRubyElement::TYPE)
         types << possible_types.select {|t| t.name == simple_name } # FIXME Need to handle namespaces here!
       rescue => e
         # couldn't parse the file
@@ -317,7 +324,7 @@ class ContentAssistant
   def suggest_globals
     suggestions = []
     all_applicable_indices(ENV['TM_FILEPATH']).each do |index|
-      prefix_search(index, com.aptana.editor.ruby.index.IRubyIndexConstants::GLOBAL_DECL) {|r| suggestions << r.word }
+      prefix_search(index, IRubyIndexConstants::GLOBAL_DECL) {|r| suggestions << r.word }
     end
     suggestions.uniq.sort.map {|proposal| create_proposal(proposal, prefix, GLOBAL_VAR_IMAGE) }
   end
@@ -476,7 +483,7 @@ class ContentAssistant
           # FIXME Use the correct image given the visibility!
           # FIXME Don't filter out non-public methods if they're on type that encloses us!
           # FIXME check include_singleton and include_instance flags!
-          if m.name.start_with?(prefix) && (m.visibility == com.aptana.editor.ruby.core.IRubyMethod::Visibility::PUBLIC)
+          if m.name.start_with?(prefix) && (m.visibility == IRubyMethod::Visibility::PUBLIC)
             Ruble::Logger.trace "Prefix matches and method is public, adding CA entry"
             proposals << create_proposal(m.name, prefix, PUBLIC_METHOD_IMAGE, type_name)
           end

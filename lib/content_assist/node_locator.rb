@@ -1,6 +1,8 @@
 require 'java'
 
-class NodeLocator < com.aptana.editor.ruby.parsing.ast.InOrderVisitor
+InOrderVisitor = com.aptana.ruby.core.ast.InOrderVisitor rescue com.aptana.editor.ruby.parsing.ast.InOrderVisitor
+
+class NodeLocator < InOrderVisitor
   
   protected
   def spans_offset?(node, offset)
