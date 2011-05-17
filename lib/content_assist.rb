@@ -287,12 +287,14 @@ class ContentAssistant
     Ruble::Logger.trace "Found type declarations in documents: #{docs.join(', ')}"
     # Now iterate over files containing a type with this name...
     docs.each do |doc|
-      doc = doc[5..-1] if doc.start_with? "file:" # Need to convert doc from a URI to a filepath
+      #doc = doc[5..-1] if doc.start_with? "file:" # Need to convert doc from a URI to a filepath
+      # Need to convert URI string to filepath
+      file_path = java.io.File.new(java.net.URI.create(doc)).absolute_path
       
       # Parse the file into an AST...
       begin
         # If this is pointing to currently edited file, use our pre-parsed AST so we pick up changes since last save
-        ast = (doc == ENV['TM_FILEPATH'] ? root_node : parser.parse(doc, java.io.FileReader.new(doc), parser_config))
+        ast = (file_path == ENV['TM_FILEPATH'] ? root_node : parser.parse(file_path, java.io.FileReader.new(file_path), parser_config))
 
         # Traverse the AST into an in-memory model...
         script = RubyScript.new(0, -1)
@@ -304,7 +306,7 @@ class ContentAssistant
         types << possible_types.select {|t| t.name == simple_name } # FIXME Need to handle namespaces here!
       rescue => e
         # couldn't parse the file
-        Ruble::Logger.log_error "Couldn't parse #{doc}: #{e}"
+        Ruble::Logger.log_error "Couldn't parse #{file_path}: #{e}"
       end
     end
     Ruble::Logger.trace "Grabbed type model elements: #{types.join(', ')}"
