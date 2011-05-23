@@ -208,12 +208,11 @@ children:
   scope: source.ruby, project.rails
 - !!com.aptana.scripting.model.SmartTypingPairsElement
   customProperties: null
-  displayName: smart_typing_pairs-0c1ecda6-b9a4-4308-b6c5-e48cf5515f93
-  pairs: [&id002 '"', *id002, &id003 '|', *id003, (, ), '{', '}', '[', ']', &id004 '''',
-    *id004, &id005 '`', *id005]
+  displayName: smart_typing_pairs-c654d5c3-5334-4a6c-8bae-23630c22738f
+  pairs: ['"', '"', '|', '|', (, ), '{', '}', '[', ']', '''', '''', '`', '`']
   path: bundle.rb
   scope: source.ruby
-- !!com.aptana.scripting.model.EnvironmentElement {customProperties: null, displayName: environment-5965b83c-af2a-49ab-a917-1fd3d65f8928,
+- !!com.aptana.scripting.model.EnvironmentElement {customProperties: null, displayName: environment-137d9a0c-c405-43c5-bbdf-dac81862102e,
   path: bundle.rb, scope: source.ruby}
 - !!com.aptana.scripting.model.CommandElement
   async: false
@@ -268,19 +267,6 @@ children:
   outputPath: null
   outputType: insert_as_text
   path: commands/code_completion.rb
-  runType: current_thread
-  scope: source.ruby
-  workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.ContentAssistElement
-  async: false
-  customProperties: null
-  displayName: Type Inference code assist
-  input: [document]
-  inputPath: null
-  keyBindingMap: null
-  outputPath: null
-  outputType: discard
-  path: commands/content_assistant.rb
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
@@ -459,7 +445,8 @@ children:
   input: [none]
   inputPath: null
   keyBindingMap:
-    !!com.aptana.scripting.model.Platform 'ALL': [CONTROL+L]
+    !!com.aptana.scripting.model.Platform 'MAC': [CONTROL+L]
+    !!com.aptana.scripting.model.Platform 'ALL': [ALT+L]
   outputPath: null
   outputType: insert_as_text
   path: commands/hash_pointer.rb
