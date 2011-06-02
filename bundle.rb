@@ -66,8 +66,6 @@ END
     menu.command "Toggle String / Symbol"
     menu.command "Insert ERb's <% .. %> or <%= ..  %>"
     menu.separator
-    menu.command 'Completion: Ruby (rcodetools)'
-    menu.separator
     menu.command "New Method"
     menu.command "Toggle 'do ... end' / '{ ... }'"
     menu.command "Hash Pointer - =>"

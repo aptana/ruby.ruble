@@ -1,220 +1,7 @@
 !!com.aptana.scripting.model.BundleElement
 author: Christopher Williams et al
 children:
-- !!com.aptana.scripting.model.MenuElement
-  children:
-  - children: &id001 []
-    commandName: Run
-    customProperties: null
-    displayName: Run
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Run Focused Unit Test
-    customProperties: null
-    displayName: Run Focused Unit Test
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Run Tests in Current File
-    customProperties: null
-    displayName: Run Tests in Current File
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Run Rake Task
-    customProperties: null
-    displayName: Run Rake Task
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: '-'
-    customProperties: null
-    displayName: '-'
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Documentation for Word
-    customProperties: null
-    displayName: Documentation for Word
-    path: bundle.rb
-    scope: null
-  - children:
-    - children: *id001
-      commandName: Show for Current File / Project
-      customProperties: null
-      displayName: Show for Current File / Project
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children:
-      - children: *id001
-        commandName: Bold
-        customProperties: null
-        displayName: Bold
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: Italic
-        customProperties: null
-        displayName: Italic
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: Typewriter
-        customProperties: null
-        displayName: Typewriter
-        path: bundle.rb
-        scope: null
-      commandName: Format
-      customProperties: null
-      displayName: Format
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: Omit
-      customProperties: null
-      displayName: Omit
-      path: bundle.rb
-      scope: null
-    commandName: RDoc
-    customProperties: null
-    displayName: RDoc
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: '-'
-    customProperties: null
-    displayName: '-'
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Open require
-    customProperties: null
-    displayName: Open require
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Validate Syntax
-    customProperties: null
-    displayName: Validate Syntax
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Validate Syntax (ERB)
-    customProperties: null
-    displayName: Validate Syntax (ERB)
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: '-'
-    customProperties: null
-    displayName: '-'
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Execute Line / Selection as Ruby
-    customProperties: null
-    displayName: Execute Line / Selection as Ruby
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Execute and Update '# =>' Markers
-    customProperties: null
-    displayName: Execute and Update '# =>' Markers
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: '-'
-    customProperties: null
-    displayName: '-'
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Insert Missing requires
-    customProperties: null
-    displayName: Insert Missing requires
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Add ! to Method in Line
-    customProperties: null
-    displayName: Add ! to Method in Line
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Toggle String / Symbol
-    customProperties: null
-    displayName: Toggle String / Symbol
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Insert ERb's <% .. %> or <%= ..  %>
-    customProperties: null
-    displayName: Insert ERb's <% .. %> or <%= ..  %>
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: '-'
-    customProperties: null
-    displayName: '-'
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: 'Completion: Ruby (rcodetools)'
-    customProperties: null
-    displayName: 'Completion: Ruby (rcodetools)'
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: '-'
-    customProperties: null
-    displayName: '-'
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: New Method
-    customProperties: null
-    displayName: New Method
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Toggle 'do ... end' / '{ ... }'
-    customProperties: null
-    displayName: Toggle 'do ... end' / '{ ... }'
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Hash Pointer - =>
-    customProperties: null
-    displayName: Hash Pointer - =>
-    path: bundle.rb
-    scope: null
-  commandName: Ruby
-  customProperties: null
-  displayName: Ruby
-  path: bundle.rb
-  scope: source.ruby, project.rails
-- !!com.aptana.scripting.model.SmartTypingPairsElement
-  customProperties: null
-  displayName: smart_typing_pairs-c654d5c3-5334-4a6c-8bae-23630c22738f
-  pairs: ['"', '"', '|', '|', (, ), '{', '}', '[', ']', '''', '''', '`', '`']
-  path: bundle.rb
-  scope: source.ruby
-- !!com.aptana.scripting.model.EnvironmentElement {customProperties: null, displayName: environment-137d9a0c-c405-43c5-bbdf-dac81862102e,
-  path: bundle.rb, scope: source.ruby}
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [bm]
@@ -228,7 +15,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Validate Syntax (ERB)
@@ -242,7 +29,7 @@ children:
   runType: current_thread
   scope: text.html.ruby, text.html source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Validate Syntax
@@ -256,21 +43,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
-  async: false
-  customProperties: null
-  displayName: 'Completion: Ruby (rcodetools)'
-  input: [document]
-  inputPath: null
-  keyBindingMap:
-    !!com.aptana.scripting.model.Platform 'ALL': [M3+ESC]
-  outputPath: null
-  outputType: insert_as_text
-  path: commands/code_completion.rb
-  runType: current_thread
-  scope: source.ruby
-  workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [cla]
@@ -284,7 +57,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Documentation for Word
@@ -298,7 +71,7 @@ children:
   runType: current_thread
   scope: source.ruby, source.ruby.rails
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [eac]
@@ -312,7 +85,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [eac]
@@ -326,7 +99,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [eas]
@@ -340,7 +113,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Bold
@@ -354,7 +127,7 @@ children:
   runType: current_thread
   scope: source.ruby comment
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Typewriter
@@ -368,7 +141,7 @@ children:
   runType: current_thread
   scope: source.ruby comment
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Italic
@@ -382,7 +155,7 @@ children:
   runType: current_thread
   scope: source.ruby comment
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Execute and Update '# =>' Markers
@@ -396,7 +169,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Execute Line / Selection as Ruby
@@ -410,7 +183,7 @@ children:
   runType: current_thread
   scope: null
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [Forw]
@@ -424,7 +197,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Go to Definition
@@ -438,22 +211,22 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Hash Pointer - =>
   input: [none]
   inputPath: null
   keyBindingMap:
-    !!com.aptana.scripting.model.Platform 'MAC': [CONTROL+L]
     !!com.aptana.scripting.model.Platform 'ALL': [ALT+L]
+    !!com.aptana.scripting.model.Platform 'MAC': [CONTROL+L]
   outputPath: null
   outputType: insert_as_text
   path: commands/hash_pointer.rb
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Insert ERb's <% .. %> or <%= ..  %>
@@ -467,7 +240,7 @@ children:
   runType: current_thread
   scope: text.html.ruby - source, text.xml.ruby - source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Insert Missing requires
@@ -481,7 +254,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Add ! to Method in Line
@@ -495,7 +268,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [mapwi]
@@ -509,7 +282,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: New Method
@@ -523,7 +296,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Omit
@@ -537,7 +310,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Open require
@@ -551,7 +324,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [Pn]
@@ -565,7 +338,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [reqg]
@@ -579,7 +352,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Run
@@ -593,7 +366,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Run Tests in Current File
@@ -607,7 +380,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Run Focused Unit Test
@@ -621,7 +394,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Run Rake Task
@@ -635,7 +408,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Show for Current File / Project
@@ -648,7 +421,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Toggle 'do ... end' / '{ ... }'
@@ -662,7 +435,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Toggle ERb Tags
@@ -676,7 +449,7 @@ children:
   runType: current_thread
   scope: source.ruby.embedded, source.ruby.rails.embedded, comment.block.erb, meta.erb
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Toggle Quote Style
@@ -690,7 +463,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Toggle String / Symbol
@@ -704,7 +477,7 @@ children:
   runType: current_thread
   scope: source.ruby string.quoted, source.ruby constant.other.symbol.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties: null
   displayName: Validate
@@ -717,7 +490,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [worw]
@@ -731,7 +504,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [xml]
@@ -745,7 +518,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [Yd]
@@ -759,7 +532,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [Yl]
@@ -2343,7 +2116,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [cla]
@@ -2357,7 +2130,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [cla]
@@ -2371,7 +2144,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [cla]
@@ -2385,7 +2158,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [cla]
@@ -2399,7 +2172,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [mod]
@@ -2413,7 +2186,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [mod]
@@ -2427,7 +2200,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [mod]
@@ -2441,7 +2214,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [nam]
@@ -2455,7 +2228,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [begin]
@@ -2469,7 +2242,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [as]
@@ -2483,7 +2256,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [ase]
@@ -2497,7 +2270,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [asid]
@@ -2511,7 +2284,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [asio]
@@ -2525,7 +2298,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [asko]
@@ -2539,7 +2312,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [asm]
@@ -2553,7 +2326,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [asn]
@@ -2567,7 +2340,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [asnm]
@@ -2581,7 +2354,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [asne]
@@ -2595,7 +2368,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [asnn]
@@ -2609,7 +2382,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [asns]
@@ -2623,7 +2396,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [asrt]
@@ -2637,7 +2410,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [ass]
@@ -2651,7 +2424,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [ass]
@@ -2665,7 +2438,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [aso]
@@ -2679,7 +2452,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [fl]
@@ -2693,7 +2466,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [=b]
@@ -2707,6 +2480,207 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
+- !!com.aptana.scripting.model.MenuElement
+  children:
+  - children: &id001 []
+    commandName: Run
+    customProperties: null
+    displayName: Run
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Run Focused Unit Test
+    customProperties: null
+    displayName: Run Focused Unit Test
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Run Tests in Current File
+    customProperties: null
+    displayName: Run Tests in Current File
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Run Rake Task
+    customProperties: null
+    displayName: Run Rake Task
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: '-'
+    customProperties: null
+    displayName: '-'
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Documentation for Word
+    customProperties: null
+    displayName: Documentation for Word
+    path: bundle.rb
+    scope: null
+  - children:
+    - children: *id001
+      commandName: Show for Current File / Project
+      customProperties: null
+      displayName: Show for Current File / Project
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children:
+      - children: *id001
+        commandName: Bold
+        customProperties: null
+        displayName: Bold
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: Italic
+        customProperties: null
+        displayName: Italic
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: Typewriter
+        customProperties: null
+        displayName: Typewriter
+        path: bundle.rb
+        scope: null
+      commandName: Format
+      customProperties: null
+      displayName: Format
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: Omit
+      customProperties: null
+      displayName: Omit
+      path: bundle.rb
+      scope: null
+    commandName: RDoc
+    customProperties: null
+    displayName: RDoc
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: '-'
+    customProperties: null
+    displayName: '-'
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Open require
+    customProperties: null
+    displayName: Open require
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Validate Syntax
+    customProperties: null
+    displayName: Validate Syntax
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Validate Syntax (ERB)
+    customProperties: null
+    displayName: Validate Syntax (ERB)
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: '-'
+    customProperties: null
+    displayName: '-'
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Execute Line / Selection as Ruby
+    customProperties: null
+    displayName: Execute Line / Selection as Ruby
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Execute and Update '# =>' Markers
+    customProperties: null
+    displayName: Execute and Update '# =>' Markers
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: '-'
+    customProperties: null
+    displayName: '-'
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Insert Missing requires
+    customProperties: null
+    displayName: Insert Missing requires
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Add ! to Method in Line
+    customProperties: null
+    displayName: Add ! to Method in Line
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Toggle String / Symbol
+    customProperties: null
+    displayName: Toggle String / Symbol
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Insert ERb's <% .. %> or <%= ..  %>
+    customProperties: null
+    displayName: Insert ERb's <% .. %> or <%= ..  %>
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: '-'
+    customProperties: null
+    displayName: '-'
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: New Method
+    customProperties: null
+    displayName: New Method
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Toggle 'do ... end' / '{ ... }'
+    customProperties: null
+    displayName: Toggle 'do ... end' / '{ ... }'
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Hash Pointer - =>
+    customProperties: null
+    displayName: Hash Pointer - =>
+    path: bundle.rb
+    scope: null
+  commandName: Ruby
+  customProperties: null
+  displayName: Ruby
+  path: bundle.rb
+  scope: source.ruby, project.rails
+- !!com.aptana.scripting.model.SmartTypingPairsElement
+  customProperties: null
+  displayName: smart_typing_pairs-11fa3c0d-1872-40b4-aee5-e9b5fac79873
+  pairs: ['"', '"', '|', '|', (, ), '{', '}', '[', ']', '''', '''', '`', '`']
+  path: bundle.rb
+  scope: source.ruby
+- !!com.aptana.scripting.model.EnvironmentElement {customProperties: null, displayName: environment-a1def4e9-e8bf-4ef3-8100-70b53b13d279,
+  path: bundle.rb, scope: source.ruby}
 copyright: '(C) Copyright 2010 Aptana Inc. Distributed under the MIT license.
 
 
@@ -2721,7 +2695,7 @@ description: "Support for the Ruby programming language (http://www.ruby-lang.or
   \n  Kenny Ortmann (http://github.com/yairgo)\n"
 displayName: Ruby
 fileTypeRegistry: {}
-fileTypes: *id001
+fileTypes: []
 foldingStartMarkers: {!scope 'source.ruby': !regexp '(?-mix:(\s*+(module|class|def(?!.*\bend\s*$)|unless|if|case|begin|for|while|until|^=begin|("(\\.|[^"])*+"|''(\\.|[^''])*+''|[^#"''])*(\s(do|begin|case)|(?<!\$)[-+=&|*\/~%^<>~]\s*+(if|unless)))\b(?![^;]*+;.*?\bend\b)|("(\\.|[^"])*+"|''(\\.|[^''])*+''|[^#"''])*(\{(?![^}]*+\})|\[(?![^\]]*+\]))).*$|[#].*?\(fold\)\s*+$)'}
 foldingStopMarkers: {!scope 'source.ruby': !regexp '(?-mix:((^|;)\s*+end\s*+([#].*)?$|(^|;)\s*+end\..*$|^\s*+[}\]],?\s*+([#].*)?$|[#].*?\(end\)\s*+$|^=end))'}
 increaseIndentMarkers: {!scope 'source.ruby': !regexp '(?x-mi:^(\s*(module|class|def|unless|if|else|elsif|case|when|begin|rescue|ensure|for|while|until|(?=.*?\b(do|begin|case|if|unless)\b)("(\\.|[^\\"])*+"|''(\\.|[^\\''])*+''|[^#"''])*(\s(do|begin|case)|[-+=&|*\/~%^<>~](?<!\$.)
