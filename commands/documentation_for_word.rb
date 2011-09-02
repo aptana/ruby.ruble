@@ -37,7 +37,7 @@ def ri(term, recurse = true)
 end
 
 command "Documentation for Word" do |cmd|
-  cmd.key_binding = 'Control+H'
+  #cmd.key_binding = 'M4+H'
   cmd.output = :show_as_tooltip
   cmd.input = :selection, :word
   cmd.scope = "source.ruby", "source.ruby.rails"

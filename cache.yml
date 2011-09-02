@@ -264,8 +264,7 @@ children:
   displayName: Documentation for Word
   input: [selection, word]
   inputPath: null
-  keyBindingMap:
-    !!com.aptana.scripting.model.Platform 'ALL': [CONTROL+H]
+  keyBindingMap: null
   outputPath: null
   outputType: show_as_tooltip
   path: commands/documentation_for_word.rb
