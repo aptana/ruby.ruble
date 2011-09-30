@@ -1,4 +1,5 @@
 require 'ruble'
+require 'ruble/ui'
 
 command 'word_wrap()' do |cmd|
   cmd.scope = 'source.ruby'
@@ -6,7 +7,6 @@ command 'word_wrap()' do |cmd|
   cmd.input = :none
   cmd.trigger = "worw" #FIXME In text mate this prefix will get replaced, but we don't seem to replace
   cmd.invoke do |context|
-    require "Ruble/ui"
     options = { :title => "Wrap Size", :prompt => "Enter a character width:", :button1 => "Build Snippet" }
     Ruble::UI.request_string(options) do |col|
       col = col.to_i
