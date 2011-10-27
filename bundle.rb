@@ -245,7 +245,7 @@ END
       tests.command 'results.report(..) { .. }'
     end
     menu.menu "Serialization" do |serial|
-      serial.command " snippet 'Marshal.dump(.., file)"
+      serial.command "Marshal.dump(.., file)"
       serial.command 'Marshal.load(obj)'
       serial.separator
       serial.command 'PStore.new( .. )'

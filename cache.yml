@@ -2465,7 +2465,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.CommandElement
+- !command
   async: false
   customProperties:
     prefix_values: [worw]
@@ -3629,9 +3629,9 @@ children:
     scope: null
   - children:
     - children: *id001
-      commandName: ' snippet ''Marshal.dump(.., file)'
+      commandName: Marshal.dump(.., file)
       customProperties: null
-      displayName: ' snippet ''Marshal.dump(.., file)'
+      displayName: Marshal.dump(.., file)
       path: bundle.rb
       scope: null
     - children: *id001
@@ -3766,11 +3766,11 @@ children:
   scope: source.ruby, project.rails
 - !!com.aptana.scripting.model.SmartTypingPairsElement
   customProperties: null
-  displayName: smart_typing_pairs-273637b0-db18-47b6-ac4f-64e0dcfa49da
+  displayName: smart_typing_pairs-ca3cf3d1-3001-4414-acb5-0964b5396b83
   pairs: ['"', '"', '|', '|', (, ), '{', '}', '[', ']', '''', '''', '`', '`']
   path: bundle.rb
   scope: source.ruby
-- !!com.aptana.scripting.model.EnvironmentElement {customProperties: null, displayName: environment-111e7a62-78cc-417a-9b97-1c1004e2da06,
+- !!com.aptana.scripting.model.EnvironmentElement {customProperties: null, displayName: environment-30a21dc1-7a4f-41a2-9970-ee0fa68b6f34,
   path: bundle.rb, scope: source.ruby}
 copyright: '(C) Copyright 2010 Aptana Inc. Distributed under the MIT license.
 
