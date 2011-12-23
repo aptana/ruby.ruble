@@ -1,7 +1,1300 @@
 !!com.aptana.scripting.model.BundleElement
 author: Christopher Williams et al
 children:
-- !command
+- !!com.aptana.scripting.model.MenuElement
+  children:
+  - children: &id001 []
+    commandName: Run
+    customProperties: null
+    displayName: Run
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Run Focused Unit Test
+    customProperties: null
+    displayName: Run Focused Unit Test
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Run Tests in Current File
+    customProperties: null
+    displayName: Run Tests in Current File
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: '-'
+    customProperties: null
+    displayName: '-'
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Documentation for Word
+    customProperties: null
+    displayName: Documentation for Word
+    path: bundle.rb
+    scope: null
+  - children:
+    - children: *id001
+      commandName: Show for Current File / Project
+      customProperties: null
+      displayName: Show for Current File / Project
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children:
+      - children: *id001
+        commandName: Bold
+        customProperties: null
+        displayName: Bold
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: Italic
+        customProperties: null
+        displayName: Italic
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: Typewriter
+        customProperties: null
+        displayName: Typewriter
+        path: bundle.rb
+        scope: null
+      commandName: Format
+      customProperties: null
+      displayName: Format
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: Omit
+      customProperties: null
+      displayName: Omit
+      path: bundle.rb
+      scope: null
+    commandName: RDoc
+    customProperties: null
+    displayName: RDoc
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: '-'
+    customProperties: null
+    displayName: '-'
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Open require
+    customProperties: null
+    displayName: Open require
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Validate Syntax
+    customProperties: null
+    displayName: Validate Syntax
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Validate Syntax (ERB)
+    customProperties: null
+    displayName: Validate Syntax (ERB)
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: '-'
+    customProperties: null
+    displayName: '-'
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Execute Line / Selection as Ruby
+    customProperties: null
+    displayName: Execute Line / Selection as Ruby
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Execute and Update '# =>' Markers
+    customProperties: null
+    displayName: Execute and Update '# =>' Markers
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Add '# =>' Marker
+    customProperties: null
+    displayName: Add '# =>' Marker
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: '-'
+    customProperties: null
+    displayName: '-'
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Insert Missing requires
+    customProperties: null
+    displayName: Insert Missing requires
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Add ! to Method in Line
+    customProperties: null
+    displayName: Add ! to Method in Line
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Toggle String / Symbol
+    customProperties: null
+    displayName: Toggle String / Symbol
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: Insert ERb's <% .. %> or <%= ..  %>
+    customProperties: null
+    displayName: Insert ERb's <% .. %> or <%= ..  %>
+    path: bundle.rb
+    scope: null
+  - children: *id001
+    commandName: '-'
+    customProperties: null
+    displayName: '-'
+    path: bundle.rb
+    scope: null
+  - children:
+    - children: *id001
+      commandName: New Method
+      customProperties: null
+      displayName: New Method
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: begin ... rescue ... end
+      customProperties: null
+      displayName: begin ... rescue ... end
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: case ... end
+      customProperties: null
+      displayName: case ... end
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: when ...
+      customProperties: null
+      displayName: when ...
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: def ... end
+      customProperties: null
+      displayName: def ... end
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: if ... end
+      customProperties: null
+      displayName: if ... end
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: if ... else ... end
+      customProperties: null
+      displayName: if ... else ... end
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: elsif ...
+      customProperties: null
+      displayName: elsif ...
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: unless ... end
+      customProperties: null
+      displayName: unless ... end
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: while ... end
+      customProperties: null
+      displayName: while ... end
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: until ... end
+      customProperties: null
+      displayName: until ... end
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children:
+      - children: *id001
+        commandName: class .. end
+        customProperties: null
+        displayName: class .. end
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: class .. initialize .. end
+        customProperties: null
+        displayName: class .. initialize .. end
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: class .. < ParentClass .. initialize .. end
+        customProperties: null
+        displayName: class .. < ParentClass .. initialize .. end
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: ClassName = Struct .. do .. end
+        customProperties: null
+        displayName: ClassName = Struct .. do .. end
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: class BlankSlate .. initialize .. end
+        customProperties: null
+        displayName: class BlankSlate .. initialize .. end
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: class .. < DelegateClass .. initialize .. end
+        customProperties: null
+        displayName: class .. < DelegateClass .. initialize .. end
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: class << self .. end
+        customProperties: null
+        displayName: class << self .. end
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: '-'
+        customProperties: null
+        displayName: '-'
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: module .. end
+        customProperties: null
+        displayName: module .. end
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: module .. module_function .. end
+        customProperties: null
+        displayName: module .. module_function .. end
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: module .. ClassMethods .. end
+        customProperties: null
+        displayName: module .. ClassMethods .. end
+        path: bundle.rb
+        scope: null
+      commandName: Classes and Modules
+      customProperties: null
+      displayName: Classes and Modules
+      path: bundle.rb
+      scope: null
+    - children:
+      - children: *id001
+        commandName: attr_reader ..
+        customProperties: null
+        displayName: attr_reader ..
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: attr_writer ..
+        customProperties: null
+        displayName: attr_writer ..
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: attr_accessor ..
+        customProperties: null
+        displayName: attr_accessor ..
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: '-'
+        customProperties: null
+        displayName: '-'
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: include Enumerable ..
+        customProperties: null
+        displayName: include Enumerable ..
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: include Comparable ..
+        customProperties: null
+        displayName: include Comparable ..
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: '-'
+        customProperties: null
+        displayName: '-'
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: Extend Forwardable (Forw)
+        customProperties: null
+        displayName: Extend Forwardable (Forw)
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: '-'
+        customProperties: null
+        displayName: '-'
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: def self .. end
+        customProperties: null
+        displayName: def self .. end
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: def method_missing .. end
+        customProperties: null
+        displayName: def method_missing .. end
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: def_delegator ..
+        customProperties: null
+        displayName: def_delegator ..
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: def_delegators ..
+        customProperties: null
+        displayName: def_delegators ..
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: '-'
+        customProperties: null
+        displayName: '-'
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: alias_method ..
+        customProperties: null
+        displayName: alias_method ..
+        path: bundle.rb
+        scope: null
+      commandName: Methods
+      customProperties: null
+      displayName: Methods
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: __END__
+      customProperties: null
+      displayName: __END__
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '#!/usr/bin/env ruby -wKU'
+      customProperties: null
+      displayName: '#!/usr/bin/env ruby -wKU'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: require ".."
+      customProperties: null
+      displayName: require ".."
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: require_gem ".."
+      customProperties: null
+      displayName: require_gem ".."
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: application { .. }
+      customProperties: null
+      displayName: application { .. }
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: usage_if()
+      customProperties: null
+      displayName: usage_if()
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: usage_unless()
+      customProperties: null
+      displayName: usage_unless()
+      path: bundle.rb
+      scope: null
+    commandName: Declarations
+    customProperties: null
+    displayName: Declarations
+    path: bundle.rb
+    scope: null
+  - children:
+    - children:
+      - children: *id001
+        commandName: Array.new(10) { |i| .. }
+        customProperties: null
+        displayName: Array.new(10) { |i| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: '-'
+        customProperties: null
+        displayName: '-'
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: delete_if { |e| .. }
+        customProperties: null
+        displayName: delete_if { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: fill(range) { |i| .. }
+        customProperties: null
+        displayName: fill(range) { |i| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: flatten_once()
+        customProperties: null
+        displayName: flatten_once()
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: zip(enums) { |row| .. }
+        customProperties: null
+        displayName: zip(enums) { |row| .. }
+        path: bundle.rb
+        scope: null
+      commandName: Arrays
+      customProperties: null
+      displayName: Arrays
+      path: bundle.rb
+      scope: null
+    - children:
+      - children: *id001
+        commandName: downto(0) { |n| .. }
+        customProperties: null
+        displayName: downto(0) { |n| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: step(2) { |e| .. }
+        customProperties: null
+        displayName: step(2) { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: times { |n| .. }
+        customProperties: null
+        displayName: times { |n| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: upto(1.0/0.0) { |n| .. }
+        customProperties: null
+        displayName: upto(1.0/0.0) { |n| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: '-'
+        customProperties: null
+        displayName: '-'
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: loop { .. }
+        customProperties: null
+        displayName: loop { .. }
+        path: bundle.rb
+        scope: null
+      commandName: Counting
+      customProperties: null
+      displayName: Counting
+      path: bundle.rb
+      scope: null
+    - children:
+      - children: *id001
+        commandName: each { |e| .. }
+        customProperties: null
+        displayName: each { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: each_byte { |byte| .. }
+        customProperties: null
+        displayName: each_byte { |byte| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: each_char { |chr| .. }
+        customProperties: null
+        displayName: each_char { |chr| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: each_cons(..) { |group| .. }
+        customProperties: null
+        displayName: each_cons(..) { |group| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: each_index { |i| .. }
+        customProperties: null
+        displayName: each_index { |i| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: each_key { |key| .. }
+        customProperties: null
+        displayName: each_key { |key| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: each_line { |line| .. }
+        customProperties: null
+        displayName: each_line { |line| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: each_pair { |name, val| .. }
+        customProperties: null
+        displayName: each_pair { |name, val| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: each_slice(..) { |group| .. }
+        customProperties: null
+        displayName: each_slice(..) { |group| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: each_value { |val| .. }
+        customProperties: null
+        displayName: each_value { |val| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: each_with_index { |e, i| .. }
+        customProperties: null
+        displayName: each_with_index { |e, i| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: reverse_each { |e| .. }
+        customProperties: null
+        displayName: reverse_each { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: '-'
+        customProperties: null
+        displayName: '-'
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: inject(init) { |mem, var| .. }
+        customProperties: null
+        displayName: inject(init) { |mem, var| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: '-'
+        customProperties: null
+        displayName: '-'
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: map { |e| .. }
+        customProperties: null
+        displayName: map { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: map_with_index { |e, i| .. }
+        customProperties: null
+        displayName: map_with_index { |e, i| .. }
+        path: bundle.rb
+        scope: null
+      commandName: Each Element
+      customProperties: null
+      displayName: Each Element
+      path: bundle.rb
+      scope: null
+    - children:
+      - children: *id001
+        commandName: sort { |a, b| .. }
+        customProperties: null
+        displayName: sort { |a, b| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: sort_by { |e| .. }
+        customProperties: null
+        displayName: sort_by { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: '-'
+        customProperties: null
+        displayName: '-'
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: randomize()
+        customProperties: null
+        displayName: randomize()
+        path: bundle.rb
+        scope: null
+      commandName: Ordering
+      customProperties: null
+      displayName: Ordering
+      path: bundle.rb
+      scope: null
+    - children:
+      - children: *id001
+        commandName: all? { |e| .. }
+        customProperties: null
+        displayName: all? { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: any? { |e| .. }
+        customProperties: null
+        displayName: any? { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: classify { |e| .. }
+        customProperties: null
+        displayName: classify { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: collect { |e| .. }
+        customProperties: null
+        displayName: collect { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: detect { |e| .. }
+        customProperties: null
+        displayName: detect { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: fetch(name) { |key| .. }
+        customProperties: null
+        displayName: fetch(name) { |key| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: find { |e| .. }
+        customProperties: null
+        displayName: find { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: find_all { |e| .. }
+        customProperties: null
+        displayName: find_all { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: grep(/pattern/) { |match| .. }
+        customProperties: null
+        displayName: grep(/pattern/) { |match| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: max { |a, b| .. }
+        customProperties: null
+        displayName: max { |a, b| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: min { |a, b| .. }
+        customProperties: null
+        displayName: min { |a, b| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: partition { |e| .. }
+        customProperties: null
+        displayName: partition { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: reject { |e| .. }
+        customProperties: null
+        displayName: reject { |e| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: select { |e| .. }
+        customProperties: null
+        displayName: select { |e| .. }
+        path: bundle.rb
+        scope: null
+      commandName: Searching and Selection
+      customProperties: null
+      displayName: Searching and Selection
+      path: bundle.rb
+      scope: null
+    - children:
+      - children: *id001
+        commandName: sub(/../) { |match| .. }
+        customProperties: null
+        displayName: sub(/../) { |match| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: gsub(/../) { |match| .. }
+        customProperties: null
+        displayName: gsub(/../) { |match| .. }
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: '-'
+        customProperties: null
+        displayName: '-'
+        path: bundle.rb
+        scope: null
+      - children: *id001
+        commandName: scan(/../) { |match| .. }
+        customProperties: null
+        displayName: scan(/../) { |match| .. }
+        path: bundle.rb
+        scope: null
+      commandName: Strings
+      customProperties: null
+      displayName: Strings
+      path: bundle.rb
+      scope: null
+    commandName: Iterators
+    customProperties: null
+    displayName: Iterators
+    path: bundle.rb
+    scope: null
+  - children:
+    - children: *id001
+      commandName: Toggle 'do ... end' / '{ ... }'
+      customProperties: null
+      displayName: Toggle 'do ... end' / '{ ... }'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: Insert { |variable| ... }
+      customProperties: null
+      displayName: Insert { |variable| ... }
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: Insert do |variable| ... end
+      customProperties: null
+      displayName: Insert do |variable| ... end
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: lambda { |args| .. }
+      customProperties: null
+      displayName: lambda { |args| .. }
+      path: bundle.rb
+      scope: null
+    commandName: Blocks
+    customProperties: null
+    displayName: Blocks
+    path: bundle.rb
+    scope: null
+  - children:
+    - children: *id001
+      commandName: Hash.new { |hash, key| hash[key] = .. }
+      customProperties: null
+      displayName: Hash.new { |hash, key| hash[key] = .. }
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: Hash Pair - :key => "value"
+      customProperties: null
+      displayName: Hash Pair - :key => "value"
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: Hash Pointer - =>
+      customProperties: null
+      displayName: Hash Pointer - =>
+      path: bundle.rb
+      scope: null
+    commandName: Hashes
+    customProperties: null
+    displayName: Hashes
+    path: bundle.rb
+    scope: null
+  - children:
+    - children: *id001
+      commandName: open("path_or_url", "w") { |io| .. }
+      customProperties: null
+      displayName: open("path_or_url", "w") { |io| .. }
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: File.foreach ("..") { |line| .. }
+      customProperties: null
+      displayName: File.foreach ("..") { |line| .. }
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: File.read("..")
+      customProperties: null
+      displayName: File.read("..")
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: File.open("..") { |file| .. }
+      customProperties: null
+      displayName: File.open("..") { |file| .. }
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: Dir.glob("..") { |file| .. }
+      customProperties: null
+      displayName: Dir.glob("..") { |file| .. }
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: Dir[".."]
+      customProperties: null
+      displayName: Dir[".."]
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: directory()
+      customProperties: null
+      displayName: directory()
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: path_from_here( .. )
+      customProperties: null
+      displayName: path_from_here( .. )
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: unix_filter { .. }
+      customProperties: null
+      displayName: unix_filter { .. }
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: option_parse { .. }
+      customProperties: null
+      displayName: option_parse { .. }
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: option(..)
+      customProperties: null
+      displayName: option(..)
+      path: bundle.rb
+      scope: null
+    commandName: Files
+    customProperties: null
+    displayName: Files
+    path: bundle.rb
+    scope: null
+  - children:
+    - children: *id001
+      commandName: class .. < Test::Unit::TestCase .. end
+      customProperties: null
+      displayName: class .. < Test::Unit::TestCase .. end
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: def test_ .. end
+      customProperties: null
+      displayName: def test_ .. end
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: require "tc_.." ..
+      customProperties: null
+      displayName: require "tc_.." ..
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert(..)
+      customProperties: null
+      displayName: assert(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_equal(..)
+      customProperties: null
+      displayName: assert_equal(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_not_equal(..)
+      customProperties: null
+      displayName: assert_not_equal(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_in_delta(..)
+      customProperties: null
+      displayName: assert_in_delta(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_instance_of(..)
+      customProperties: null
+      displayName: assert_instance_of(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_kind_of(..)
+      customProperties: null
+      displayName: assert_kind_of(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_nil(..)
+      customProperties: null
+      displayName: assert_nil(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_not_nil(..)
+      customProperties: null
+      displayName: assert_not_nil(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_match(..)
+      customProperties: null
+      displayName: assert_match(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_no_match(..)
+      customProperties: null
+      displayName: assert_no_match(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_operator(..)
+      customProperties: null
+      displayName: assert_operator(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_raise(..) { .. }
+      customProperties: null
+      displayName: assert_raise(..) { .. }
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_nothing_raised(..) { .. }
+      customProperties: null
+      displayName: assert_nothing_raised(..) { .. }
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_respond_to(..)
+      customProperties: null
+      displayName: assert_respond_to(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_same(..)
+      customProperties: null
+      displayName: assert_same(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_not_same(..)
+      customProperties: null
+      displayName: assert_not_same(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_send(..)
+      customProperties: null
+      displayName: assert_send(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_throws(..) { .. }
+      customProperties: null
+      displayName: assert_throws(..) { .. }
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: assert_nothing_thrown { .. }
+      customProperties: null
+      displayName: assert_nothing_thrown { .. }
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: flunk(..)
+      customProperties: null
+      displayName: flunk(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: Benchmark.bmbm do .. end
+      customProperties: null
+      displayName: Benchmark.bmbm do .. end
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: results.report(..) { .. }
+      customProperties: null
+      displayName: results.report(..) { .. }
+      path: bundle.rb
+      scope: null
+    commandName: Tests
+    customProperties: null
+    displayName: Tests
+    path: bundle.rb
+    scope: null
+  - children:
+    - children: *id001
+      commandName: Marshal.dump(.., file)
+      customProperties: null
+      displayName: Marshal.dump(.., file)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: Marshal.load(obj)
+      customProperties: null
+      displayName: Marshal.load(obj)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: PStore.new( .. )
+      customProperties: null
+      displayName: PStore.new( .. )
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: transaction( .. ) { .. }
+      customProperties: null
+      displayName: transaction( .. ) { .. }
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: YAML.dump(.., file)
+      customProperties: null
+      displayName: YAML.dump(.., file)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: YAML.load(file)
+      customProperties: null
+      displayName: YAML.load(file)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: xmlread(..)
+      customProperties: null
+      displayName: xmlread(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: xpath(..) { .. }
+      customProperties: null
+      displayName: xpath(..) { .. }
+      path: bundle.rb
+      scope: null
+    commandName: Serialization
+    customProperties: null
+    displayName: Serialization
+    path: bundle.rb
+    scope: null
+  - children:
+    - children: *id001
+      commandName: class_from_name()
+      customProperties: null
+      displayName: class_from_name()
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: deep_copy(..)
+      customProperties: null
+      displayName: deep_copy(..)
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: singleton_class()
+      customProperties: null
+      displayName: singleton_class()
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: word_wrap()
+      customProperties: null
+      displayName: word_wrap()
+      path: bundle.rb
+      scope: null
+    commandName: Idioms
+    customProperties: null
+    displayName: Idioms
+    path: bundle.rb
+    scope: null
+  - children:
+    - children: *id001
+      commandName: Run Rake Task
+      customProperties: null
+      displayName: Run Rake Task
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: '-'
+      customProperties: null
+      displayName: '-'
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: namespace :.. do .. end
+      customProperties: null
+      displayName: namespace :.. do .. end
+      path: bundle.rb
+      scope: null
+    - children: *id001
+      commandName: task :task_name => [:dependent, :tasks] do .. end
+      customProperties: null
+      displayName: task :task_name => [:dependent, :tasks] do .. end
+      path: bundle.rb
+      scope: null
+    commandName: Rake
+    customProperties: null
+    displayName: Rake
+    path: bundle.rb
+    scope: null
+  commandName: Ruby
+  customProperties: null
+  displayName: Ruby
+  path: bundle.rb
+  scope: source.ruby, project.rails
+- !!com.aptana.scripting.model.SmartTypingPairsElement
+  customProperties: null
+  displayName: smart_typing_pairs-fcd888cc-91ab-433e-b8e0-a1f45d4aed84
+  pairs: ['"', '"', '|', '|', (, ), '{', '}', '[', ']', '''', '''', '`', '`']
+  path: bundle.rb
+  scope: source.ruby
+- !!com.aptana.scripting.model.EnvironmentElement {customProperties: null, displayName: environment-e18114bb-4e07-4267-9d76-682a41685f27,
+  path: bundle.rb, scope: source.ruby}
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [bm]
@@ -15,7 +1308,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Validate Syntax (ERB)
@@ -29,7 +1322,7 @@ children:
   runType: current_thread
   scope: text.html.ruby, text.html source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Validate Syntax
@@ -43,7 +1336,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [cla]
@@ -57,7 +1350,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Documentation for Word
@@ -70,7 +1363,7 @@ children:
   runType: current_thread
   scope: source.ruby, source.ruby.rails
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [eac]
@@ -84,7 +1377,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [eac]
@@ -98,7 +1391,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [eas]
@@ -112,7 +1405,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Bold
@@ -126,7 +1419,7 @@ children:
   runType: current_thread
   scope: source.ruby comment
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Typewriter
@@ -140,7 +1433,7 @@ children:
   runType: current_thread
   scope: source.ruby comment
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Italic
@@ -154,7 +1447,7 @@ children:
   runType: current_thread
   scope: source.ruby comment
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Execute and Update '# =>' Markers
@@ -168,7 +1461,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Execute Line / Selection as Ruby
@@ -182,7 +1475,7 @@ children:
   runType: current_thread
   scope: null
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [Forw]
@@ -196,7 +1489,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Go to Definition
@@ -210,7 +1503,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Hash Pointer - =>
@@ -225,7 +1518,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Insert ERb's <% .. %> or <%= ..  %>
@@ -239,7 +1532,7 @@ children:
   runType: current_thread
   scope: text.html.ruby - source, text.xml.ruby - source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Insert Missing requires
@@ -253,7 +1546,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Add ! to Method in Line
@@ -267,7 +1560,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [mapwi]
@@ -281,7 +1574,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: New Method
@@ -295,7 +1588,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Omit
@@ -309,7 +1602,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Open require
@@ -323,7 +1616,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [Pn]
@@ -337,7 +1630,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [reqg]
@@ -351,7 +1644,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Run
@@ -365,7 +1658,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Run Tests in Current File
@@ -379,7 +1672,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Run Focused Unit Test
@@ -393,7 +1686,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Run Rake Task
@@ -407,7 +1700,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Show for Current File / Project
@@ -420,7 +1713,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Toggle 'do ... end' / '{ ... }'
@@ -434,7 +1727,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Toggle ERb Tags
@@ -448,7 +1741,7 @@ children:
   runType: current_thread
   scope: source.ruby.embedded, source.ruby.rails.embedded, comment.block.erb, meta.erb
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Toggle Quote Style
@@ -462,7 +1755,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Toggle String / Symbol
@@ -476,7 +1769,7 @@ children:
   runType: current_thread
   scope: source.ruby string.quoted, source.ruby constant.other.symbol.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties: null
   displayName: Validate
@@ -489,7 +1782,21 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
+  async: false
+  customProperties:
+    prefix_values: [worw]
+  displayName: word_wrap()
+  input: [none]
+  inputPath: null
+  keyBindingMap: null
+  outputPath: null
+  outputType: insert_as_text
+  path: commands/word_wrap.rb
+  runType: current_thread
+  scope: source.ruby
+  workingDirectoryType: UNDEFINED
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [xml]
@@ -503,7 +1810,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [Yd]
@@ -517,7 +1824,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [Yl]
@@ -2101,7 +3408,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [cla]
@@ -2115,7 +3422,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [cla]
@@ -2129,7 +3436,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [cla]
@@ -2143,7 +3450,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [cla]
@@ -2157,7 +3464,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [mod]
@@ -2171,7 +3478,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [mod]
@@ -2185,7 +3492,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [mod]
@@ -2199,7 +3506,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [nam]
@@ -2213,7 +3520,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [begin]
@@ -2227,7 +3534,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [as]
@@ -2241,7 +3548,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [ase]
@@ -2255,7 +3562,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [asid]
@@ -2269,7 +3576,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [asio]
@@ -2283,7 +3590,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [asko]
@@ -2297,7 +3604,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [asm]
@@ -2311,7 +3618,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [asn]
@@ -2325,7 +3632,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [asnm]
@@ -2339,7 +3646,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [asne]
@@ -2353,7 +3660,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [asnn]
@@ -2367,7 +3674,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [asns]
@@ -2381,7 +3688,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [asrt]
@@ -2395,7 +3702,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [ass]
@@ -2409,7 +3716,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [ass]
@@ -2423,7 +3730,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [aso]
@@ -2437,7 +3744,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [fl]
@@ -2451,7 +3758,7 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
+- !!com.aptana.scripting.model.CommandElement
   async: false
   customProperties:
     prefix_values: [=b]
@@ -2465,1313 +3772,6 @@ children:
   runType: current_thread
   scope: source.ruby
   workingDirectoryType: UNDEFINED
-- !command
-  async: false
-  customProperties:
-    prefix_values: [worw]
-  displayName: word_wrap()
-  input: [none]
-  inputPath: null
-  keyBindingMap: null
-  outputPath: null
-  outputType: insert_as_text
-  path: commands/word_wrap.rb
-  runType: current_thread
-  scope: source.ruby
-  workingDirectoryType: UNDEFINED
-- !!com.aptana.scripting.model.MenuElement
-  children:
-  - children: &id001 []
-    commandName: Run
-    customProperties: null
-    displayName: Run
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Run Focused Unit Test
-    customProperties: null
-    displayName: Run Focused Unit Test
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Run Tests in Current File
-    customProperties: null
-    displayName: Run Tests in Current File
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: '-'
-    customProperties: null
-    displayName: '-'
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Documentation for Word
-    customProperties: null
-    displayName: Documentation for Word
-    path: bundle.rb
-    scope: null
-  - children:
-    - children: *id001
-      commandName: Show for Current File / Project
-      customProperties: null
-      displayName: Show for Current File / Project
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children:
-      - children: *id001
-        commandName: Bold
-        customProperties: null
-        displayName: Bold
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: Italic
-        customProperties: null
-        displayName: Italic
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: Typewriter
-        customProperties: null
-        displayName: Typewriter
-        path: bundle.rb
-        scope: null
-      commandName: Format
-      customProperties: null
-      displayName: Format
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: Omit
-      customProperties: null
-      displayName: Omit
-      path: bundle.rb
-      scope: null
-    commandName: RDoc
-    customProperties: null
-    displayName: RDoc
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: '-'
-    customProperties: null
-    displayName: '-'
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Open require
-    customProperties: null
-    displayName: Open require
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Validate Syntax
-    customProperties: null
-    displayName: Validate Syntax
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Validate Syntax (ERB)
-    customProperties: null
-    displayName: Validate Syntax (ERB)
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: '-'
-    customProperties: null
-    displayName: '-'
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Execute Line / Selection as Ruby
-    customProperties: null
-    displayName: Execute Line / Selection as Ruby
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Execute and Update '# =>' Markers
-    customProperties: null
-    displayName: Execute and Update '# =>' Markers
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Add '# =>' Marker
-    customProperties: null
-    displayName: Add '# =>' Marker
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: '-'
-    customProperties: null
-    displayName: '-'
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Insert Missing requires
-    customProperties: null
-    displayName: Insert Missing requires
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Add ! to Method in Line
-    customProperties: null
-    displayName: Add ! to Method in Line
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Toggle String / Symbol
-    customProperties: null
-    displayName: Toggle String / Symbol
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: Insert ERb's <% .. %> or <%= ..  %>
-    customProperties: null
-    displayName: Insert ERb's <% .. %> or <%= ..  %>
-    path: bundle.rb
-    scope: null
-  - children: *id001
-    commandName: '-'
-    customProperties: null
-    displayName: '-'
-    path: bundle.rb
-    scope: null
-  - children:
-    - children: *id001
-      commandName: New Method
-      customProperties: null
-      displayName: New Method
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: begin ... rescue ... end
-      customProperties: null
-      displayName: begin ... rescue ... end
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: case ... end
-      customProperties: null
-      displayName: case ... end
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: when ...
-      customProperties: null
-      displayName: when ...
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: def ... end
-      customProperties: null
-      displayName: def ... end
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: if ... end
-      customProperties: null
-      displayName: if ... end
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: if ... else ... end
-      customProperties: null
-      displayName: if ... else ... end
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: elsif ...
-      customProperties: null
-      displayName: elsif ...
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: unless ... end
-      customProperties: null
-      displayName: unless ... end
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: while ... end
-      customProperties: null
-      displayName: while ... end
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: until ... end
-      customProperties: null
-      displayName: until ... end
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children:
-      - children: *id001
-        commandName: class .. end
-        customProperties: null
-        displayName: class .. end
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: class .. initialize .. end
-        customProperties: null
-        displayName: class .. initialize .. end
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: class .. < ParentClass .. initialize .. end
-        customProperties: null
-        displayName: class .. < ParentClass .. initialize .. end
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: ClassName = Struct .. do .. end
-        customProperties: null
-        displayName: ClassName = Struct .. do .. end
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: class BlankSlate .. initialize .. end
-        customProperties: null
-        displayName: class BlankSlate .. initialize .. end
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: class .. < DelegateClass .. initialize .. end
-        customProperties: null
-        displayName: class .. < DelegateClass .. initialize .. end
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: class << self .. end
-        customProperties: null
-        displayName: class << self .. end
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: '-'
-        customProperties: null
-        displayName: '-'
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: module .. end
-        customProperties: null
-        displayName: module .. end
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: module .. module_function .. end
-        customProperties: null
-        displayName: module .. module_function .. end
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: module .. ClassMethods .. end
-        customProperties: null
-        displayName: module .. ClassMethods .. end
-        path: bundle.rb
-        scope: null
-      commandName: Classes and Modules
-      customProperties: null
-      displayName: Classes and Modules
-      path: bundle.rb
-      scope: null
-    - children:
-      - children: *id001
-        commandName: attr_reader ..
-        customProperties: null
-        displayName: attr_reader ..
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: attr_writer ..
-        customProperties: null
-        displayName: attr_writer ..
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: attr_accessor ..
-        customProperties: null
-        displayName: attr_accessor ..
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: '-'
-        customProperties: null
-        displayName: '-'
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: include Enumerable ..
-        customProperties: null
-        displayName: include Enumerable ..
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: include Comparable ..
-        customProperties: null
-        displayName: include Comparable ..
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: '-'
-        customProperties: null
-        displayName: '-'
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: Extend Forwardable (Forw)
-        customProperties: null
-        displayName: Extend Forwardable (Forw)
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: '-'
-        customProperties: null
-        displayName: '-'
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: def self .. end
-        customProperties: null
-        displayName: def self .. end
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: def method_missing .. end
-        customProperties: null
-        displayName: def method_missing .. end
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: def_delegator ..
-        customProperties: null
-        displayName: def_delegator ..
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: def_delegators ..
-        customProperties: null
-        displayName: def_delegators ..
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: '-'
-        customProperties: null
-        displayName: '-'
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: alias_method ..
-        customProperties: null
-        displayName: alias_method ..
-        path: bundle.rb
-        scope: null
-      commandName: Methods
-      customProperties: null
-      displayName: Methods
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: __END__
-      customProperties: null
-      displayName: __END__
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '#!/usr/bin/env ruby -wKU'
-      customProperties: null
-      displayName: '#!/usr/bin/env ruby -wKU'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: require ".."
-      customProperties: null
-      displayName: require ".."
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: require_gem ".."
-      customProperties: null
-      displayName: require_gem ".."
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: application { .. }
-      customProperties: null
-      displayName: application { .. }
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: usage_if()
-      customProperties: null
-      displayName: usage_if()
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: usage_unless()
-      customProperties: null
-      displayName: usage_unless()
-      path: bundle.rb
-      scope: null
-    commandName: Declarations
-    customProperties: null
-    displayName: Declarations
-    path: bundle.rb
-    scope: null
-  - children:
-    - children:
-      - children: *id001
-        commandName: Array.new(10) { |i| .. }
-        customProperties: null
-        displayName: Array.new(10) { |i| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: '-'
-        customProperties: null
-        displayName: '-'
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: delete_if { |e| .. }
-        customProperties: null
-        displayName: delete_if { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: fill(range) { |i| .. }
-        customProperties: null
-        displayName: fill(range) { |i| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: flatten_once()
-        customProperties: null
-        displayName: flatten_once()
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: zip(enums) { |row| .. }
-        customProperties: null
-        displayName: zip(enums) { |row| .. }
-        path: bundle.rb
-        scope: null
-      commandName: Arrays
-      customProperties: null
-      displayName: Arrays
-      path: bundle.rb
-      scope: null
-    - children:
-      - children: *id001
-        commandName: downto(0) { |n| .. }
-        customProperties: null
-        displayName: downto(0) { |n| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: step(2) { |e| .. }
-        customProperties: null
-        displayName: step(2) { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: times { |n| .. }
-        customProperties: null
-        displayName: times { |n| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: upto(1.0/0.0) { |n| .. }
-        customProperties: null
-        displayName: upto(1.0/0.0) { |n| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: '-'
-        customProperties: null
-        displayName: '-'
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: loop { .. }
-        customProperties: null
-        displayName: loop { .. }
-        path: bundle.rb
-        scope: null
-      commandName: Counting
-      customProperties: null
-      displayName: Counting
-      path: bundle.rb
-      scope: null
-    - children:
-      - children: *id001
-        commandName: each { |e| .. }
-        customProperties: null
-        displayName: each { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: each_byte { |byte| .. }
-        customProperties: null
-        displayName: each_byte { |byte| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: each_char { |chr| .. }
-        customProperties: null
-        displayName: each_char { |chr| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: each_cons(..) { |group| .. }
-        customProperties: null
-        displayName: each_cons(..) { |group| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: each_index { |i| .. }
-        customProperties: null
-        displayName: each_index { |i| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: each_key { |key| .. }
-        customProperties: null
-        displayName: each_key { |key| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: each_line { |line| .. }
-        customProperties: null
-        displayName: each_line { |line| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: each_pair { |name, val| .. }
-        customProperties: null
-        displayName: each_pair { |name, val| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: each_slice(..) { |group| .. }
-        customProperties: null
-        displayName: each_slice(..) { |group| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: each_value { |val| .. }
-        customProperties: null
-        displayName: each_value { |val| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: each_with_index { |e, i| .. }
-        customProperties: null
-        displayName: each_with_index { |e, i| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: reverse_each { |e| .. }
-        customProperties: null
-        displayName: reverse_each { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: '-'
-        customProperties: null
-        displayName: '-'
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: inject(init) { |mem, var| .. }
-        customProperties: null
-        displayName: inject(init) { |mem, var| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: '-'
-        customProperties: null
-        displayName: '-'
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: map { |e| .. }
-        customProperties: null
-        displayName: map { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: map_with_index { |e, i| .. }
-        customProperties: null
-        displayName: map_with_index { |e, i| .. }
-        path: bundle.rb
-        scope: null
-      commandName: Each Element
-      customProperties: null
-      displayName: Each Element
-      path: bundle.rb
-      scope: null
-    - children:
-      - children: *id001
-        commandName: sort { |a, b| .. }
-        customProperties: null
-        displayName: sort { |a, b| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: sort_by { |e| .. }
-        customProperties: null
-        displayName: sort_by { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: '-'
-        customProperties: null
-        displayName: '-'
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: randomize()
-        customProperties: null
-        displayName: randomize()
-        path: bundle.rb
-        scope: null
-      commandName: Ordering
-      customProperties: null
-      displayName: Ordering
-      path: bundle.rb
-      scope: null
-    - children:
-      - children: *id001
-        commandName: all? { |e| .. }
-        customProperties: null
-        displayName: all? { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: any? { |e| .. }
-        customProperties: null
-        displayName: any? { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: classify { |e| .. }
-        customProperties: null
-        displayName: classify { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: collect { |e| .. }
-        customProperties: null
-        displayName: collect { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: detect { |e| .. }
-        customProperties: null
-        displayName: detect { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: fetch(name) { |key| .. }
-        customProperties: null
-        displayName: fetch(name) { |key| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: find { |e| .. }
-        customProperties: null
-        displayName: find { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: find_all { |e| .. }
-        customProperties: null
-        displayName: find_all { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: grep(/pattern/) { |match| .. }
-        customProperties: null
-        displayName: grep(/pattern/) { |match| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: max { |a, b| .. }
-        customProperties: null
-        displayName: max { |a, b| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: min { |a, b| .. }
-        customProperties: null
-        displayName: min { |a, b| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: partition { |e| .. }
-        customProperties: null
-        displayName: partition { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: reject { |e| .. }
-        customProperties: null
-        displayName: reject { |e| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: select { |e| .. }
-        customProperties: null
-        displayName: select { |e| .. }
-        path: bundle.rb
-        scope: null
-      commandName: Searching and Selection
-      customProperties: null
-      displayName: Searching and Selection
-      path: bundle.rb
-      scope: null
-    - children:
-      - children: *id001
-        commandName: sub(/../) { |match| .. }
-        customProperties: null
-        displayName: sub(/../) { |match| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: gsub(/../) { |match| .. }
-        customProperties: null
-        displayName: gsub(/../) { |match| .. }
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: '-'
-        customProperties: null
-        displayName: '-'
-        path: bundle.rb
-        scope: null
-      - children: *id001
-        commandName: scan(/../) { |match| .. }
-        customProperties: null
-        displayName: scan(/../) { |match| .. }
-        path: bundle.rb
-        scope: null
-      commandName: Strings
-      customProperties: null
-      displayName: Strings
-      path: bundle.rb
-      scope: null
-    commandName: Iterators
-    customProperties: null
-    displayName: Iterators
-    path: bundle.rb
-    scope: null
-  - children:
-    - children: *id001
-      commandName: Toggle 'do ... end' / '{ ... }'
-      customProperties: null
-      displayName: Toggle 'do ... end' / '{ ... }'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: Insert { |variable| ... }
-      customProperties: null
-      displayName: Insert { |variable| ... }
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: Insert do |variable| ... end
-      customProperties: null
-      displayName: Insert do |variable| ... end
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: lambda { |args| .. }
-      customProperties: null
-      displayName: lambda { |args| .. }
-      path: bundle.rb
-      scope: null
-    commandName: Blocks
-    customProperties: null
-    displayName: Blocks
-    path: bundle.rb
-    scope: null
-  - children:
-    - children: *id001
-      commandName: Hash.new { |hash, key| hash[key] = .. }
-      customProperties: null
-      displayName: Hash.new { |hash, key| hash[key] = .. }
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: Hash Pair - :key => "value"
-      customProperties: null
-      displayName: Hash Pair - :key => "value"
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: Hash Pointer - =>
-      customProperties: null
-      displayName: Hash Pointer - =>
-      path: bundle.rb
-      scope: null
-    commandName: Hashes
-    customProperties: null
-    displayName: Hashes
-    path: bundle.rb
-    scope: null
-  - children:
-    - children: *id001
-      commandName: open("path_or_url", "w") { |io| .. }
-      customProperties: null
-      displayName: open("path_or_url", "w") { |io| .. }
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: File.foreach ("..") { |line| .. }
-      customProperties: null
-      displayName: File.foreach ("..") { |line| .. }
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: File.read("..")
-      customProperties: null
-      displayName: File.read("..")
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: File.open("..") { |file| .. }
-      customProperties: null
-      displayName: File.open("..") { |file| .. }
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: Dir.glob("..") { |file| .. }
-      customProperties: null
-      displayName: Dir.glob("..") { |file| .. }
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: Dir[".."]
-      customProperties: null
-      displayName: Dir[".."]
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: directory()
-      customProperties: null
-      displayName: directory()
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: path_from_here( .. )
-      customProperties: null
-      displayName: path_from_here( .. )
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: unix_filter { .. }
-      customProperties: null
-      displayName: unix_filter { .. }
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: option_parse { .. }
-      customProperties: null
-      displayName: option_parse { .. }
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: option(..)
-      customProperties: null
-      displayName: option(..)
-      path: bundle.rb
-      scope: null
-    commandName: Files
-    customProperties: null
-    displayName: Files
-    path: bundle.rb
-    scope: null
-  - children:
-    - children: *id001
-      commandName: class .. < Test::Unit::TestCase .. end
-      customProperties: null
-      displayName: class .. < Test::Unit::TestCase .. end
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: def test_ .. end
-      customProperties: null
-      displayName: def test_ .. end
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: require "tc_.." ..
-      customProperties: null
-      displayName: require "tc_.." ..
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert(..)
-      customProperties: null
-      displayName: assert(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_equal(..)
-      customProperties: null
-      displayName: assert_equal(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_not_equal(..)
-      customProperties: null
-      displayName: assert_not_equal(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_in_delta(..)
-      customProperties: null
-      displayName: assert_in_delta(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_instance_of(..)
-      customProperties: null
-      displayName: assert_instance_of(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_kind_of(..)
-      customProperties: null
-      displayName: assert_kind_of(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_nil(..)
-      customProperties: null
-      displayName: assert_nil(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_not_nil(..)
-      customProperties: null
-      displayName: assert_not_nil(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_match(..)
-      customProperties: null
-      displayName: assert_match(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_no_match(..)
-      customProperties: null
-      displayName: assert_no_match(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_operator(..)
-      customProperties: null
-      displayName: assert_operator(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_raise(..) { .. }
-      customProperties: null
-      displayName: assert_raise(..) { .. }
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_nothing_raised(..) { .. }
-      customProperties: null
-      displayName: assert_nothing_raised(..) { .. }
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_respond_to(..)
-      customProperties: null
-      displayName: assert_respond_to(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_same(..)
-      customProperties: null
-      displayName: assert_same(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_not_same(..)
-      customProperties: null
-      displayName: assert_not_same(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_send(..)
-      customProperties: null
-      displayName: assert_send(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_throws(..) { .. }
-      customProperties: null
-      displayName: assert_throws(..) { .. }
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: assert_nothing_thrown { .. }
-      customProperties: null
-      displayName: assert_nothing_thrown { .. }
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: flunk(..)
-      customProperties: null
-      displayName: flunk(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: Benchmark.bmbm do .. end
-      customProperties: null
-      displayName: Benchmark.bmbm do .. end
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: results.report(..) { .. }
-      customProperties: null
-      displayName: results.report(..) { .. }
-      path: bundle.rb
-      scope: null
-    commandName: Tests
-    customProperties: null
-    displayName: Tests
-    path: bundle.rb
-    scope: null
-  - children:
-    - children: *id001
-      commandName: Marshal.dump(.., file)
-      customProperties: null
-      displayName: Marshal.dump(.., file)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: Marshal.load(obj)
-      customProperties: null
-      displayName: Marshal.load(obj)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: PStore.new( .. )
-      customProperties: null
-      displayName: PStore.new( .. )
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: transaction( .. ) { .. }
-      customProperties: null
-      displayName: transaction( .. ) { .. }
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: YAML.dump(.., file)
-      customProperties: null
-      displayName: YAML.dump(.., file)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: YAML.load(file)
-      customProperties: null
-      displayName: YAML.load(file)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: xmlread(..)
-      customProperties: null
-      displayName: xmlread(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: xpath(..) { .. }
-      customProperties: null
-      displayName: xpath(..) { .. }
-      path: bundle.rb
-      scope: null
-    commandName: Serialization
-    customProperties: null
-    displayName: Serialization
-    path: bundle.rb
-    scope: null
-  - children:
-    - children: *id001
-      commandName: class_from_name()
-      customProperties: null
-      displayName: class_from_name()
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: deep_copy(..)
-      customProperties: null
-      displayName: deep_copy(..)
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: singleton_class()
-      customProperties: null
-      displayName: singleton_class()
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: word_wrap()
-      customProperties: null
-      displayName: word_wrap()
-      path: bundle.rb
-      scope: null
-    commandName: Idioms
-    customProperties: null
-    displayName: Idioms
-    path: bundle.rb
-    scope: null
-  - children:
-    - children: *id001
-      commandName: Run Rake Task
-      customProperties: null
-      displayName: Run Rake Task
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: '-'
-      customProperties: null
-      displayName: '-'
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: namespace :.. do .. end
-      customProperties: null
-      displayName: namespace :.. do .. end
-      path: bundle.rb
-      scope: null
-    - children: *id001
-      commandName: task :task_name => [:dependent, :tasks] do .. end
-      customProperties: null
-      displayName: task :task_name => [:dependent, :tasks] do .. end
-      path: bundle.rb
-      scope: null
-    commandName: Rake
-    customProperties: null
-    displayName: Rake
-    path: bundle.rb
-    scope: null
-  commandName: Ruby
-  customProperties: null
-  displayName: Ruby
-  path: bundle.rb
-  scope: source.ruby, project.rails
-- !!com.aptana.scripting.model.SmartTypingPairsElement
-  customProperties: null
-  displayName: smart_typing_pairs-ca3cf3d1-3001-4414-acb5-0964b5396b83
-  pairs: ['"', '"', '|', '|', (, ), '{', '}', '[', ']', '''', '''', '`', '`']
-  path: bundle.rb
-  scope: source.ruby
-- !!com.aptana.scripting.model.EnvironmentElement {customProperties: null, displayName: environment-30a21dc1-7a4f-41a2-9970-ee0fa68b6f34,
-  path: bundle.rb, scope: source.ruby}
 copyright: '(C) Copyright 2010 Aptana Inc. Distributed under the MIT license.
 
 
@@ -3786,7 +3786,7 @@ description: "Support for the Ruby programming language (http://www.ruby-lang.or
   \n  Kenny Ortmann (http://github.com/yairgo)\n"
 displayName: Ruby
 fileTypeRegistry: {}
-fileTypes: []
+fileTypes: *id001
 foldingStartMarkers: {!scope 'source.ruby': !regexp '(?-mix:(\s*+(module|class|def(?!.*\bend\s*$)|unless|if|case|begin|for|while|until|^=begin|("(\\.|[^"])*+"|''(\\.|[^''])*+''|[^#"''])*(\s(do|begin|case)|(?<!\$)[-+=&|*\/~%^<>~]\s*+(if|unless)))\b(?![^;]*+;.*?\bend\b)|("(\\.|[^"])*+"|''(\\.|[^''])*+''|[^#"''])*(\{(?![^}]*+\})|\[(?![^\]]*+\]))).*$|[#].*?\(fold\)\s*+$)'}
 foldingStopMarkers: {!scope 'source.ruby': !regexp '(?-mix:((^|;)\s*+end\s*+([#].*)?$|(^|;)\s*+end\..*$|^\s*+[}\]],?\s*+([#].*)?$|[#].*?\(end\)\s*+$|^=end))'}
 increaseIndentMarkers: {!scope 'source.ruby': !regexp '(?x-mi:^(\s*(module|class|def|unless|if|else|elsif|case|when|begin|rescue|ensure|for|while|until|(?=.*?\b(do|begin|case|if|unless)\b)("(\\.|[^\\"])*+"|''(\\.|[^\\''])*+''|[^#"''])*(\s(do|begin|case)|[-+=&|*\/~%^<>~](?<!\$.)
