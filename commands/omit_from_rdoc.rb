@@ -1,6 +1,6 @@
 require 'ruble'
 
-command 'Omit' do |cmd|
+command t(:omit) do |cmd|
   cmd.key_binding = 'Command+Shift+Control+O'
   cmd.scope = 'source.ruby'
   cmd.output = :insert_as_snippet

@@ -2,7 +2,7 @@ require 'ruble'
 require 'ruble/ui'
 require 'ruble/terminal'
 
-command 'Run Rake Task' do |cmd|
+command t(:run_rake_task) do |cmd|
   cmd.key_binding = 'CONTROL+M2+R'
   cmd.scope = 'source.ruby'
   cmd.output = :discard

@@ -45,7 +45,7 @@ end'
 '
   end
   
-  snippet "Add '# =>' Marker" do |s|
+  snippet t(:add_hash_marker) do |s|
     s.trigger = '#'
     s.expansion = '# => '
   end
@@ -233,7 +233,7 @@ end'
     s.expansion = 'File.dirname(__FILE__)'
   end
 
-  snippet 'Insert do |variable| ... end' do |s|
+  snippet t(:insert_multiline_block) do |s|
     s.trigger = 'do'
     s.expansion = 'do |${1:variable}|
   $0
@@ -414,7 +414,7 @@ end'
     s.expansion = 'min { |a, b| $0 }'
   end
 
-  snippet 'Insert { |variable| ... }' do |s|
+  snippet t(:insert_block) do |s|
     s.trigger = '{'
     s.expansion = '{ |${1:variable}| ${0} }'
   end

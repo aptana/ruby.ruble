@@ -1,6 +1,6 @@
 require 'ruble'
 
-command 'Italic' do |cmd|
+command t(:italic) do |cmd|
   cmd.key_binding = 'M1+SHIFT+I'
   cmd.scope = 'source.ruby comment'
   cmd.output = :insert_as_snippet

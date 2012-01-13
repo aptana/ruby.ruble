@@ -36,7 +36,7 @@ def ri(term, recurse = true)
   end
 end
 
-command "Documentation for Word" do |cmd|
+command t(:doc_for_word) do |cmd|
   #cmd.key_binding = 'M4+H'
   cmd.output = :show_as_tooltip
   cmd.input = :selection, :word

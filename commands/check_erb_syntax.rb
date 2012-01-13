@@ -1,7 +1,7 @@
 require 'ruble'
 require 'ruble/editor'
 
-command 'Validate Syntax (ERB)' do |cmd|
+command t(:validate_syntax_erb) do |cmd|
   cmd.key_binding = 'Control+Shift+V'
   cmd.scope = 'text.html.ruby, text.html source.ruby'
   cmd.output = :show_as_tooltip

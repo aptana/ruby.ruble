@@ -1,6 +1,6 @@
 require 'ruble'
 
-# its ruby, so this just addscommands/snippets in bundle (or replaces those with same name)
+# its ruby, so this just adds commands/snippets in bundle (or replaces those with same name)
 # many ruby files could add to a single bundle
 bundle do |bundle|
   bundle.author = 'Christopher Williams et al'
@@ -10,7 +10,7 @@ bundle do |bundle|
 Portions (C) Copyright 2006 James Edward Gray II, distributed under the terms of the MIT License.
 END
 
-  bundle.display_name = 'Ruby'
+  bundle.display_name = t(:bundle_name)
   bundle.description = <<END
 Support for the Ruby programming language (http://www.ruby-lang.org),
 converted from TextMate to Ruble by Aptana.
@@ -59,42 +59,42 @@ END
   
   # most commands install into a dedicated rails menu
   # See also the alternative, HAML-style syntax in menu.rrmenu
-  bundle.menu "Ruby" do |menu|
+  bundle.menu t(:bundle_name) do |menu|
     # this menu should be shown when any of the following scopes is active:
     menu.scope = [ "source.ruby", "project.rails" ]
     
-    menu.command "Run"
-    menu.command "Run Focused Unit Test"
-    menu.command 'Run Tests in Current File'
+    menu.command t(:run)
+    menu.command t(:run_focused_test)
+    menu.command t(:run_tests)
     menu.separator
-    menu.command "Documentation for Word"
-    menu.menu "RDoc" do |rdoc|
-      rdoc.command 'Show for Current File / Project'
+    menu.command t(:doc_for_word)
+    menu.menu t(:rdoc) do |rdoc|
+      rdoc.command t(:show_for_file)
       rdoc.separator
-      rdoc.menu 'Format' do |format|
-        format.command "Bold"
-        format.command "Italic"
-        format.command "Typewriter"
+      rdoc.menu t(:format) do |format|
+        format.command t(:bold)
+        format.command t(:italic)
+        format.command t(:typewriter)
       end
       rdoc.separator
-      rdoc.command "Omit"
+      rdoc.command t(:omit)
     end
     menu.separator
-    menu.command "Open require"
-    menu.command "Validate Syntax"
-    menu.command "Validate Syntax (ERB)"
+    menu.command t(:open_require)
+    menu.command t(:validate_syntax)
+    menu.command t(:validate_syntax_erb)
     menu.separator
-    menu.command "Execute Line / Selection as Ruby"
-    menu.command "Execute and Update '# =>' Markers"
-    menu.command "Add '# =>' Marker"
+    menu.command t(:execute_as_ruby)
+    menu.command t(:execute_and_update_hash_markers)
+    menu.command t(:add_hash_marker)
     menu.separator
-    menu.command "Insert Missing requires"
-    menu.command "Add ! to Method in Line"
-    menu.command "Toggle String / Symbol"
-    menu.command "Insert ERb's <% .. %> or <%= ..  %>"
+    menu.command t(:insert_missing_requires)
+    menu.command t(:add_bang_to_method)
+    menu.command t(:toggle_string_symbol)
+    menu.command t(:insert_erb_tags)
     menu.separator
-    menu.menu "Declarations" do |decl|
-      decl.command "New Method"
+    menu.menu t(:declarations) do |decl|
+      decl.command t(:new_method)
       decl.separator
       decl.command 'begin ... rescue ... end'
       decl.command 'case ... end'
@@ -107,7 +107,7 @@ END
       decl.command 'while ... end'
       decl.command 'until ... end'
       decl.separator
-      decl.menu 'Classes and Modules' do |classes|
+      decl.menu t(:classes_and_modules) do |classes|
          classes.command 'class .. end'
          classes.command 'class .. initialize .. end'
          classes.command 'class .. < ParentClass .. initialize .. end'
@@ -120,7 +120,7 @@ END
          classes.command 'module .. module_function .. end'
          classes.command 'module .. ClassMethods .. end'
       end
-      decl.menu 'Methods' do |methods|
+      decl.menu t(:methods) do |methods|
         methods.command 'attr_reader ..'
         methods.command 'attr_writer ..'
         methods.command 'attr_accessor ..'
@@ -140,15 +140,14 @@ END
       decl.command '__END__'  
       decl.separator
       decl.command '#!/usr/bin/env ruby -wKU'
-      # decl.command 
       decl.command 'require ".."'
       decl.command 'require_gem ".."'
       decl.command 'application { .. }'
       decl.command 'usage_if()'
       decl.command 'usage_unless()'
     end
-    menu.menu "Iterators" do |iters|
-      iters.menu "Arrays" do |arrays|
+    menu.menu t(:iterators) do |iters|
+      iters.menu t(:arrays) do |arrays|
         arrays.command 'Array.new(10) { |i| .. }'
         arrays.separator
         arrays.command 'delete_if { |e| .. }'
@@ -156,7 +155,7 @@ END
         arrays.command 'flatten_once()'
         arrays.command 'zip(enums) { |row| .. }'
       end
-      iters.menu "Counting" do |counting|
+      iters.menu t(:counting) do |counting|
         counting.command 'downto(0) { |n| .. }'
         counting.command 'step(2) { |e| .. }'
         counting.command 'times { |n| .. }'
@@ -164,7 +163,7 @@ END
         counting.separator
         counting.command 'loop { .. }'
       end
-      iters.menu "Each Element" do |each_element|
+      iters.menu t(:each_element) do |each_element|
         each_element.command 'each { |e| .. }'
         each_element.command 'each_byte { |byte| .. }'
         each_element.command 'each_char { |chr| .. }'
@@ -183,13 +182,13 @@ END
         each_element.command 'map { |e| .. }'
         each_element.command 'map_with_index { |e, i| .. }'
       end
-      iters.menu "Ordering" do |ordering|
+      iters.menu t(:ordering) do |ordering|
         ordering.command 'sort { |a, b| .. }'
         ordering.command 'sort_by { |e| .. }'
         ordering.separator
         ordering.command 'randomize()'
       end
-      iters.menu "Searching and Selection" do |searching|
+      iters.menu t(:search_and_selection) do |searching|
         searching.command 'all? { |e| .. }'
         searching.command 'any? { |e| .. }'
         searching.command 'classify { |e| .. }'
@@ -205,28 +204,28 @@ END
         searching.command 'reject { |e| .. }'
         searching.command 'select { |e| .. }'
       end
-      iters.menu "Strings" do |strings|
+      iters.menu t(:strings) do |strings|
         strings.command 'sub(/../) { |match| .. }'
         strings.command 'gsub(/../) { |match| .. }'
         strings.separator
         strings.command 'scan(/../) { |match| .. }'
       end
     end
-    menu.menu "Blocks" do |blocks|
-      blocks.command "Toggle 'do ... end' / '{ ... }'"
+    menu.menu t(:blocks) do |blocks|
+      blocks.command t(:toggle_block)
       blocks.separator
-      blocks.command 'Insert { |variable| ... }'
-      blocks.command 'Insert do |variable| ... end'
+      blocks.command t(:insert_block)
+      blocks.command t(:insert_multiline_block)
       blocks.separator
       blocks.command 'lambda { |args| .. }'
     end
-    menu.menu "Hashes" do |hashes|
+    menu.menu t(:hashes) do |hashes|
       hashes.command 'Hash.new { |hash, key| hash[key] = .. }'
       hashes.separator
       hashes.command 'Hash Pair - :key => "value"'
       hashes.command "Hash Pointer - =>"
     end
-    menu.menu "Files" do |files|
+    menu.menu t(:files) do |files|
       files.command 'open("path_or_url", "w") { |io| .. }'
       files.separator
       files.command 'File.foreach ("..") { |line| .. }'
@@ -242,7 +241,7 @@ END
       files.command 'option_parse { .. }'
       files.command 'option(..)'
     end
-    menu.menu "Tests" do |tests|
+    menu.menu t(:tests) do |tests|
       tests.command 'class .. < Test::Unit::TestCase .. end'
       tests.command 'def test_ .. end'
       tests.command 'require "tc_.." ..'
@@ -271,7 +270,7 @@ END
       tests.command 'Benchmark.bmbm do .. end'
       tests.command 'results.report(..) { .. }'
     end
-    menu.menu "Serialization" do |serial|
+    menu.menu t(:serialization) do |serial|
       serial.command "Marshal.dump(.., file)"
       serial.command 'Marshal.load(obj)'
       serial.separator
@@ -284,14 +283,14 @@ END
       serial.command 'xmlread(..)'
       serial.command 'xpath(..) { .. }'
     end
-    menu.menu "Idioms" do |idioms|
+    menu.menu t(:idioms) do |idioms|
       idioms.command 'class_from_name()'
       idioms.command 'deep_copy(..)'
       idioms.command 'singleton_class()'
       idioms.command 'word_wrap()'
     end
-    menu.menu "Rake" do |rake|
-      rake.command "Run Rake Task"
+    menu.menu t(:rake) do |rake|
+      rake.command t(:run_rake_task)
       rake.separator
       rake.command 'namespace :.. do .. end'
       rake.command 'task :task_name => [:dependent, :tasks] do .. end'

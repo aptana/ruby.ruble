@@ -1,7 +1,7 @@
 require 'ruble'
 require 'ruble/terminal'
 
-command 'Run Tests in Current File' do |cmd|
+command t(:run_tests) do |cmd|
   cmd.key_binding = 'M1+M2+T'
   cmd.scope = 'source.ruby'
   cmd.output = :discard
