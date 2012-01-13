@@ -21,14 +21,41 @@ Special thanks to our contributors:
 END
 
   bundle.repository = "git://github.com/aptana/ruby.ruble.git"
-  # Folding
-  start_folding = /(\s*+(module|class|def(?!.*\bend\s*$)|unless|if|case|begin|for|while|until|^=begin|("(\\.|[^"])*+"|'(\\.|[^'])*+'|[^#"'])*(\s(do|begin|case)|(?<!\$)[-+=&|*\/~%^<>~]\s*+(if|unless)))\b(?![^;]*+;.*?\bend\b)|("(\\.|[^"])*+"|'(\\.|[^'])*+'|[^#"'])*(\{(?![^}]*+\})|\[(?![^\]]*+\]))).*$|[#].*?\(fold\)\s*+$/
-  end_folding = /((^|;)\s*+end\s*+([#].*)?$|(^|;)\s*+end\..*$|^\s*+[}\]],?\s*+([#].*)?$|[#].*?\(end\)\s*+$|^=end)/
-  bundle.folding['source.ruby'] = start_folding, end_folding
+
+  # Folding is now done in java for this language for more precise folding bast on AST from parse
   # Indentation
-  increase_indent = /(?x)^(\s*(module|class|def|unless|if|else|elsif|case|when|begin|rescue|ensure|for|while|until|(?=.*?\b(do|begin|case|if|unless)\b)("(\\.|[^\\"])*+"|'(\\.|[^\\'])*+'|[^#"'])*(\s(do|begin|case)|[-+=&|*\/~%^<>~](?<!\$.) \s*+ (if|unless)))\b(?![^;]*+;.*?\bend\b)|("(\\.|[^\\"])*+"|'(\\.|[^\\'])*+'|[^#"'])*(\{(?![^}]*+\})|\[(?![^\]]*+\]))).*$/
-  decrease_indent = /^\s*([}\]]\s*$|(end|rescue|ensure|else|elsif|when)\b)/
-  bundle.indent['source.ruby'] = increase_indent, decrease_indent
+  begin
+    increase_indent = Regexp.new('(?x)^
+      (\s*
+          (module|class|def
+          |unless|if|else|elsif
+          |case|when
+          |begin|rescue|ensure
+          |for|while|until
+          |(?= .*? \b(do|begin|case|if|unless)\b )
+           # the look-ahead above is to quickly discard non-candidates
+           (  "(\\.|[^\\"])*+"        # eat a double quoted string
+           | \'(\\.|[^\\\'])*+\'      # eat a single quoted string
+           |   [^#"\']                # eat all but comments and strings
+           )*
+           (                         \s   (do|begin|case)
+           | [-+=&|*/~%^<>~](?<!\$.) \s*+ (if|unless)
+           )
+          )\b
+          (?! [^;]*+ ; .*? \bend\b )
+      |(  "(\\.|[^\\"])*+"            # eat a double quoted string
+       | \'(\\.|[^\\\'])*+\'          # eat a single quoted string
+       |   [^#"\']                    # eat all but comments and strings
+       )*
+       ( \{ (?!  [^}]*+ \} )
+       | \[ (?! [^\]]*+ \] )
+       )
+      ).*$')
+    decrease_indent = /^\s*([}\]]\s*$|(end|rescue|ensure|else|elsif|when)\b)/
+    bundle.indent['source.ruby'] = increase_indent, decrease_indent
+  rescue
+    # The increase indent regexp will fail to compile under Ruby 1.8's default regexp engine
+  end
   
   # most commands install into a dedicated rails menu
   # See also the alternative, HAML-style syntax in menu.rrmenu
