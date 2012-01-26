@@ -78,8 +78,10 @@ module ProcessParticularLine
   def aref_or_aset?(right_stripped, last_char)
     if last_char == ?[
       case right_stripped
-      when /\]\s*=/: "[]="
-      when /\]/:     "[]"
+      when /\]\s*=/
+        "[]="
+      when /\]/
+        "[]"
       end
     end
   end
