@@ -1,6 +1,6 @@
 require 'ruble'
 
-command "Execute and Update '# =>' Markers" do |cmd|
+command t(:execute_and_update_hash_markers) do |cmd|
   cmd.key_binding = 'COMMAND+CONTROL+SHIFT+E'
   cmd.scope = 'source.ruby'
   cmd.output = :replace_selection

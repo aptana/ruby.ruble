@@ -1,7 +1,7 @@
 require 'ruble'
 require 'ruble/editor'
 
-command "Validate Syntax" do |cmd|
+command t(:validate_syntax) do |cmd|
   cmd.key_binding = 'Control+Shift+V'
   cmd.output = :show_as_tooltip
   cmd.input = :document

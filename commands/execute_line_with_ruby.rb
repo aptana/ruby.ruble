@@ -1,6 +1,6 @@
 require 'ruble'
 
-command 'Execute Line / Selection as Ruby' do |cmd|
+command t(:execute_as_ruby) do |cmd|
   cmd.key_binding = 'Shift+Control+E'
   cmd.output = :insert_as_text
   cmd.input = :selection, :line

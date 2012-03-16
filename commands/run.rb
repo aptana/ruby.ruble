@@ -1,7 +1,7 @@
 require 'ruble'
 require 'ruble/terminal'
 
-command 'Run' do |cmd|
+command t(:run) do |cmd|
   cmd.key_binding = 'M1+R'
   cmd.scope = 'source.ruby'
   cmd.output = :discard

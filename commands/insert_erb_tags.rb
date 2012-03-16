@@ -1,6 +1,6 @@
 require 'ruble'
 
-command "Insert ERb's <% .. %> or <%= ..  %>" do |cmd|
+command t(:insert_erb_tags) do |cmd|
   cmd.key_binding = 'CONTROL+SHIFT+.'
   cmd.scope = "text.html.ruby - source, text.xml.ruby - source.ruby"
   cmd.output = :insert_as_snippet

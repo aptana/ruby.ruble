@@ -1,6 +1,6 @@
 require 'ruble'
 
-command 'Show for Current File / Project' do |cmd|
+command t(:show_for_file) do |cmd|
   cmd.scope = 'source.ruby'
   cmd.output = :show_as_html
   cmd.input = :none

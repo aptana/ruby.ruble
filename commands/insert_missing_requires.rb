@@ -1,6 +1,6 @@
 require 'ruble'
 
-command "Insert Missing requires" do |cmd|
+command t(:insert_missing_requires) do |cmd|
   cmd.key_binding = 'M1+M2+3'
   cmd.output = :insert_as_snippet
   cmd.input = :selection, :document

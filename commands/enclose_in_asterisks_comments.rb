@@ -1,6 +1,6 @@
 require 'ruble'
 
-command 'Bold' do |cmd|
+command t(:bold) do |cmd|
   cmd.key_binding = 'M1+SHIFT+B'
   cmd.scope = 'source.ruby comment'
   cmd.output = :insert_as_snippet

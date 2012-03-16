@@ -1,7 +1,7 @@
 require 'ruble'
 require 'ruble/ui'
 
-command 'New Method' do |cmd|
+command t(:new_method) do |cmd|
   cmd.key_binding = 'Shift+Return'
   cmd.scope = 'source.ruby'
   cmd.output = :insert_as_snippet

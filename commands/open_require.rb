@@ -2,7 +2,7 @@ require 'ruble'
 require 'ruble/ui'
 require 'ruble/editor'
 
-command 'Open require' do |cmd|
+command t(:open_require) do |cmd|
   cmd.key_binding = 'Shift+M1+D'
   cmd.scope = 'source.ruby'
   cmd.output = :show_as_tooltip

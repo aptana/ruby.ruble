@@ -1,6 +1,6 @@
 require 'ruble'
 
-command "Toggle String / Symbol" do |cmd|
+command t(:toggle_string_symbol) do |cmd|
   cmd.key_binding = 'CTRL+M2+;' # CTRL+:
   cmd.output = :replace_selection
   cmd.input = :selection, :scope
